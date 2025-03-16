@@ -30,6 +30,24 @@
             <div class="col-sm-6 col-md-4 col-lg-3 mb-4">
                 <div class="card h-100 border-0 shadow card-hover">
                     <div class="card-body text-center">
+                        <a href="https://vinitycard.com/" title="Vinitycard" target="_blank" rel="nofollow">
+                            <h4 class="card-title heading mt-3">Vinitycard</h4>
+                        </a>
+                        <a href="https://vinitycard.com/" title="Vinitycard" target="_blank"
+                           rel="nofollow">
+                            <img class="card-img-top d-block mx-auto img-logo"
+                                 src="{{ asset('assets/images/vinitycard.png') }}" alt="vinitycard">
+                        </a>
+                        <p class="card-text description mt-3">
+                            A Smart Business Card solution with interactive features, instant contact sharing, and real-time updates.
+                            Developed with Laravel and Liveware.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-4 col-lg-3 mb-4">
+                <div class="card h-100 border-0 shadow card-hover">
+                    <div class="card-body text-center">
                         <a href="https://mhzone.mokaddes.com/" title="MH ZONE" target="_blank" rel="nofollow">
                             <h4 class="card-title heading mt-3">MH ZONE</h4>
                         </a>
@@ -79,7 +97,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-6 col-md-4 col-lg-3 mb-4">
+            {{--<div class="col-sm-6 col-md-4 col-lg-3 mb-4">
                 <div class="card h-100 border-0 shadow card-hover">
                     <div class="card-body text-center">
                         <a href="https://franchisesavailablenow.com/" title="Franchises" target="_blank" rel="nofollow">
@@ -95,7 +113,7 @@
                         </p>
                     </div>
                 </div>
-            </div>
+            </div>--}}
             {{--<div class="col-sm-6 col-md-4 col-lg-3 mb-4">
                 <div class="card h-100 border-0 shadow card-hover">
                     <div class="card-body text-center">
