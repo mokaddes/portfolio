@@ -97,7 +97,7 @@
                     </div>
                 </div>
             </div>
-            {{--<div class="col-sm-6 col-md-4 col-lg-3 mb-4">
+            <div class="col-sm-6 col-md-4 col-lg-3 mb-4">
                 <div class="card h-100 border-0 shadow card-hover">
                     <div class="card-body text-center">
                         <a href="https://franchisesavailablenow.com/" title="Franchises" target="_blank" rel="nofollow">
@@ -113,8 +113,8 @@
                         </p>
                     </div>
                 </div>
-            </div>--}}
-            {{--<div class="col-sm-6 col-md-4 col-lg-3 mb-4">
+            </div>
+            <div class="col-sm-6 col-md-4 col-lg-3 mb-4">
                 <div class="card h-100 border-0 shadow card-hover">
                     <div class="card-body text-center">
                         <a href="https://www.zentune.online" title="Zentune" target="_blank" rel="nofollow">
@@ -131,7 +131,7 @@
                         </p>
                     </div>
                 </div>
-            </div>--}}
+            </div>
             <div class="col-sm-6 col-md-4 col-lg-3 mb-4">
                 <div class="card h-100 border-0 shadow card-hover">
                     <div class="card-body text-center">
@@ -186,7 +186,7 @@
                     </div>
                 </div>
             </div>
-            {{--<div class="col-sm-6 col-md-4 col-lg-3 mb-4">
+            <div class="col-sm-6 col-md-4 col-lg-3 mb-4">
                 <div class="card h-100 border-0 shadow card-hover">
                     <div class="card-body text-center">
                         <a href="https://www.tclibrary.com" title="TCLI Library" target="_blank" rel="nofollow">
@@ -203,8 +203,8 @@
                         </p>
                     </div>
                 </div>
-            </div>--}}
-            {{--<div class="col-sm-6 col-md-4 col-lg-3 mb-4">
+            </div>
+            <div class="col-sm-6 col-md-4 col-lg-3 mb-4">
                 <div class="card h-100 border-0 shadow card-hover">
                     <div class="card-body text-center">
                         <a href="https://enjoycitytours.com/" title="Dhereye Delivery" target="_blank" rel="nofollow">
@@ -221,7 +221,7 @@
                         </p>
                     </div>
                 </div>
-            </div>--}}
+            </div>
         </div>
     </div>
 </section>

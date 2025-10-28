@@ -3,6 +3,10 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\PersonalQuality;
+use App\Models\Project;
+use App\Models\Skill;
+use App\Models\Tool;
 use App\Models\VisitorLog;
 use App\Notifications\ContactMailNotification;
 use Illuminate\Http\Request;
@@ -42,7 +46,27 @@ class FrontendController extends Controller
         } catch (\Exception $e) {
             Log::alert($e->getMessage());
         }
-        return view('portfolio.index');
+
+        $skills = Skill::all();
+        $projects = Project::where('status', 1)->get();
+        $tools = Tool::orderBy('order')->get();
+        $personalQualities = PersonalQuality::all();
+        $objective = '';
+        $education = [];
+        $experience = [];
+        return view('portfolio.index3',
+            [
+                'resumeLink' => asset('assets/cv/mokaddes_hosain.pdf'),
+                'heroBg' => asset('images/hero-bg.jpg'), // optional hero bg override
+                'skills' => $skills, // array / collection of skill objects: icon, name, description
+                'projects' => $projects, // array/collection: image, name, description, url, category
+                'tools' => $tools,
+                'personalQualities' => $personalQualities,
+                'objective' => $objective, // string from CV
+                'education' => $education, // array of [degree, institution, year, meta]
+                'experience' => $experience, // array of [title, company, period, location, desc]
+            ]
+        );
 
     }
 }

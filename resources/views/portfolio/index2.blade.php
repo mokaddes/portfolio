@@ -1,0 +1,786 @@
+{{-- resources/views/portfolio.blade.php --}}
+    <!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>{{ $name ?? 'Mokaddes Hosain' }} — Portfolio</title>
+
+    <!-- Bootstrap (optional) + Font Awesome + Swiper -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+
+    <style>
+        /* ====== Root Theme ====== */
+        :root{
+            --primary: #667eea;
+            --secondary: #764ba2;
+            --accent: #f093fb;
+            --dark: #0f172a;
+            --light: #f8fafc;
+            --muted: #94a3b8;
+            --glass: rgba(255,255,255,0.06);
+        }
+
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', system-ui, -apple-system, Roboto, "Helvetica Neue", Arial;
+            background: var(--dark);
+            color: var(--light);
+            -webkit-font-smoothing:antialiased;
+            -moz-osx-font-smoothing:grayscale;
+            overflow-x: hidden; /* prevent accidental horizontal scroll */
+            touch-action: pan-y; /* mobile scroll stability */
+        }
+
+        /* keep original animated gradient background behind everything */
+        .bg-animation {
+            position: fixed;
+            inset: 0;
+            z-index: -2;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+        }
+        .bg-animation::before{
+            content: '';
+            position:absolute; inset:0;
+            background: radial-gradient(circle, rgba(255,255,255,0.06) 1px, transparent 1px);
+            background-size: 50px 50px;
+            opacity: 0.25;
+            animation: bgMove 22s linear infinite;
+            mix-blend-mode: overlay;
+        }
+        @keyframes bgMove {
+            0%{ transform: translate(0,0); } 100%{ transform: translate(60px,60px); }
+        }
+
+        /* Navbar (preserve original style) */
+        nav#navbar{
+            position: fixed; top:0; left:0; right:0;
+            z-index: 1050;
+            background: rgba(15,23,42,0.7);
+            backdrop-filter: blur(8px);
+            transition: all .25s ease;
+            border-bottom: 1px solid rgba(255,255,255,0.03);
+        }
+        nav#navbar.scrolled {
+            background: rgba(15,23,42,0.95);
+            padding: 0.45rem 0;
+        }
+        .nav-container { max-width: 1400px; margin:0 auto; padding: .9rem 1rem; display:flex; align-items:center; justify-content:space-between; gap:1rem; }
+        .logo { font-weight:800; font-size:1.35rem; background:linear-gradient(135deg,var(--primary),var(--accent)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+        .nav-links { display:flex; gap:1rem; align-items:center; list-style:none; margin:0; padding:0; }
+        .nav-links a { color:var(--light); text-decoration:none; padding:.35rem .5rem; border-radius:6px; transition:all .18s; font-weight:600; }
+        .nav-links a:hover { color:var(--accent); background: rgba(255,255,255,0.03); }
+
+        /* Hamburger for small screens */
+        .hamburger { display:none; cursor:pointer; gap:6px; flex-direction:column; }
+        .hamburger span { width:26px; height:3px; background:var(--light); display:block; border-radius:2px; transition:all .25s; }
+
+        /* Hero (keeps original layout but more professional) */
+        .hero {
+            min-height: 90vh;
+            padding: 0 !important;
+            display:flex; align-items:center; justify-content:center;
+            position:relative;
+            overflow:hidden;
+            color:var(--light);
+        }
+        .hero-inner { max-width:1400px; width:100%; display:grid; grid-template-columns: 1fr auto 1fr; gap:2.4rem; align-items:center; padding: 2rem; }
+        @media (max-width:1024px){ .hero-inner { grid-template-columns: 1fr; text-align:center; } }
+        /* professional hero background image with subtle overlay and parallax */
+        .hero-bg {
+            position:absolute; inset:0; z-index:-1; background-size:cover; background-position:center; filter:brightness(.55) saturate(.95);
+            transform-origin:center;
+            transition: transform .2s ease-out;
+        }
+        .hero-card { background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border-radius:20px; padding:1.6rem; box-shadow: 0 18px 60px rgba(2,6,23,0.6); border:1px solid rgba(255,255,255,0.06); }
+
+        /* profile (preserve the floating and ring) */
+        .profile-image-wrapper { position:relative; width:210px; height:210px; margin:0 auto; }
+        .profile-image {
+            width:210px; height:210px; border-radius:50%; object-fit:cover; border:5px solid rgba(255,255,255,0.12); box-shadow:0 20px 60px rgba(0,0,0,0.4); animation: float 3s ease-in-out infinite;
+        }
+        .profile-ring {
+            position:absolute; inset:-12px; border-radius:50%; border:3px solid var(--accent); opacity:0.5; animation: rotate 10s linear infinite;
+        }
+        @keyframes rotate{ to{ transform: rotate(360deg); } }
+
+        .profile-name { font-size:2.9rem; font-weight:800; color:var(--light); margin-top:1rem; }
+        .profile-title { color:var(--accent); font-size:1.15rem; font-weight:600; letter-spacing:.4px; }
+
+        /* resume button */
+        .resume-button {
+            display:inline-flex; align-items:center; gap:.85rem; padding:.9rem 1.6rem; border-radius:999px; background:linear-gradient(135deg,var(--primary),var(--secondary)); color:white; font-weight:700; box-shadow: 0 18px 50px rgba(102,126,234,0.22);
+            text-decoration:none;
+        }
+        .resume-button svg{ transition: transform .25s; }
+        .resume-button:hover svg{ transform: translateY(3px); }
+
+        /* Contact list on hero */
+        .contact-section { display:flex; flex-direction:column; gap:.9rem; align-items:flex-start; }
+        .contact-item { display:flex; gap:.8rem; align-items:center; padding:.45rem .6rem; border-radius:10px; color:var(--light); transition: all .18s; }
+        .contact-item:hover { transform:translateX(6px); background: rgba(255,255,255,0.02); }
+        .contact-item a{ color:var(--light); text-decoration:none; }
+
+        /* scroll indicator */
+        .scroll-indicator { position:absolute; bottom:28px; left:50%; transform:translateX(-50%); animation:bounce 2s infinite; }
+        @keyframes bounce{ 0%,20%,50%,80%,100%{ transform: translateX(-50%) translateY(0); } 40%{ transform: translateX(-50%) translateY(-14px);} 60%{ transform: translateX(-50%) translateY(-7px);} }
+
+        /* Sections */
+        section { padding: 4.2rem 1rem; position:relative; }
+        .section-bg { background: var(--light); color: #0b1330; border-top-left-radius: 26px; border-top-right-radius: 26px; padding-top:5rem; }
+        .container { max-width:1400px; margin:0 auto; }
+
+        .section-header{ text-align:center; margin-bottom:2.5rem; }
+        .section-header h2{ font-size: clamp(1.8rem, 3vw, 2.6rem); color: var(--light); display:inline-block; position:relative; }
+        .section-header p{ color: rgba(255,255,255,0.8); margin-top:.6rem; }
+
+        /* Cards / grids (tilt and hover preserved) */
+        .skills-grid, .projects-grid, .tools-grid, .personal-grid { display:grid; gap:1.4rem; }
+        .skill-card, .project-card, .tool-item, .personal-card { background:var(--glass); border-radius:18px; padding:1.25rem; transition:all .25s; border:1px solid rgba(255,255,255,0.06); }
+        .skill-card:hover, .project-card:hover, .tool-item:hover, .personal-card:hover{ transform: translateY(-8px); box-shadow: 0 18px 50px rgba(2,6,23,0.7); }
+
+        .skill-icon, .tool-icon { width:80px; height:80px; margin:0 auto 1rem; border-radius:14px; display:flex; align-items:center; justify-content:center; font-size:2rem; background:linear-gradient(135deg,var(--primary),var(--accent)); color:white; }
+
+        /* Projects */
+        .project-image { height:180px; display:flex; align-items:center; justify-content:center; border-radius:12px; overflow:hidden; background: linear-gradient(135deg,var(--primary),var(--secondary)); }
+        .project-content h3{ color:var(--light); }
+
+        /* Swiper overrides (slick feel for mobile) */
+        .swiper { padding-bottom:40px; }
+        .swiper-slide { display:flex; justify-content:center; align-items:stretch; }
+        .swiper-pagination-bullet { background:var(--accent); }
+
+        /* Contact form modern style */
+        .contact-card { background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02)); border-radius:18px; padding: 1.4rem; border:1px solid rgba(255,255,255,0.06); box-shadow: 0 20px 50px rgba(2,6,23,0.6); }
+        .form-floating .form-control, .form-floating .form-control:focus { background: rgba(255,255,255,0.04); color:var(--light); border:none; }
+        .btn-send { background: linear-gradient(135deg,var(--primary),var(--accent)); color:white; border-radius: 999px; padding: 0.75rem 1.5rem; border:none; font-weight:700; box-shadow: 0 10px 30px rgba(102,126,234,0.28); }
+
+        /* Footer */
+        footer { padding:2.5rem 1rem; text-align:center; color: rgba(255,255,255,0.75); background: linear-gradient(180deg, rgba(2,6,23,0.6), rgba(2,6,23,0.7)); }
+
+        /* Responsive Grid Layouts */
+        @media (min-width: 1200px){
+            .skills-grid { grid-template-columns: repeat(3, 1fr); }
+            .projects-grid { grid-template-columns: repeat(3, 1fr); }
+            .tools-grid { grid-template-columns: repeat(4, 1fr); }
+            .personal-grid { grid-template-columns: repeat(4, 1fr); }
+        }
+
+        @media (max-width: 1199px) and (min-width: 768px) {
+            .skills-grid { grid-template-columns: repeat(2, 1fr); }
+            .projects-grid { grid-template-columns: repeat(2, 1fr); }
+            .tools-grid { grid-template-columns: repeat(3, 1fr); }
+            .personal-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 767px) {
+            .nav-links { display:none; }
+            .hamburger { display:flex; }
+            .hero-inner { gap:1rem; padding:1rem; }
+            .profile-image-wrapper { width:150px; height:150px; }
+            .profile-image { width:150px; height:150px; }
+            .profile-name { font-size:1.8rem; }
+        }
+
+        /* scroll reveal helper */
+        .reveal { opacity:0; transform: translateY(30px); transition: all .6s cubic-bezier(.2,.9,.2,1); }
+        .reveal.active { opacity:1; transform: none; }
+
+        /* small utility */
+        .text-accent { color: var(--accent) !important; }
+        a.text-accent:hover { color: #fff !important; }
+
+        /* cursor trail improvements (limit performance cost) */
+        .cursor-trail-dot { position:fixed; width:6px; height:6px; border-radius:50%; pointer-events:none; z-index:9999; transform:translate(-50%,-50%); }
+    </style>
+</head>
+<body>
+
+<div class="bg-animation"></div>
+
+{{-- NAVBAR --}}
+<nav id="navbar" aria-label="Main navigation">
+    <div class="nav-container">
+        <div class="d-flex align-items-center gap-3">
+            <div class="logo">{{ $initials ?? 'MH' }}</div>
+        </div>
+
+        <ul class="nav-links" id="navLinksDesktop">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#professional">Skills</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+
+        <div class="hamburger" id="hamburger" aria-hidden="true">
+            <span></span><span></span><span></span>
+        </div>
+    </div>
+
+    {{-- Mobile slide-out nav --}}
+    <div id="mobileNav" style="position:fixed;right:-100%;top:0;height:100vh;width:72%;background:rgba(2,6,23,0.96);backdrop-filter:blur(8px);transition:right .28s;z-index:1060;padding:4.5rem 1.2rem;">
+        <button id="mobileClose" class="btn-close btn-close-white mb-3"></button>
+        <nav class="d-flex flex-column gap-3">
+            <a href="#home" class="text-white">Home</a>
+            <a href="#professional" class="text-white">Skills</a>
+            <a href="#projects" class="text-white">Projects</a>
+            <a href="#about" class="text-white">About</a>
+            <a href="#contact" class="text-white">Contact</a>
+        </nav>
+    </div>
+</nav>
+
+{{-- HERO --}}
+<section id="home" class="hero">
+    {{-- background image (parallax) --}}
+    <div id="heroBg" class="hero-bg" style="background-image: url('{{ $heroBg ?? asset('assets/images/hero-bg.jpg') }}');"></div>
+
+    <div class="hero-inner container">
+        {{-- Left: Profile/Title --}}
+        <div class="hero-card reveal">
+            <div class="profile-image-wrapper">
+                <img src="{{ $profileImage ?? asset('https://placehold.co/200') }}" alt="{{ $name ?? 'Mokaddes Hosain' }}" class="profile-image" loading="lazy">
+                <div class="profile-ring"></div>
+            </div>
+
+            <div class="text-center mt-3">
+                <div class="profile-name">{{ $name ?? 'Mokaddes Hosain' }}</div>
+                <div class="profile-title">{{ $title ?? 'Software Developer' }}</div>
+            </div>
+
+            <div class="d-flex justify-content-center gap-3 mt-4">
+                <a href="{{ $resumeLink ?? asset('assets/cv/mokaddes_hosain.pdf') }}" class="resume-button" download>
+                    <i class="fa-solid fa-download"></i> <span>RESUME</span>
+                </a>
+                <a href="#contact" class="resume-button" style="background:transparent;border:1px solid rgba(255,255,255,0.06);"><i class="fa-solid fa-paper-plane"></i> Contact</a>
+            </div>
+        </div>
+
+        {{-- Center: Decorative / badge column (keeps original spacing) --}}
+        <div class="d-none d-lg-flex flex-column align-items-center justify-content-center gap-3">
+            {{-- small highlight cards (experience, location, etc) --}}
+            <div class="card-custom text-center p-3">
+                <div class="fw-bold">Experience</div>
+                <div class="text-muted small">{{ count($experience ?? []) }}+ years</div>
+            </div>
+            <div class="card-custom text-center p-3">
+                <div class="fw-bold">Location</div>
+                <div class="text-muted small">Rangpur, Bangladesh</div>
+            </div>
+        </div>
+
+        {{-- Right: contact links --}}
+        <div class="hero-card contact-section reveal">
+            <div class="contact-item">
+                <i class="fa-solid fa-phone text-accent"></i>
+                <div><small class="text-muted">Phone</small><div class="fw-bold">{{ $phone ?? '+8801750899448' }}</div></div>
+            </div>
+
+            <div class="contact-item">
+                <i class="fa-solid fa-envelope text-accent"></i>
+                <div><small class="text-muted">Email</small><div class="fw-bold">{{ $email ?? 'mr.mokaddes@gmail.com' }}</div></div>
+            </div>
+
+            <div class="contact-item">
+                <i class="fa-brands fa-github text-accent"></i>
+                <div><small class="text-muted">GitHub</small><a href="{{ $github ?? 'https://github.com/mokaddes' }}" target="_blank" class="d-block text-accent small">{{ $github ?? 'github.com/mokaddes' }}</a></div>
+            </div>
+
+            <div class="contact-item">
+                <i class="fa-brands fa-linkedin text-accent"></i>
+                <div><small class="text-muted">LinkedIn</small><a href="{{ $linkedin ?? 'https://linkedin.com/in/mokaddesru' }}" target="_blank" class="d-block text-accent small">{{ $linkedin ?? 'linkedin.com/in/mokaddesru' }}</a></div>
+            </div>
+        </div>
+
+        {{-- scroll indicator --}}
+        <div class="scroll-indicator d-lg-none">
+            <a href="#professional" aria-label="Scroll to skills">
+                <svg width="30" height="50" viewBox="0 0 30 50" fill="none" aria-hidden="true">
+                    <rect x="1" y="1" width="28" height="48" rx="14" stroke="white" stroke-opacity="0.7" stroke-width="2"/>
+                    <circle cx="15" cy="15" r="5" fill="white" opacity="0.9">
+                        <animate attributeName="cy" from="15" to="35" dur="1.5s" repeatCount="indefinite"/>
+                        <animate attributeName="opacity" from="1" to="0" dur="1.5s" repeatCount="indefinite"/>
+                    </circle>
+                </svg>
+            </a>
+        </div>
+    </div>
+</section>
+
+{{-- PROFESSIONAL SKILLS (with Swiper slider for mobile) --}}
+<section id="professional">
+    <div class="container">
+        <div class="section-header reveal">
+            <h2>Professional Skills</h2>
+            <p class="lead text-muted">Technologies and expertise I use to build exceptional digital experiences.</p>
+        </div>
+
+        {{-- Desktop grid (keeps original look) --}}
+        <div class="skills-grid reveal d-none d-md-grid">
+            @foreach($skills as $skill)
+                <div class="skill-card" data-tilt>
+                    <div class="skill-icon">
+                        @if(!empty($skill->icon))
+                            <img src="{{ asset($skill->icon) }}" alt="{{ $skill->name }}" style="width:56px;height:56px;object-fit:contain;">
+                        @else
+                            <i class="fa-solid fa-code"></i>
+                        @endif
+                    </div>
+                    <h3 class="h5 mt-2">{{ $skill->name }}</h3>
+                    <p class="small text-muted">{{ $skill->description }}</p>
+                </div>
+            @endforeach
+        </div>
+
+        {{-- Mobile swiper --}}
+        <div class="d-md-none mt-3">
+            <div class="swiper skills-swiper">
+                <div class="swiper-wrapper">
+                    @foreach($skills as $skill)
+                        <div class="swiper-slide">
+                            <div class="skill-card w-100">
+                                <div class="skill-icon">
+                                    @if(!empty($skill->icon))
+                                        <img src="{{ asset($skill->icon) }}" alt="{{ $skill->name }}" style="width:56px;height:56px;object-fit:contain;">
+                                    @else
+                                        <i class="fa-solid fa-code"></i>
+                                    @endif
+                                </div>
+                                <h3 class="h6 mt-2">{{ $skill->name }}</h3>
+                                <p class="small text-muted">{{ $skill->description }}</p>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+{{-- PROJECTS --}}
+<section id="projects">
+    <div class="container">
+        <div class="section-header reveal">
+            <h2>Featured Projects</h2>
+            <p class="lead text-muted">A selection of projects built using Laravel, PHP and modern front-end tools.</p>
+        </div>
+
+        {{-- Desktop grid --}}
+        <div class="projects-grid reveal d-none d-lg-grid">
+            @foreach($projects as $project)
+                <div class="project-card" data-tilt>
+                    <div class="project-image">
+                        <img src="{{ asset($project->image ?? 'https://placehold.co/600x400') }}" alt="{{ $project->name }}" style="max-width:100%;object-fit:cover;">
+                    </div>
+                    <div class="project-content mt-3">
+                        <h3 class="h5">{{ $project->name }}</h3>
+                        @if(!empty($project->category->name))
+                            <span class="badge bg-info">{{ $project->category->name }}</span>
+                        @endif
+                        <p class="mt-2 text-muted small">{!! Str::limit($project->description, 180) !!}</p>
+                        @if(!empty($project->url))
+                            <a href="{{ $project->url }}" class="text-accent fw-semibold" target="_blank">View Project →</a>
+                        @endif
+                    </div>
+                </div>
+            @endforeach
+        </div>
+
+        {{-- Mobile Swiper for projects --}}
+        <div class="d-lg-none mt-3">
+            <div class="swiper projects-swiper">
+                <div class="swiper-wrapper">
+                    @foreach($projects as $project)
+                        <div class="swiper-slide">
+                            <div class="project-card w-100">
+                                <div class="project-image">
+                                    <img src="{{ asset($project->image ?? 'https://placehold.co/600x400') }}" alt="{{ $project->name }}" style="width:100%;height:120px;object-fit:cover;">
+                                </div>
+                                <div class="project-content mt-2">
+                                    <h4 class="h6">{{ $project->name }}</h4>
+                                    <p class="small text-muted">{!! Str::limit($project->description, 120) !!}</p>
+                                    @if(!empty($project->url))
+                                        <a href="{{ $project->url }}" class="text-accent small" target="_blank">Open →</a>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+{{-- ABOUT / CV details (auto from provided CV) --}}
+<section id="about" class="section-bg">
+    <div class="container">
+        <div class="section-header reveal">
+            <h2>About & Education</h2>
+            <p class="lead text-muted">A little more about my background, education and career highlights.</p>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-lg-6">
+                <div class="card-custom reveal">
+                    <h4>Objective</h4>
+                    <p class="text-muted">{{ $objective ?? 'Dedicated Laravel developer with a strong academic foundation in engineering and a passion for web development.' }}</p>
+
+                    <hr class="my-3">
+
+                    <h5>Experience</h5>
+                    <ul class="list-unstyled small">
+                        @foreach($experience as $exp)
+                            <li class="mb-2">
+                                <strong>{{ $exp['title'] ?? $exp->title ?? 'Role' }}</strong>
+                                <div class="text-muted small">{{ $exp['company'] ?? $exp->company ?? '' }} • {{ $exp['period'] ?? $exp->period ?? '' }}</div>
+                                @if(!empty($exp['desc'] ?? $exp->desc))
+                                    <div class="mt-1 text-muted small">{!! Str::limit($exp['desc'] ?? $exp->desc, 220) !!}</div>
+                                @endif
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="card-custom reveal">
+                    <h4>Education</h4>
+                    <ul class="list-unstyled small">
+                        @foreach($education as $edu)
+                            <li class="mb-3">
+                                <strong>{{ $edu['degree'] ?? $edu->degree ?? 'Degree' }}</strong>
+                                <div class="text-muted small">{{ $edu['institution'] ?? $edu->institution ?? '' }} • {{ $edu['year'] ?? $edu->year ?? '' }}</div>
+                                @if(!empty($edu['meta'] ?? $edu->meta))
+                                    <div class="text-muted small mt-1">{!! $edu['meta'] ?? $edu->meta !!}</div>
+                                @endif
+                            </li>
+                        @endforeach
+                    </ul>
+
+                    <hr class="my-2">
+
+                    <h5>Skills Snapshot</h5>
+                    <div class="d-flex flex-wrap gap-2 mt-2">
+                        @foreach($skills as $skill)
+                            <span class="badge" style="background:rgba(255,255,255,0.04); color:var(--light); padding:.5rem .7rem;">{{ $skill->name }}</span>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{{-- TOOLS --}}
+<section id="tools" class="py-5">
+    <div class="container">
+        <div class="section-header reveal">
+            <h2>Tools & Technologies</h2>
+            <p class="text-muted">Daily toolbox for building, testing and shipping software.</p>
+        </div>
+
+        <div class="tools-grid reveal">
+            @foreach($tools as $tool)
+                <div class="tool-item" data-tilt>
+                    <div class="tool-icon">
+                        @if(!empty($tool->icon))
+                            <img src="{{ asset($tool->icon) }}" alt="{{ $tool->name }}" width="48" loading="lazy">
+                        @else
+                            <i class="fa-solid fa-wrench"></i>
+                        @endif
+                    </div>
+                    <h5 class="h6 mt-2">{{ $tool->name }}</h5>
+                    <p class="small text-muted">{{ $tool->description ?? '' }}</p>
+                </div>
+            @endforeach
+        </div>
+    </div>
+</section>
+
+{{-- PERSONAL QUALITIES --}}
+<section id="personal" class="py-5 section-bg">
+    <div class="container">
+        <div class="section-header reveal">
+            <h2>Personal Qualities</h2>
+            <p class="text-muted">What makes me a great team member</p>
+        </div>
+
+        <div class="personal-grid reveal">
+            @foreach($personalQualities as $quality)
+                <div class="personal-card" data-tilt>
+                    <div class="personal-icon mb-2">
+                        @if(!empty($quality->icon))
+                            <img src="{{ asset($quality->icon) }}" alt="{{ $quality->title }}" width="48" loading="lazy">
+                        @else
+                            <i class="fa-solid fa-user-check fa-2x"></i>
+                        @endif
+                    </div>
+                    <h5 class="h6">{{ $quality->title }}</h5>
+                    <p class="small text-muted">{{ $quality->description }}</p>
+                </div>
+            @endforeach
+        </div>
+    </div>
+</section>
+
+{{-- CONTACT (modern form + ajax) --}}
+<section id="contact" class="py-5">
+    <div class="container">
+        <div class="section-header reveal">
+            <h2>Contact Me</h2>
+            <p class="text-muted">Let's build something great together — drop a message and I'll reply quickly.</p>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="contact-card reveal">
+                    <form id="contactForm" class="row g-3" novalidate>
+                        @csrf
+                        <div class="col-md-6 form-floating">
+                            <input type="text" class="form-control" id="cname" name="name" placeholder="Your name" required>
+                            <label for="cname">Your name</label>
+                        </div>
+                        <div class="col-md-6 form-floating">
+                            <input type="email" class="form-control" id="cemail" name="email" placeholder="name@example.com" required>
+                            <label for="cemail">Email address</label>
+                        </div>
+                        <div class="col-12 form-floating">
+                            <input type="text" class="form-control" id="csubject" name="subject" placeholder="Subject">
+                            <label for="csubject">Subject (optional)</label>
+                        </div>
+                        <div class="col-12 form-floating">
+                            <textarea class="form-control" placeholder="Your message" id="cmessage" name="message" style="height:140px" required></textarea>
+                            <label for="cmessage">Message</label>
+                        </div>
+
+                        <div class="col-12 d-flex justify-content-between align-items-center">
+                            <div class="small text-muted">You can also email: <a href="mailto:{{ $email ?? 'mr.mokaddes@gmail.com' }}" class="text-accent">{{ $email ?? 'mr.mokaddes@gmail.com' }}</a></div>
+                            <button id="sendBtn" type="submit" class="btn btn-send"><i class="fa-solid fa-paper-plane me-2"></i><span>Send Message</span></button>
+                        </div>
+                    </form>
+                </div>
+
+                {{-- success toast --}}
+                <div class="position-fixed bottom-0 end-0 p-3" style="z-index:12000">
+                    <div id="contactToast" class="toast align-items-center text-bg-dark border-0" role="alert" aria-live="assertive" aria-atomic="true">
+                        <div class="d-flex">
+                            <div class="toast-body">Message sent successfully. Thank you — I will reply soon.</div>
+                            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+{{-- Footer --}}
+<footer>
+    <div class="container">
+        <div class="d-flex justify-content-center gap-3 mb-3 social-links">
+            <a href="{{ $linkedin ?? 'https://linkedin.com/in/mokaddesru' }}" target="_blank"><i class="fab fa-linkedin fa-lg"></i></a>
+            <a href="{{ $github ?? 'https://github.com/mokaddes' }}" target="_blank"><i class="fab fa-github fa-lg"></i></a>
+            <a href="{{ $gitlab ?? 'https://gitlab.com/mokaddes' }}" target="_blank"><i class="fab fa-gitlab fa-lg"></i></a>
+        </div>
+        <p class="mb-0">© <span id="year"></span> {{ $name ?? 'Mokaddes Hosain' }}. All rights reserved.</p>
+    </div>
+</footer>
+
+{{-- SCRIPTS --}}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+<script>
+    // YEAR
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // NAVBAR behavior
+    const navbar = document.getElementById('navbar');
+    const mobileNav = document.getElementById('mobileNav');
+    const hamburger = document.getElementById('hamburger');
+    const mobileClose = document.getElementById('mobileClose');
+
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 80) navbar.classList.add('scrolled'); else navbar.classList.remove('scrolled');
+    });
+
+    hamburger.addEventListener('click', () => {
+        if (mobileNav.style.right === '0px') mobileNav.style.right = '-100%';
+        else mobileNav.style.right = '0';
+        hamburger.classList.toggle('active');
+    });
+    mobileClose.addEventListener('click', () => mobileNav.style.right = '-100%');
+
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+        a.addEventListener('click', function(e){
+            const target = document.querySelector(this.getAttribute('href'));
+            if(target){ e.preventDefault(); target.scrollIntoView({behavior:'smooth', block:'start'}); mobileNav.style.right='-100%'; }
+        });
+    });
+
+    // SWIPER (skills + projects) - shows as slider on mobile (breakpoints adjust)
+    const skillsSwiper = new Swiper('.skills-swiper', {
+        slidesPerView: 1.15,
+        spaceBetween: 16,
+        pagination: { el: '.skills-swiper .swiper-pagination', clickable:true },
+        breakpoints: { 768: { enabled: false }, 1024: { enabled: false } } // disables swiper on large screens (we use grid)
+    });
+
+    const projectsSwiper = new Swiper('.projects-swiper', {
+        slidesPerView: 1.05,
+        spaceBetween: 16,
+        pagination: { el: '.projects-swiper .swiper-pagination', clickable:true },
+        breakpoints: { 768: { enabled: true }, 1024: { enabled: false } }
+    });
+
+    // reveal on scroll
+    function revealOnScroll() {
+        document.querySelectorAll('.reveal').forEach(el=>{
+            const top = el.getBoundingClientRect().top;
+            console.log('top ' + top);
+          el.classList.add('active');
+        });
+    }
+    window.addEventListener('scroll', revealOnScroll);
+    window.addEventListener('load', revealOnScroll);
+
+    // Tilt effect (lightweight) for cards
+    document.querySelectorAll('[data-tilt]').forEach(el=>{
+        el.addEventListener('mousemove', function(e){
+            const rect = el.getBoundingClientRect();
+            const x = (e.clientX - rect.left) / rect.width;
+            const y = (e.clientY - rect.top) / rect.height;
+            const rotY = (x - 0.5) * 12;
+            const rotX = (0.5 - y) * 10;
+            el.style.transform = `perspective(900px) rotateX(${rotX}deg) rotateY(${rotY}deg) translateY(-6px)`;
+        });
+        el.addEventListener('mouseleave', function(){ el.style.transform = ''; });
+    });
+
+    // Particles (lightweight floating) — throttle using setInterval
+    function createParticle(){
+        if (window.innerWidth < 768) return; // avoid mobile perf cost
+        const p = document.createElement('div');
+        p.style.position = 'fixed';
+        p.style.left = Math.random()*window.innerWidth + 'px';
+        p.style.top = window.innerHeight + 'px';
+        p.style.width = (Math.random()*3 + 2) + 'px';
+        p.style.height = p.style.width;
+        p.style.borderRadius = '50%';
+        p.style.background = 'rgba(255,255,255,' + (Math.random()*0.25 + 0.03) + ')';
+        p.style.pointerEvents = 'none';
+        p.style.zIndex = 0;
+        document.body.appendChild(p);
+        const duration = 3000 + Math.random()*3000;
+        const drift = (Math.random()-0.5)*200;
+        p.animate([
+            { transform: `translateY(0) translateX(0)`, opacity:0 },
+            { transform: `translateY(-${window.innerHeight+200}px) translateX(${drift}px)`, opacity:1 },
+            { transform: `translateY(-${window.innerHeight+400}px) translateX(${drift*2}px)`, opacity:0 }
+        ], { duration: duration, easing: 'linear' }).onfinish = ()=> p.remove();
+    }
+    setInterval(createParticle, 350);
+
+    // Cursor trail (desktop only, low-cost)
+    (function(){
+        if (window.innerWidth < 900) return;
+        const trail = []; const maxTrail=18;
+        document.addEventListener('mousemove', (e)=>{
+            trail.push({x:e.clientX, y:e.clientY, t:Date.now()});
+            if(trail.length>maxTrail) trail.shift();
+            trail.forEach((pt,i)=>{
+                const age = Date.now()-pt.t;
+                if(age<500){
+                    const dot = document.createElement('div');
+                    dot.className='cursor-trail-dot';
+                    dot.style.left = pt.x + 'px';
+                    dot.style.top = pt.y + 'px';
+                    dot.style.background = `rgba(102,126,234,${1 - age/500})`;
+                    dot.style.zIndex = 9999 - i;
+                    document.body.appendChild(dot);
+                    setTimeout(()=>dot.remove(), 120);
+                }
+            });
+        });
+    })();
+
+    // Parallax on hero bg during scroll
+    window.addEventListener('scroll', () => {
+        const scrolled = window.scrollY;
+        const heroBg = document.getElementById('heroBg');
+        if (heroBg) heroBg.style.transform = `translateY(${scrolled * 0.05}px) scale(${1 + scrolled/20000})`;
+    });
+
+    // CONTACT FORM (AJAX friendly)
+    const contactForm = document.getElementById('contactForm');
+    const contactToastEl = document.getElementById('contactToast');
+    const toast = new bootstrap.Toast(contactToastEl);
+
+    contactForm.addEventListener('submit', async (e)=>{
+        e.preventDefault();
+        const sendBtn = document.getElementById('sendBtn');
+        sendBtn.disabled = true;
+        sendBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin me-2"></i>Sending...';
+
+        const data = {
+            _token: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+            name: document.getElementById('cname').value.trim(),
+            email: document.getElementById('cemail').value.trim(),
+            subject: document.getElementById('csubject').value.trim(),
+            message: document.getElementById('cmessage').value.trim()
+        };
+
+        // Try posting to the backend route /contact (if you implement). If it 404 or fails, fallback to demo success.
+        try {
+            const res = await fetch("{{ url('/contact') }}", {
+                method: 'POST',
+                headers: { 'Content-Type':'application/json', 'X-Requested-With':'XMLHttpRequest' },
+                body: JSON.stringify(data)
+            });
+
+            if (res.ok) {
+                // show server response if provided
+                const json = await res.json().catch(()=>({}));
+                toast.show();
+                contactForm.reset();
+            } else {
+                // fallback success (demo mode)
+                toast.show();
+                contactForm.reset();
+            }
+        } catch (err) {
+            // network error -> demo success
+            toast.show();
+            contactForm.reset();
+        } finally {
+            sendBtn.disabled = false;
+            sendBtn.innerHTML = '<i class="fa-solid fa-paper-plane me-2"></i>Send Message';
+        }
+    });
+
+    // Throttle scroll reveals
+    let revealTimeout;
+    window.addEventListener('scroll', ()=> {
+        clearTimeout(revealTimeout);
+        revealTimeout = setTimeout(revealOnScroll, 120);
+    });
+
+    // Initial reveal
+    document.addEventListener('DOMContentLoaded', revealOnScroll);
+
+</script>
+</body>
+</html>

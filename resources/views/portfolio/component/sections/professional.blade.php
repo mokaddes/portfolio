@@ -1,24 +1,16 @@
-
-<section id="professional">
+<section id="professional" class="section-bg">
     <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <div class="section-header">
-                    <h2>Professional Skills</h2>
-                    <h3>Knowledge and technologies I use to create websites and applications</h3>
-                </div>
-            </div>
+        <div class="section-header reveal">
+            <h2>Professional Skills</h2>
+            <p>Technologies and expertise I use to build exceptional digital experiences</p>
         </div>
-
-        <div class="row text-center">
-            <div class="col-12 col-sm-12 col-md-6 col-lg-3">
-                <div class="card-body">
-                    <div class="fa-stack fa-1x mb-3">
-                        <img src="{{ asset('assets/icons/php.svg') }}" alt="PHP">
-                    </div>
-                    <h3 class="service-heading">PHP</h3>
-                    <p class="text-muted">I use PHP&nbsp;7 language to develop web applications</p>
+        <div class="skills-grid">
+            <div class="skill-card reveal">
+                <div class="skill-icon">
+                    <img src="{{ asset('assets/icons/php.svg') }}" alt="PHP">
                 </div>
+                <h3>PHP</h3>
+                <p>I use PHP&nbsp;7 language to develop web applications</p>
             </div>
             <div class="col-12 col-sm-12 col-md-6 col-lg-3">
                 <div class="card-body">
@@ -113,7 +105,7 @@
                     <p class="text-muted">I use relational databases MySQL and MariaDB to store data</p>
                 </div>
             </div>
-            {{--<div class="col-12 col-sm-12 col-md-6 col-lg-3">
+            <div class="col-12 col-sm-12 col-md-6 col-lg-3">
                 <div class="card-body">
                     <div class="fa-stack fa-1x mb-3">
                         <img src="{{ asset('assets/icons/apache.svg') }}" alt="Apache Server">
@@ -121,8 +113,8 @@
                     <h3 class="service-heading">Apache Server</h3>
                     <p class="text-muted">I use Apache server to serve sites</p>
                 </div>
-            </div>--}}
-            {{-- Vue js --}}
+            </div>
+
             <div class="col-12 col-sm-12 col-md-6 col-lg-3">
                 <div class="card-body">
                     <div class="fa-stack fa-1x mb-3">
@@ -145,3 +137,5 @@
         </div>
     </div>
 </section>
+
+
