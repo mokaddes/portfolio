@@ -22,6 +22,14 @@
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ asset('assets/css/temp3.css') }}">
+    <style>
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.6)), url("{{ asset('images/coding2.jpg') }}") no-repeat center center;
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+    </style>
 </head>
 <body>
 <div class="bg-animation"></div>
