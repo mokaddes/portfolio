@@ -42,9 +42,7 @@
 
 <body id="page-top">
 
-@if(Route::currentRouteName() == 'frontend.index')
-    @include('layouts.top_nav')
-    @else
+
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
@@ -100,13 +98,11 @@
             </div>
         </nav>
     </div>
-@endif
+
 
 @yield('content')
 
-@if(Route::currentRouteName() == 'frontend.index')
-    @include('layouts.footer')
-@endif
+
 
 {{-- whatsapp icon --}}
 <div class="relative">

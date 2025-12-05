@@ -39,6 +39,7 @@ class ContactMailNotification extends Notification
         return (new MailMessage)
             ->subject('Contact Form Submission')
             ->line('You have received a new contact form submission.')
+            ->line('subject: ' . $this->data['subject'])
             ->line('Name: ' . $this->data['name'])
             ->line('Email: ' . $this->data['email'])
             ->line('Message: ' . $this->data['message'])

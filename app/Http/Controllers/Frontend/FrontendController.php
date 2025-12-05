@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Education;
 use App\Models\PersonalQuality;
 use App\Models\Project;
 use App\Models\Skill;
@@ -10,6 +11,7 @@ use App\Models\Tool;
 use App\Models\VisitorLog;
 use App\Notifications\ContactMailNotification;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Notification;
@@ -47,12 +49,12 @@ class FrontendController extends Controller
             Log::alert($e->getMessage());
         }
 
-        $skills = Skill::all();
-        $projects = Project::where('status', 1)->get();
-        $tools = Tool::orderBy('order')->get();
-        $personalQualities = PersonalQuality::all();
+        $skills = Skill::where('status', 1)->get();
+        $projects = Project::with('galleries')->where('status', 1)->get();
+        $tools = Tool::orderBy('order')->where('status', 1)->get();;
+        $personalQualities = PersonalQuality::where('status', 1)->get();
+        $education = Education::where('status', 1)->get();
         $objective = '';
-        $education = [];
         $experience = [];
         return view('portfolio.index3',
             [
@@ -63,10 +65,49 @@ class FrontendController extends Controller
                 'tools' => $tools,
                 'personalQualities' => $personalQualities,
                 'objective' => $objective, // string from CV
-                'education' => $education, // array of [degree, institution, year, meta]
+                'educations' => $education, // array of [degree, institution, year, meta]
                 'experience' => $experience, // array of [title, company, period, location, desc]
             ]
         );
 
     }
+
+    public function show($id)
+    {
+        try {
+            $project = Project::with(['galleries', 'category'])
+                ->where('status', 1)
+                ->findOrFail($id);
+
+            return response()->json([
+                'success' => true,
+                'data' => [
+                    'id' => $project->id,
+                    'name' => $project->name,
+                    'slug' => $project->slug,
+                    'category' => $project->category->name ?? 'Uncategorized',
+                    'short_description' => $project->short_description,
+                    'long_description' => $project->long_description,
+                    'url' => $project->url,
+                    'image' => asset($project->image),
+                    'features' => json_decode($project->features, true) ?? [],
+                    'technologies' => json_decode($project->technologies, true) ?? [],
+                    'skills_used' => json_decode($project->skills_used, true) ?? [],
+                    'galleries' => $project->galleries->map(function($gallery) {
+                        return [
+                            'id' => $gallery->id,
+                            'image' => asset($gallery->image),
+                            'caption' => $gallery->caption,
+                        ];
+                    }),
+                ]
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Project not found'
+            ], 404);
+        }
+    }
+
 }

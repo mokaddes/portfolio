@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [FrontendController::class, 'index'])->name('frontend.index');
+Route::get('/projects/{id}', [FrontendController::class, 'show'])->name('projects.show');
 
 Route::get('/image', [ImageProcessingController::class, 'index']);
 Route::post('/image/store', [ImageProcessingController::class, 'store'])->name('image.store');

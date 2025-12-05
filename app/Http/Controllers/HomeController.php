@@ -22,10 +22,10 @@ class HomeController extends Controller
 
     public function contact(Request $request)
     {
-        $blockIps = VisitorLog::where('is_blocked', '1')->pluck('ip_address')->toArray();
+       /* $blockIps = VisitorLog::where('is_blocked', '1')->pluck('ip_address')->toArray();
         if (in_array($request->ip(), $blockIps)) {
             abort(403, 'You are blocked from sending message.');
-        }
+        }*/
         $valid = Validator::make($request->all(), [
             'email' => 'required|email',
             'message' => 'required'
@@ -39,6 +39,7 @@ class HomeController extends Controller
             return redirect()->back()->with($session);
         }
         $data = [
+            'subject' => $request->subject,
             'name' => $request->name,
             'email' => $request->email,
             'message' => $request->message,
@@ -51,7 +52,10 @@ class HomeController extends Controller
             'alert-type' => 'success'
         ];
 
-        return redirect()->back()->with($session);
+        return response()->json([
+            'success' => true,
+            'message' => 'Thank you for your message. We will get back to you soon.'
+        ]);
     }
 
     public function visitors()
