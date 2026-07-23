@@ -6,7 +6,7 @@
             <!-- Profile Section -->
             <div class="profile-section">
                 <div class="profile-image-wrapper">
-                    <img src="{{ asset('images/mkds.jpg') }}" alt="Mokaddes Hosain" class="profile-image">
+                    <img src="{{ asset('images/mkds.png') }}" alt="Mokaddes Hosain" class="profile-image">
                     <div class="profile-ring"></div>
                 </div>
                 <h1 class="profile-name">Mokaddes Hosain</h1>

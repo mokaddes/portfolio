@@ -79,6 +79,31 @@ class SkillsTableSeeder extends Seeder
                 'icon' => 'assets/icons/sonarqube-1.svg',
                 'description' => 'I use SonarQube to analyze the quality of code',
             ],
+            [
+                'name' => 'OpenAI API',
+                'icon' => 'assets/icons/chatgpt.svg',
+                'description' => 'I integrate OpenAI-powered features for assistants, content generation, and automation',
+            ],
+            [
+                'name' => 'Prompt Engineering',
+                'icon' => 'assets/icons/terminal.svg',
+                'description' => 'I design prompts and workflows that produce reliable AI-assisted outputs',
+            ],
+            [
+                'name' => 'AI Automation',
+                'icon' => 'assets/icons/crud.svg',
+                'description' => 'I build AI-supported workflows that reduce manual work and accelerate delivery',
+            ],
+            [
+                'name' => 'RAG Systems',
+                'icon' => 'assets/icons/orm.svg',
+                'description' => 'I work with retrieval-augmented generation patterns for smarter search and answers',
+            ],
+            [
+                'name' => 'Vector Database',
+                'icon' => 'assets/icons/database.svg',
+                'description' => 'I use vector storage patterns for semantic search and AI knowledge retrieval',
+            ],
         ]);
     }
 }

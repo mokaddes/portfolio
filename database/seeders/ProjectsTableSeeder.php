@@ -2,31 +2,28 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class ProjectsTableSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
         $projects = [
-            [
+            $this->project([
                 'name' => 'Afflispark',
-                'slug' => Str::slug('Afflispark'),
                 'category_id' => 2,
                 'short_description' => 'Affiliate marketing platform with multi-tier vendor & affiliate commissions.',
                 'long_description' => 'AffliSpark is a full-featured affiliate marketing platform where vendors can upload products and affiliates can promote them to earn commissions. The system supports multi-tier affiliate structures, allowing referrals to earn from standard affiliates, vendors, and super affiliates. Built with Laravel, it includes instant PayPal & Stripe split payouts, multi-language support, multi-currency handling, and advanced tracking for clicks, referrals, and product conversions.',
+                'problem' => 'The client needed a scalable affiliate marketplace where vendors, affiliates, and super affiliates could operate under a single platform with automated commission payouts and real-time tracking — without manual spreadsheet reconciliation.',
+                'solution' => 'I designed a multi-tier commission engine with role-based dashboards, automated split payouts via PayPal and Stripe, and a tracking system that captures clicks, referrals, and conversions at every level of the hierarchy.',
+                'my_contribution' => 'I architected the backend commission engine, referral tracking logic, payout integration, dashboard analytics, and full release pipeline.',
                 'url' => 'https://affilspark.com/',
                 'image' => 'assets/images/afflispark.png',
                 'order' => 0,
                 'is_featured' => true,
-                'status' => 1,
-                'features' => json_encode([
+                'features' => [
                     'Multi-vendor affiliate marketplace',
                     'Multi-tier affiliate referral system',
                     'Instant PayPal & Stripe split payouts',
@@ -35,260 +32,386 @@ class ProjectsTableSeeder extends Seeder
                     'Vendor product upload & commission configuration',
                     'Affiliate dashboard with earning analytics',
                     'Super vendor & super affiliate commission hierarchy',
-                ]),
-                'technologies' => json_encode(['Laravel', 'MySQL', 'Bootstrap', 'jQuery', 'Stripe API', 'PayPal Payouts', 'REST API']),
-                'skills_used' => json_encode([
+                ],
+                'technologies' => ['Laravel', 'MySQL', 'Bootstrap', 'jQuery', 'Stripe API', 'PayPal Payouts', 'REST API'],
+                'skills_used' => [
                     'Payment gateway split payout integration',
                     'Advanced tracking system design',
                     'Multi-tier commission logic development',
                     'SaaS architecture & role-based access control',
-                    'Multi-language and multi-currency implementation'
-                ]),
-            ],
-            [
+                    'Multi-language and multi-currency implementation',
+                ],
+                'screenshots' => [
+                    'assets/images/afflispark.png',
+                    'assets/images/gallery/project/Screenshot_1.jpg',
+                ],
+            ]),
+            $this->project([
                 'name' => 'Proxima Digital',
-                'slug' => Str::slug('Proxima Digital'),
                 'category_id' => 1,
                 'short_description' => 'All-in-one IT solution platform built with Laravel, Vue.js, and TailwindCSS.',
                 'long_description' => 'Proxima Digital is a comprehensive IT solutions platform designed for startups and enterprises. Built using Laravel and Vue.js, it offers seamless performance, real-time analytics, and a responsive interface powered by TailwindCSS. The platform streamlines service management, client interaction, and workflow automation for digital businesses.',
+                'problem' => 'The client needed a unified system to manage services, client projects, and internal operations instead of juggling multiple disconnected tools.',
+                'solution' => 'I built a modular Laravel + Vue.js application with structured management screens, real-time reporting, and reusable component architecture.',
+                'my_contribution' => 'I delivered the full-stack implementation, dashboard logic, API-ready structure, and responsive frontend.',
                 'url' => 'https://proxima.mokaddes.com/',
                 'image' => 'assets/images/proxima.png',
                 'order' => 1,
                 'is_featured' => true,
-                'status' => 1,
-                'features' => json_encode([
+                'features' => [
                     'Dynamic admin dashboard with role-based access',
                     'Project and client management system',
                     'Data visualization with charts and real-time updates',
                     'Integrated user authentication and notifications',
                     'API-ready architecture for mobile extension',
-                ]),
-                'technologies' => json_encode(['Laravel', 'Vue.js', 'TailwindCSS', 'MySQL', 'REST API', 'Pusher']),
-                'skills_used' => json_encode(['Full-stack development', 'API design', 'Frontend integration', 'UX optimization']),
-            ],
-            [
+                ],
+                'technologies' => ['Laravel', 'Vue.js', 'TailwindCSS', 'MySQL', 'REST API', 'Pusher'],
+                'skills_used' => [
+                    'Full-stack development',
+                    'API design',
+                    'Frontend integration',
+                    'UX optimization',
+                ],
+                'screenshots' => [
+                    'assets/images/proxima.png',
+                    'assets/images/gallery/project/proxima_1.jpg',
+                ],
+            ]),
+            $this->project([
                 'name' => 'Vinitycard',
-                'slug' => Str::slug('Vinitycard'),
                 'category_id' => 5,
                 'short_description' => 'Smart NFC business card platform for professionals and teams.',
                 'long_description' => 'Vinitycard allows professionals to instantly share contact details using NFC or QR. The platform is built with Laravel and Livewire, providing analytics, contact sync, and custom design options for digital cards. It includes a clean admin dashboard for users to manage cards and track engagement.',
+                'problem' => 'Professionals needed a modern way to share contact information and track engagement without relying on printed business cards.',
+                'solution' => 'I created a digital card platform with NFC and QR sharing, real-time analytics, and a user-friendly dashboard for card management.',
+                'my_contribution' => 'I delivered the Laravel backend, Livewire interactive components, analytics dashboard, and contact-sharing workflow.',
                 'url' => 'https://vinitycard.com/',
                 'image' => 'assets/images/vinitycard.png',
                 'order' => 2,
                 'is_featured' => true,
-                'status' => 1,
-                'features' => json_encode([
+                'features' => [
                     'Instant contact sharing via NFC/QR',
                     'Customizable digital card templates',
                     'Profile analytics and visitor tracking',
                     'Team management and bulk card generation',
-                ]),
-                'technologies' => json_encode(['Laravel', 'Livewire', 'Bootstrap', 'MySQL', 'JavaScript', 'NFC Integration']),
-                'skills_used' => json_encode(['Laravel backend development', 'Livewire integration', 'UI development', 'Data analytics']),
-            ],
-            [
+                ],
+                'technologies' => ['Laravel', 'Livewire', 'Bootstrap', 'MySQL', 'JavaScript', 'NFC Integration'],
+                'skills_used' => [
+                    'Laravel backend development',
+                    'Livewire integration',
+                    'UI development',
+                    'Data analytics',
+                ],
+                'screenshots' => [
+                    'assets/images/vinitycard.png',
+                    'assets/images/gallery/project/vinitycard_1.jpg',
+                    'assets/images/gallery/project/vinitycard_2.jpg',
+                ],
+            ]),
+            $this->project([
                 'name' => 'MH ZONE',
-                'slug' => Str::slug('MH ZONE'),
                 'category_id' => 2,
                 'short_description' => 'Multi-vendor eCommerce platform with dual buyer-seller mode.',
                 'long_description' => 'MH ZONE is a next-generation eCommerce platform enabling users to operate as both buyer and seller. Built with Laravel and MySQL, it features inventory management, secure payment gateways, and vendor dashboards with analytics for smarter business decisions.',
+                'problem' => 'The client wanted a marketplace where users could seamlessly switch between buying and selling from a single account while keeping orders and inventory organized.',
+                'solution' => 'I developed dual-role authentication flows, vendor store management, inventory tracking, and integrated payment processing.',
+                'my_contribution' => 'I handled backend business rules, vendor dashboard flows, payment gateway setup, and admin analytics views.',
                 'url' => 'https://mhzone.mokaddes.com/',
                 'image' => 'assets/images/mhzone.png',
                 'order' => 3,
                 'is_featured' => true,
-                'status' => 1,
-                'features' => json_encode([
+                'features' => [
                     'Dual user mode (Buyer/Seller)',
                     'Vendor store management system',
                     'Product inventory and order tracking',
                     'Integrated Stripe & PayPal payments',
                     'Sales analytics and reports dashboard',
-                ]),
-                'technologies' => json_encode(['Laravel', 'Bootstrap', 'MySQL', 'jQuery', 'Stripe API', 'PayPal SDK']),
-                'skills_used' => json_encode(['Backend API development', 'Payment integration', 'Admin dashboard', 'Data visualization']),
-            ],
-            [
+                ],
+                'technologies' => ['Laravel', 'Bootstrap', 'MySQL', 'jQuery', 'Stripe API', 'PayPal SDK'],
+                'skills_used' => [
+                    'Backend API development',
+                    'Payment integration',
+                    'Admin dashboard',
+                    'Data visualization',
+                ],
+                'screenshots' => [
+                    'assets/images/mhzone.png',
+                ],
+            ]),
+            $this->project([
                 'name' => 'Real Time Chat App',
-                'slug' => Str::slug('Real Time Chat App'),
                 'category_id' => 1,
                 'short_description' => 'Instant messaging app built with Laravel, Vue.js & Pusher.',
                 'long_description' => 'This real-time chat app allows users to communicate instantly via private and group chat rooms. Built with Laravel, Vue.js, and Pusher, it includes typing indicators, message read receipts, and notifications for a seamless communication experience.',
+                'problem' => 'Users needed instant, real-time communication without page refreshes or delayed message delivery.',
+                'solution' => 'I built a real-time messaging system with Pusher event broadcasting, conversation rooms, and responsive UI states.',
+                'my_contribution' => 'I implemented the real-time messaging flow, Vue.js frontend reactivity, notification handling, and backend channel architecture.',
                 'url' => 'https://chat.mokaddes.com/',
                 'image' => 'assets/images/chat.png',
                 'order' => 4,
-                'is_featured' => false,
-                'status' => 1,
-                'features' => json_encode([
+                'features' => [
                     'Real-time messaging with chat rooms',
                     'Typing indicators & read receipts',
                     'Private and group chats',
                     'Pusher-based notifications',
-                ]),
-                'technologies' => json_encode(['Laravel', 'Vue.js', 'Pusher', 'TailwindCSS', 'MySQL']),
-                'skills_used' => json_encode(['Real-time app development', 'Frontend integration', 'Backend architecture']),
-            ],
-            [
+                ],
+                'technologies' => ['Laravel', 'Vue.js', 'Pusher', 'TailwindCSS', 'MySQL'],
+                'skills_used' => [
+                    'Real-time app development',
+                    'Frontend integration',
+                    'Backend architecture',
+                ],
+                'screenshots' => [
+                    'assets/images/chat.png',
+                    'assets/images/gallery/project/chat_1.jpg',
+                    'assets/images/gallery/project/chat_2.jpg',
+                ],
+            ]),
+            $this->project([
                 'name' => 'BRP',
-                'slug' => Str::slug('BRP'),
                 'category_id' => 2,
                 'short_description' => 'Automotive e-commerce for tuning, racing, and performance parts.',
                 'long_description' => 'BRP is an e-commerce solution for motorsport enthusiasts and professional tuners. It offers a catalog for tuning, racing, drifting, and performance upgrades with inventory management, advanced filters, and smooth checkout features.',
+                'problem' => 'The business needed a specialized product catalog for automotive performance parts with a streamlined browsing and checkout experience.',
+                'solution' => 'I created a focused commerce layout with product catalog controls, category-based filtering, and a simplified checkout flow.',
+                'my_contribution' => 'I handled backend e-commerce structure, UI implementation, and payment gateway integration.',
                 'url' => 'https://www.brp.online',
                 'image' => 'assets/images/brp.gif',
                 'order' => 5,
-                'is_featured' => false,
-                'status' => 1,
-                'features' => json_encode([
+                'features' => [
                     'Advanced product catalog for motorsports',
                     'Inventory management and filtering',
                     'Secure checkout with multiple payment options',
                     'Responsive user interface for buyers',
-                ]),
-                'technologies' => json_encode(['Laravel', 'Bootstrap', 'MySQL', 'jQuery', 'Stripe API']),
-                'skills_used' => json_encode(['Backend e-commerce setup', 'UI design', 'Payment integration']),
-            ],
-            [
+                ],
+                'technologies' => ['Laravel', 'Bootstrap', 'MySQL', 'jQuery', 'Stripe API'],
+                'skills_used' => [
+                    'Backend e-commerce setup',
+                    'UI design',
+                    'Payment integration',
+                ],
+                'screenshots' => [
+                    'assets/images/brp.gif',
+                ],
+            ]),
+            $this->project([
                 'name' => 'Franchises Available Now',
-                'slug' => Str::slug('Franchises Available Now'),
                 'category_id' => 3,
                 'short_description' => 'Discover and evaluate franchise opportunities easily.',
                 'long_description' => 'Franchises Available Now helps entrepreneurs explore franchise options filtered by investment, location, and category. Built with Laravel, it provides detailed insights, contact forms, and analytics for decision-making.',
+                'problem' => 'Potential franchise buyers needed a centralized platform to browse, filter, and compare opportunities without scattered information.',
+                'solution' => 'I built a searchable franchise directory with structured detail pages, inquiry management, and comparison-ready filters.',
+                'my_contribution' => 'I implemented filtering logic, page architecture, and frontend usability enhancements.',
                 'url' => 'https://franchisesavailablenow.com/',
                 'image' => 'assets/images/franchises.png',
                 'order' => 6,
-                'is_featured' => false,
-                'status' => 1,
-                'features' => json_encode([
+                'features' => [
                     'Search & filter franchises by interest and budget',
                     'Detailed franchise information',
                     'Contact and inquiry forms',
                     'Mobile-friendly interface',
-                ]),
-                'technologies' => json_encode(['Laravel', 'Bootstrap', 'MySQL', 'jQuery']),
-                'skills_used' => json_encode(['Backend filtering', 'Frontend UX', 'Data management']),
-            ],
-            [
+                ],
+                'technologies' => ['Laravel', 'Bootstrap', 'MySQL', 'jQuery'],
+                'skills_used' => [
+                    'Backend filtering',
+                    'Frontend UX',
+                    'Data management',
+                ],
+                'screenshots' => [
+                    'assets/images/franchises.png',
+                    'assets/images/gallery/project/franchises-available-now_1.jpg',
+                    'assets/images/gallery/project/franchises-available-now_2.jpg',
+                ],
+            ]),
+            $this->project([
                 'name' => 'Zentune',
-                'slug' => Str::slug('Zentune'),
                 'category_id' => 3,
                 'short_description' => 'Vehicle tuning platform with Laravel REST API integration.',
                 'long_description' => 'Zentune develops advanced tuning files for vehicles. Utilizing Laravel REST API, it ensures smooth app integration, real-time updates, and efficient file management for performance enhancement.',
+                'problem' => 'The client needed a scalable backend to manage tuning files and support mobile app integration with real-time data synchronization.',
+                'solution' => 'I created an API-first Laravel architecture for tuning file management, update workflows, and seamless mobile integration.',
+                'my_contribution' => 'I designed and built the REST API, tuning file logic, and integration-oriented backend architecture.',
                 'url' => 'https://www.zentune.com',
                 'image' => 'assets/images/zentune.png',
                 'order' => 7,
-                'is_featured' => false,
-                'status' => 1,
-                'features' => json_encode([
+                'features' => [
                     'Vehicle performance tuning files',
                     'REST API for app integration',
                     'Real-time updates and notifications',
                     'Stage and custom tuning options',
-                ]),
-                'technologies' => json_encode(['Laravel', 'REST API', 'MySQL', 'Vue.js']),
-                'skills_used' => json_encode(['API development', 'Backend tuning logic', 'Integration with mobile apps']),
-            ],
-            [
+                ],
+                'technologies' => ['Laravel', 'REST API', 'MySQL', 'Vue.js'],
+                'skills_used' => [
+                    'API development',
+                    'Backend tuning logic',
+                    'Integration with mobile apps',
+                ],
+                'screenshots' => [
+                    'assets/images/zentune.png',
+                ],
+            ]),
+            $this->project([
                 'name' => 'Everisamting',
-                'slug' => Str::slug('Everisamting'),
                 'category_id' => 3,
                 'short_description' => 'Classified & event management platform with Laravel API.',
                 'long_description' => 'Everisamting is a classifieds platform combining event management. Built with Laravel REST API, it supports posting, browsing, and event ticketing with mobile app integration.',
+                'problem' => 'The team needed a single platform to manage classified listings and event workflows instead of maintaining separate systems.',
+                'solution' => 'I built a Laravel backend with listing management, event ticketing, and API-first architecture for mobile clients.',
+                'my_contribution' => 'I delivered the API integration layer, backend development, and interface improvements.',
                 'url' => 'https://everisamting.com/',
                 'image' => 'assets/images/everisamting.png',
                 'order' => 8,
-                'is_featured' => false,
-                'status' => 1,
-                'features' => json_encode([
+                'features' => [
                     'Classified ads posting and browsing',
                     'Event listing and ticketing',
                     'REST API for mobile app',
                     'User-friendly dashboard',
-                ]),
-                'technologies' => json_encode(['Laravel', 'REST API', 'Bootstrap', 'MySQL']),
-                'skills_used' => json_encode(['API integration', 'Backend development', 'UI enhancements']),
-            ],
-            [
+                ],
+                'technologies' => ['Laravel', 'REST API', 'Bootstrap', 'MySQL'],
+                'skills_used' => [
+                    'API integration',
+                    'Backend development',
+                    'UI enhancements',
+                ],
+                'screenshots' => [
+                    'assets/images/everisamting.png',
+                ],
+            ]),
+            $this->project([
                 'name' => 'Service Provider',
-                'slug' => Str::slug('Service Provider'),
                 'category_id' => 5,
                 'short_description' => 'Marketplace connecting users with service providers efficiently.',
                 'long_description' => 'Service Provider platform enables users to find and book trusted service providers. Built with Laravel, it features service listings, reviews, booking management, and notifications for seamless user experience.',
+                'problem' => 'The business needed a trusted marketplace with provider profiles, customer reviews, and booking flows consolidated in one platform.',
+                'solution' => 'I designed a searchable service directory with booking workflows, review management, and automated notification triggers.',
+                'my_contribution' => 'I implemented backend booking logic, service management flows, and frontend UI support.',
                 'url' => 'https://serviceprovider.ae/',
                 'image' => 'assets/images/sp.png',
                 'order' => 9,
-                'is_featured' => false,
-                'status' => 1,
-                'features' => json_encode([
+                'features' => [
                     'Service discovery and booking',
                     'Provider reviews and ratings',
                     'Real-time notifications',
                     'User-friendly dashboard for service providers',
-                ]),
-                'technologies' => json_encode(['Laravel', 'Bootstrap', 'MySQL', 'jQuery']),
-                'skills_used' => json_encode(['Backend API', 'Service management', 'UI/UX']),
-            ],
-            [
+                ],
+                'technologies' => ['Laravel', 'Bootstrap', 'MySQL', 'jQuery'],
+                'skills_used' => [
+                    'Backend API',
+                    'Service management',
+                    'UI/UX',
+                ],
+                'screenshots' => [
+                    'assets/images/sp.png',
+                ],
+            ]),
+            $this->project([
                 'name' => 'Enjoy City Tour',
-                'slug' => Str::slug('Enjoy City Tour'),
                 'category_id' => 4,
                 'short_description' => 'Tour booking platform for city adventures and sightseeing.',
                 'long_description' => 'Enjoy City Tour allows users to explore and book exciting activities, guided tours, and city experiences. Built with Laravel and Bootstrap, it includes location-based search, booking management, and secure payments for travelers worldwide.',
+                'problem' => 'Travelers needed an intuitive platform to discover and book tours with clear availability, pricing, and itinerary details.',
+                'solution' => 'I built a booking platform with location-based search, itinerary management, and payment-ready infrastructure.',
+                'my_contribution' => 'I handled booking logic, frontend layout, and payment flow integration.',
                 'url' => 'https://enjoycitytours.com/',
                 'image' => 'assets/images/ect.png',
                 'order' => 10,
-                'is_featured' => false,
-                'status' => 1,
-                'features' => json_encode([
+                'features' => [
                     'Tour booking & itinerary management',
                     'Location-based search',
                     'Secure payment integration',
                     'Mobile-friendly interface',
-                ]),
-                'technologies' => json_encode(['Laravel', 'Bootstrap', 'MySQL', 'jQuery']),
-                'skills_used' => json_encode(['Backend booking logic', 'Frontend UI', 'Payment integration']),
-            ],
-            [
+                ],
+                'technologies' => ['Laravel', 'Bootstrap', 'MySQL', 'jQuery'],
+                'skills_used' => [
+                    'Backend booking logic',
+                    'Frontend UI',
+                    'Payment integration',
+                ],
+                'screenshots' => [
+                    'assets/images/ect.png',
+                ],
+            ]),
+            $this->project([
                 'name' => 'TCLI Library',
-                'slug' => Str::slug('TCLI Library'),
                 'category_id' => 4,
                 'short_description' => 'Online library with clubs, forums, and API integration.',
                 'long_description' => 'TCLI Library is an advanced online library system with integrated clubs, forums, and REST API support. Users can access books, discuss topics, and connect through digital communities.',
+                'problem' => 'The client needed a digital library platform that also supported community features like clubs, forums, and mobile access.',
+                'solution' => 'I created a content-driven library platform with community features, discussion forums, and API-ready data structures.',
+                'my_contribution' => 'I contributed API development, frontend integration, and community workflow design.',
                 'url' => 'https://www.tclibrary.com',
                 'image' => 'assets/images/tcli.png',
                 'order' => 11,
-                'is_featured' => false,
-                'status' => 1,
-                'features' => json_encode([
+                'features' => [
                     'Digital book collection',
                     'Community clubs and discussion forums',
                     'REST API for mobile integration',
                     'User-friendly interface',
-                ]),
-                'technologies' => json_encode(['Laravel', 'REST API', 'Bootstrap', 'MySQL']),
-                'skills_used' => json_encode(['API development', 'Frontend integration', 'Community management']),
-            ],
-            [
+                ],
+                'technologies' => ['Laravel', 'REST API', 'Bootstrap', 'MySQL'],
+                'skills_used' => [
+                    'API development',
+                    'Frontend integration',
+                    'Community management',
+                ],
+                'screenshots' => [
+                    'assets/images/tcli.png',
+                ],
+            ]),
+            $this->project([
                 'name' => 'Dhereye Delivery',
-                'slug' => Str::slug('Dhereye Delivery'),
                 'category_id' => 5,
                 'short_description' => 'Courier and logistics platform with live tracking.',
                 'long_description' => 'Dhereye Delivery is a logistics platform for corporate and retail customers. Built with Laravel, it features delivery scheduling, product tracking, and notifications for efficient delivery management.',
-                'url' => 'https://enjoycitytours.com/',
+                'problem' => 'Delivery operations needed a centralized system to manage orders, track shipments in real time, and keep customers informed throughout the process.',
+                'solution' => 'I built a logistics workflow with delivery scheduling, live tracking, automated status updates, and customer notification triggers.',
+                'my_contribution' => 'I worked on backend logistics logic, real-time tracking features, and operational dashboard interfaces.',
+                'url' => 'https://dhereye.com/',
                 'image' => 'assets/images/dhereye.png',
                 'order' => 12,
                 'is_featured' => false,
                 'status' => 0,
-                'features' => json_encode([
+                'features' => [
                     'Courier scheduling and tracking',
                     'Order management dashboard',
                     'Customer notifications',
                     'Admin panel for delivery monitoring',
-                ]),
-                'technologies' => json_encode(['Laravel', 'Bootstrap', 'MySQL', 'jQuery']),
-                'skills_used' => json_encode(['Backend logistics logic', 'Tracking system', 'Dashboard UI']),
-            ],
+                ],
+                'technologies' => ['Laravel', 'Bootstrap', 'MySQL', 'jQuery'],
+                'skills_used' => [
+                    'Backend logistics logic',
+                    'Tracking system',
+                    'Dashboard UI',
+                ],
+                'screenshots' => [
+                    'assets/images/dhereye.png',
+                ],
+            ]),
         ];
 
         DB::table('projects')->insert($projects);
+    }
+
+    private function project(array $project): array
+    {
+        return [
+            'name' => $project['name'],
+            'slug' => Str::slug($project['name']),
+            'category_id' => $project['category_id'],
+            'short_description' => $project['short_description'],
+            'long_description' => $project['long_description'],
+            'problem' => $project['problem'],
+            'solution' => $project['solution'],
+            'my_contribution' => $project['my_contribution'],
+            'url' => $project['url'] ?? null,
+            'image' => $project['image'] ?? null,
+            'order' => $project['order'] ?? 0,
+            'is_featured' => $project['is_featured'] ?? false,
+            'status' => $project['status'] ?? 1,
+            'features' => json_encode($project['features'] ?? []),
+            'technologies' => json_encode($project['technologies'] ?? []),
+            'skills_used' => json_encode($project['skills_used'] ?? []),
+            'screenshots' => json_encode($project['screenshots'] ?? []),
+        ];
     }
 }

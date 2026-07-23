@@ -1,7 +1,13 @@
 <?php
 
+use App\Http\Controllers\Admin\AiProviderController;
+use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\EducationController;
+use App\Http\Controllers\Admin\PersonalQualityController;
 use App\Http\Controllers\Admin\ProjectController;
+use App\Http\Controllers\Admin\SkillController;
+use App\Http\Controllers\Admin\ToolController;
 use App\Http\Controllers\Frontend\FrontendController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ImageProcessingController;
@@ -21,6 +27,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [FrontendController::class, 'index'])->name('frontend.index');
 Route::get('/projects/{id}', [FrontendController::class, 'show'])->name('projects.show');
+Route::get('/study-cases/{project:slug}', [FrontendController::class, 'projectStudyCase'])->name('projects.study-case');
+Route::get('/blog', [FrontendController::class, 'blogIndex'])->name('blog.index');
+Route::get('/blog/{blog:slug}', [FrontendController::class, 'blogShow'])->name('blog.show');
+Route::get('/resume', [FrontendController::class, 'resume'])->name('resume');
+// routes/web.php — near your existing resume route
+Route::get('/resume/download', [FrontendController::class, 'resumeDownload'])->name('resume.download');
 
 Route::get('/image', [ImageProcessingController::class, 'index']);
 Route::post('/image/store', [ImageProcessingController::class, 'store'])->name('image.store');
@@ -49,6 +61,46 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin', 'as' => 'admin.'], fu
         Route::get('/edit/{category}', [CategoryController::class, 'edit'])->name('edit');
         Route::post('/update/{category}', [CategoryController::class, 'update'])->name('update');
         Route::get('/delete/{category}', [CategoryController::class, 'destroy'])->name('delete');
+    });
+
+    Route::group(['prefix' => 'tools', 'as' => 'tool.'], function () {
+        Route::get('/', [ToolController::class, 'index'])->name('index');
+        Route::post('/store', [ToolController::class, 'store'])->name('store');
+        Route::post('/{tool}/update', [ToolController::class, 'update'])->name('update');
+        Route::get('/{tool}/delete', [ToolController::class, 'destroy'])->name('delete');
+    });
+    Route::group(['prefix' => 'skills', 'as' => 'skill.'], function () {
+        Route::get('/', [SkillController::class, 'index'])->name('index');
+        Route::post('/store', [SkillController::class, 'store'])->name('store');
+        Route::post('/{skill}/update', [SkillController::class, 'update'])->name('update');
+        Route::get('/{skill}/delete', [SkillController::class, 'destroy'])->name('delete');
+    });
+    Route::group(['prefix' => 'personal-qualities', 'as' => 'personal-quality.'], function () {
+        Route::get('/', [PersonalQualityController::class, 'index'])->name('index');
+        Route::post('/store', [PersonalQualityController::class, 'store'])->name('store');
+        Route::post('/{personalQuality}/update', [PersonalQualityController::class, 'update'])->name('update');
+        Route::get('/{personalQuality}/delete', [PersonalQualityController::class, 'destroy'])->name('delete');
+    });
+    Route::group(['prefix' => 'educations', 'as' => 'education.'], function () {
+        Route::get('/', [EducationController::class, 'index'])->name('index');
+        Route::post('/store', [EducationController::class, 'store'])->name('store');
+        Route::post('/{education}/update', [EducationController::class, 'update'])->name('update');
+        Route::get('/{education}/delete', [EducationController::class, 'destroy'])->name('delete');
+    });
+
+    Route::group(['prefix' => 'blogs', 'as' => 'blog.'], function () {
+        Route::get('/', [BlogController::class, 'index'])->name('index');
+        Route::post('/store', [BlogController::class, 'store'])->name('store');
+        Route::post('/{blog}/update', [BlogController::class, 'update'])->name('update');
+        Route::get('/{blog}/delete', [BlogController::class, 'destroy'])->name('delete');
+        Route::post('/{blog}/generate-topics', [BlogController::class, 'generateTopics'])->name('generate-topics');
+    });
+    Route::group(['prefix' => 'ai-providers', 'as' => 'ai-provider.'], function () {
+        Route::get('/', [AiProviderController::class, 'index'])->name('index');
+        Route::post('/store', [AiProviderController::class, 'store'])->name('store');
+        Route::post('/{aiProvider}/update', [AiProviderController::class, 'update'])->name('update');
+        Route::get('/{aiProvider}/delete', [AiProviderController::class, 'destroy'])->name('delete');
+        Route::get('/{aiProvider}/toggle-active', [AiProviderController::class, 'toggleActive'])->name('toggle-active');
     });
 
     Route::get('visitors', [HomeController::class, 'visitors'])->name('visitors');

@@ -10,4 +10,13 @@ class Category extends Model
     use HasFactory;
 
     protected $fillable = ['name', 'slug', 'order_id', 'parent_id', 'status'];
+
+    protected $casts = [
+        'status' => 'boolean',
+    ];
+
+    public function projects()
+    {
+        return $this->hasMany(Project::class);
+    }
 }

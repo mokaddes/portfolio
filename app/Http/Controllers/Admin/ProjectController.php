@@ -40,10 +40,10 @@ class ProjectController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required',
+            'name'        => 'required',
             'category_id' => 'required',
             'description' => 'required',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image'       => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
         $imageName = time().'.'.$request->image->extension();
@@ -52,7 +52,7 @@ class ProjectController extends Controller
         $data['image'] = 'images/'.$imageName;
         $this->projectRepo->create($data);
 
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Project created successfully.');
     }
 
     /**
@@ -76,7 +76,23 @@ class ProjectController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'name'        => 'required',
+            'category_id' => 'required',
+            'image'       => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        $data = $request->except(['_token', '_method', 'image']);
+
+        if ($request->hasFile('image')) {
+            $imageName = time() . '.' . $request->image->extension();
+            $request->image->move(public_path('images'), $imageName);
+            $data['image'] = 'images/' . $imageName;
+        }
+
+        $this->projectRepo->update($data, $id);
+
+        return redirect()->back()->with('success', 'Project updated successfully.');
     }
 
     /**
@@ -84,6 +100,13 @@ class ProjectController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $project = \App\Models\Project::find($id);
+        if ($project) {
+            if ($project->image && file_exists(public_path($project->image))) {
+                @unlink(public_path($project->image));
+            }
+            $project->delete();
+        }
+        return redirect()->back()->with('success', 'Project deleted successfully.');
     }
 }

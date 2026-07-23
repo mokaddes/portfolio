@@ -39,6 +39,42 @@
                     <span class="menu-title" data-i18n="Project">Projects</span>
                 </a>
             </li>
+            <li class=" nav-item @yield('tools')">
+                <a href="{{ route('admin.tool.index') }}">
+                    <i class="feather icon-tool"></i>
+                    <span class="menu-title" data-i18n="Tool">Tools</span>
+                </a>
+            </li>
+            <li class=" nav-item @yield('skills')">
+                <a href="{{ route('admin.skill.index') }}">
+                    <i class="feather icon-star"></i>
+                    <span class="menu-title" data-i18n="Skill">Skills</span>
+                </a>
+            </li>
+            <li class=" nav-item @yield('personal-qualities')">
+                <a href="{{ route('admin.personal-quality.index') }}">
+                    <i class="feather icon-user"></i>
+                    <span class="menu-title" data-i18n="PersonalQuality">Personal Qualities</span>
+                </a>
+            </li>
+            <li class=" nav-item @yield('educations')">
+                <a href="{{ route('admin.education.index') }}">
+                    <i class="feather icon-book"></i>
+                    <span class="menu-title" data-i18n="Education">Educations</span>
+                </a>
+            </li>
+            <li class=" nav-item @yield('blogs')">
+                <a href="{{ route('admin.blog.index') }}">
+                    <i class="feather icon-file-text"></i>
+                    <span class="menu-title" data-i18n="Blog">Blog</span>
+                </a>
+            </li>
+            <li class=" nav-item @yield('ai-providers')">
+                <a href="{{ route('admin.ai-provider.index') }}">
+                    <i class="feather icon-cpu"></i>
+                    <span class="menu-title" data-i18n="AiProvider">AI Providers</span>
+                </a>
+            </li>
             <li class=" nav-item @yield('visitors')">
                 <a href="{{ route('admin.visitors') }}">
                     <i class="feather icon-user"></i>

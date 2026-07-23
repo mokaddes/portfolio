@@ -12,14 +12,36 @@ class Project extends Model
     protected $fillable = [
         'name',
         'slug',
-        'description',
+        'category_id',
+        'short_description',
+        'long_description',
+        'problem',
+        'solution',
+        'my_contribution',
         'image',
         'url',
+        'order',
+        'is_featured',
         'status',
-        'category_id',
-        'created_at',
-        'updated_at'
+        'features',
+        'technologies',
+        'skills_used',
+        'screenshots',
     ];
+
+    protected $casts = [
+        'features' => 'array',
+        'technologies' => 'array',
+        'skills_used' => 'array',
+        'screenshots' => 'array',
+        'is_featured' => 'boolean',
+        'status' => 'boolean',
+    ];
+
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
 
     public function category()
     {

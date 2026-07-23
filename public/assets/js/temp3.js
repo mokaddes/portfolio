@@ -1,402 +1,362 @@
-let galleryMainSwiper = null;
-let galleryThumbsSwiper = null;
+/* =============================================
+   Portfolio JS — Animations, Interactions, AJAX
+   ============================================= */
 
-// Open project modal
-function openProjectModal(projectId) {
-    const modal = document.getElementById('projectModal');
-    const modalBody = document.getElementById('modalBody');
-    const modalLoading = document.getElementById('modalLoading');
+document.addEventListener('DOMContentLoaded', () => {
 
-    // Show modal and loading state
-    modal.classList.add('active');
-    document.body.style.overflow = 'hidden';
-    modalBody.style.display = 'none';
-    modalLoading.style.display = 'flex';
-
-    // Fetch project details
-    fetch(`/projects/${projectId}`)
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                populateModal(data.data);
-                modalLoading.style.display = 'none';
-                modalBody.style.display = 'block';
-            } else {
-                throw new Error(data.message);
-            }
-        })
-        .catch(error => {
-            console.error('Error loading project:', error);
-            modalLoading.innerHTML = '<p class="error">Failed to load project details. Please try again.</p>';
-        });
-}
-
-// Close project modal
-function closeProjectModal() {
-    const modal = document.getElementById('projectModal');
-    modal.classList.remove('active');
-    document.body.style.overflow = '';
-
-    // Destroy swiper instances
-    if (galleryMainSwiper) {
-        galleryMainSwiper.destroy(true, true);
-        galleryMainSwiper = null;
-    }
-    if (galleryThumbsSwiper) {
-        galleryThumbsSwiper.destroy(true, true);
-        galleryThumbsSwiper = null;
-    }
-}
-
-// Populate modal with project data
-function populateModal(project) {
-    // Set basic info
-    document.getElementById('projectTitle').textContent = project.name;
-    document.getElementById('projectCategory').textContent = project.category;
-    document.getElementById('projectDescription').textContent = project.long_description;
-    document.getElementById('projectLiveLink').href = project.url;
-
-    // Populate gallery
-    const mainSlides = document.getElementById('galleryMainSlides');
-    const thumbSlides = document.getElementById('galleryThumbSlides');
-    mainSlides.innerHTML = '';
-    thumbSlides.innerHTML = '';
-
-    if (project.galleries && project.galleries.length > 0) {
-        project.galleries.forEach(gallery => {
-            // Main slides
-            mainSlides.innerHTML += `
-                <div class="swiper-slide">
-                    <img src="${gallery.image}" alt="${gallery.caption}">
-                    <div class="gallery-caption">${gallery.caption}</div>
-                </div>
+    /* ------------------------------------------
+       FLOATING PARTICLES
+    ------------------------------------------ */
+    function createParticles() {
+        const colors = ['#6366f1', '#06b6d4', '#a78bfa', '#22c55e'];
+        for (let i = 0; i < 22; i++) {
+            const el = document.createElement('div');
+            el.className = 'particle';
+            const size = Math.random() * 5 + 2;
+            el.style.cssText = `
+                width: ${size}px;
+                height: ${size}px;
+                background: ${colors[Math.floor(Math.random() * colors.length)]};
+                left: ${Math.random() * 100}vw;
+                animation-duration: ${Math.random() * 20 + 15}s;
+                animation-delay: ${Math.random() * 15}s;
             `;
-
-            // Thumbnail slides
-            thumbSlides.innerHTML += `
-                <div class="swiper-slide">
-                    <img src="${gallery.image}" alt="${gallery.caption}">
-                </div>
-            `;
-        });
-
-        // Initialize gallery swipers
-        initializeGallery();
-    } else {
-        // If no gallery, show main image
-        mainSlides.innerHTML = `
-            <div class="swiper-slide">
-                <img src="${project.image}" alt="${project.name}">
-            </div>
-        `;
-    }
-
-    // Populate technologies
-    const techContainer = document.getElementById('projectTechnologies');
-    techContainer.innerHTML = '';
-    if (project.technologies && project.technologies.length > 0) {
-        project.technologies.forEach(tech => {
-            techContainer.innerHTML += `<span class="tech-tag">${tech}</span>`;
-        });
-    }
-
-    // Populate skills
-    const skillsContainer = document.getElementById('projectSkills');
-    skillsContainer.innerHTML = '';
-    if (project.skills_used && project.skills_used.length > 0) {
-        project.skills_used.forEach(skill => {
-            skillsContainer.innerHTML += `<span class="skill-tag">${skill}</span>`;
-        });
-    }
-
-    // Populate features
-    const featuresContainer = document.getElementById('projectFeatures');
-    featuresContainer.innerHTML = '';
-    if (project.features && project.features.length > 0) {
-        project.features.forEach(feature => {
-            featuresContainer.innerHTML += `<li><i class="fas fa-check"></i> ${feature}</li>`;
-        });
-    }
-}
-
-// Initialize gallery swipers
-function initializeGallery() {
-    // Destroy existing instances
-    if (galleryMainSwiper) galleryMainSwiper.destroy(true, true);
-    if (galleryThumbsSwiper) galleryThumbsSwiper.destroy(true, true);
-
-    // Initialize thumbs swiper
-    galleryThumbsSwiper = new Swiper('.gallery-thumbs-swiper', {
-        spaceBetween: 10,
-        slidesPerView: 4,
-        watchSlidesProgress: true,
-        breakpoints: {
-            640: {slidesPerView: 5},
-            768: {slidesPerView: 6},
-            1024: {slidesPerView: 7},
+            document.querySelector('.bg-animation').appendChild(el);
         }
-    });
-
-    // Initialize main swiper
-    galleryMainSwiper = new Swiper('.gallery-main-swiper', {
-        spaceBetween: 10,
-        navigation: {
-            nextEl: '.swiper-button-next',
-            prevEl: '.swiper-button-prev',
-        },
-        thumbs: {
-            swiper: galleryThumbsSwiper,
-        },
-    });
-}
-
-// Close modal on ESC key
-document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape') {
-        closeProjectModal();
     }
-});
+    createParticles();
 
-// Set current year
-document.getElementById('year').textContent = new Date().getFullYear();
+    /* ------------------------------------------
+       NAVBAR SCROLL BEHAVIOUR
+    ------------------------------------------ */
+    const navbar = document.getElementById('navbar');
+    const navLinks = document.querySelectorAll('.nav-links a');
+    const sections = document.querySelectorAll('section[id]');
 
-// Initialize Swiper for Skills (Mobile only)
-new Swiper('.swiper-container-skills', {
-    slidesPerView: 1.15,
-    spaceBetween: 15,
-    pagination: {
-        el: '.swiper-container-skills .swiper-pagination',
-        clickable: true,
-    },
-    breakpoints: {768: {enabled: false}, 1024: {enabled: false}},
-    autoplay: {
-        delay: 3000,
-        disableOnInteraction: false,
-    },
-});
-
-// Initialize Swiper for Projects (Mobile only)
-new Swiper('.swiper-container-projects', {
-    slidesPerView: 1.25,
-    spaceBetween: 20,
-    pagination: {
-        el: '.swiper-container-projects .swiper-pagination',
-        clickable: true,
-    },
-    breakpoints: {768: {enabled: false}, 1024: {enabled: false}},
-    autoplay: {
-        delay: 3500,
-        disableOnInteraction: false,
-    },
-});
-
-// Navbar scroll effect
-const navbar = document.getElementById('navbar');
-window.addEventListener('scroll', () => {
-    if (window.scrollY > 50) {
-        navbar.classList.add('scrolled');
-    } else {
-        navbar.classList.remove('scrolled');
-    }
-});
-
-// Mobile menu toggle
-const hamburger = document.getElementById('hamburger');
-const navLinks = document.getElementById('navLinks');
-
-hamburger.addEventListener('click', () => {
-    hamburger.classList.toggle('active');
-    navLinks.classList.toggle('active');
-});
-
-// Close mobile menu when clicking a link
-document.querySelectorAll('.nav-links a').forEach(link => {
-    link.addEventListener('click', () => {
-        hamburger.classList.remove('active');
-        navLinks.classList.remove('active');
-    });
-});
-
-// Scroll reveal animation
-function revealOnScroll() {
-    const reveals = document.querySelectorAll('.reveal');
-    reveals.forEach(element => {
-        const windowHeight = window.innerHeight;
-        const elementTop = element.getBoundingClientRect().top;
-        const revealPoint = 80;
-
-        if (elementTop < windowHeight - revealPoint) {
-            element.classList.add('active');
-        }
-    });
-}
-
-window.addEventListener('scroll', revealOnScroll);
-revealOnScroll();
-
-// Smooth scroll for anchor links
-
-
-// Contact form submission
-document.getElementById('contactForm').addEventListener('submit', function (e) {
-    e.preventDefault();
-
-    const formData = new FormData(this);
-    const messageDiv = document.getElementById('formMessage');
-    const submitBtn = this.querySelector('.btn-submit');
-    const originalText = submitBtn.innerHTML;
-
-    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
-    submitBtn.disabled = true;
-
-    fetch(this.action, {
-        method: 'POST',
-        body: formData,
-        headers: {
-            'X-Requested-With': 'XMLHttpRequest',
-        }
-    })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                messageDiv.innerHTML = `
-                        <div style="padding: 1rem; background: #d4edda; color: #155724; border-radius: 10px; border: 1px solid #c3e6cb;">
-                            <i class="fas fa-check-circle"></i> ${data.message}
-                        </div>
-                    `;
-                this.reset();
-            } else {
-                messageDiv.innerHTML = `
-                        <div style="padding: 1rem; background: #f8d7da; color: #721c24; border-radius: 10px; border: 1px solid #f5c6cb;">
-                            <i class="fas fa-exclamation-circle"></i> ${data.message}
-                        </div>
-                    `;
-            }
-        })
-        .catch(error => {
-            messageDiv.innerHTML = `
-                    <div style="padding: 1rem; background: #f8d7da; color: #721c24; border-radius: 10px; border: 1px solid #f5c6cb;">
-                        <i class="fas fa-exclamation-circle"></i> An error occurred. Please try again.
-                    </div>
-                `;
-        })
-        .finally(() => {
-            submitBtn.innerHTML = originalText;
-            submitBtn.disabled = false;
-            setTimeout(() => {
-                messageDiv.innerHTML = '';
-            }, 5000);
-        });
-});
-
-function createParticle() {
-    const particle = document.createElement('div');
-    particle.style.position = 'fixed';
-    particle.style.width = '4px';
-    particle.style.height = '4px';
-    particle.style.background = 'rgba(255, 255, 255, 0.5)';
-    particle.style.borderRadius = '50%';
-    particle.style.pointerEvents = 'none';
-    particle.style.left = Math.random() * window.innerWidth + 'px';
-    particle.style.top = window.innerHeight + 'px';
-    particle.style.zIndex = '1';
-
-    document.body.appendChild(particle);
-
-    const duration = Math.random() * 3000 + 2000;
-    const drift = (Math.random() - 0.5) * 100;
-
-    particle.animate([
-        {transform: 'translateY(0px) translateX(0px)', opacity: 0},
-        {transform: `translateY(-${window.innerHeight + 100}px) translateX(${drift}px)`, opacity: 1},
-        {transform: `translateY(-${window.innerHeight + 200}px) translateX(${drift * 2}px)`, opacity: 0}
-    ], {
-        duration: duration,
-        easing: 'linear'
-    }).onfinish = () => particle.remove();
-}
-
-// Create particles periodically
-setInterval(createParticle, 300);
-
-// Cursor trail effect
-const trail = [];
-const trailLength = 20;
-
-document.addEventListener('mousemove', (e) => {
-    if (window.innerWidth > 768) {
-        trail.push({x: e.clientX, y: e.clientY, time: Date.now()});
-
-        if (trail.length > trailLength) {
-            trail.shift();
-        }
-
-        trail.forEach((point, index) => {
-            const age = Date.now() - point.time;
-            if (age < 500) {
-                const dot = document.createElement('div');
-                dot.style.position = 'fixed';
-                dot.style.left = point.x + 'px';
-                dot.style.top = point.y + 'px';
-                dot.style.width = '6px';
-                dot.style.height = '6px';
-                dot.style.background = `rgba(102, 126, 234, ${1 - age / 500})`;
-                dot.style.borderRadius = '50%';
-                dot.style.pointerEvents = 'none';
-                dot.style.zIndex = '9999';
-                dot.style.transform = 'translate(-50%, -50%)';
-
-                document.body.appendChild(dot);
-
-                setTimeout(() => dot.remove(), 100);
-            }
-        });
-    }
-});
-// Add tilt effect to cards (desktop only)
-if (window.innerWidth > 768) {
-    document.querySelectorAll('.skill-card, .project-card, .tool-item, .personal-card').forEach(card => {
-        card.addEventListener('mousemove', function (e) {
-            const rect = this.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            const centerX = rect.width / 2;
-            const centerY = rect.height / 2;
-            const rotateX = (y - centerY) / 15;
-            const rotateY = (centerX - x) / 15;
-            this.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-8px)`;
-        });
-
-        card.addEventListener('mouseleave', function () {
-            this.style.transform = '';
-        });
-    });
-}
-
-// Typing effect for hero subtitle
-const subtitle = document.querySelector('.profile-title');
-if (subtitle) {
-    const text = subtitle.textContent;
-    subtitle.textContent = '';
-    let index = 0;
-
-    function typeWriter() {
-        if (index < text.length) {
-            subtitle.textContent += text.charAt(index);
-            index++;
-            setTimeout(typeWriter, 100);
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 20) {
+            navbar.classList.add('scrolled');
         } else {
-            // After finishing, wait a bit, then restart
-            setTimeout(() => {
-                subtitle.textContent = '';
-                index = 0;
-                typeWriter();
-            }, 1000); // restart delay
+            navbar.classList.remove('scrolled');
         }
+        highlightNavLink();
+    }, { passive: true });
+
+    /* Active nav link on scroll */
+    function highlightNavLink() {
+        let current = '';
+        sections.forEach(sec => {
+            if (window.scrollY >= sec.offsetTop - 120) {
+                current = sec.getAttribute('id');
+            }
+        });
+        navLinks.forEach(a => {
+            a.classList.remove('active');
+            if (a.getAttribute('href') === '#' + current) {
+                a.classList.add('active');
+            }
+        });
     }
 
-    window.addEventListener('load', () => {
-        setTimeout(typeWriter, 800);
-    });
-}
+    /* ------------------------------------------
+       HAMBURGER MENU (MOBILE)
+    ------------------------------------------ */
+    const hamburger = document.getElementById('hamburger');
+    const navMenu   = document.getElementById('navLinks');
 
+    if (hamburger && navMenu) {
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('open');
+            navMenu.classList.toggle('open');
+            document.body.style.overflow = navMenu.classList.contains('open') ? 'hidden' : '';
+        });
+
+        navMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('open');
+                navMenu.classList.remove('open');
+                document.body.style.overflow = '';
+            });
+        });
+
+        document.addEventListener('click', e => {
+            if (!navbar.contains(e.target) && navMenu.classList.contains('open')) {
+                hamburger.classList.remove('open');
+                navMenu.classList.remove('open');
+                document.body.style.overflow = '';
+            }
+        });
+    }
+
+    /* ------------------------------------------
+       TYPING ANIMATION (HERO TITLE)
+    ------------------------------------------ */
+    const titleEl = document.querySelector('.profile-title-typing');
+    if (titleEl) {
+        const texts  = titleEl.dataset.texts ? JSON.parse(titleEl.dataset.texts) : [titleEl.textContent.trim()];
+        const cursor = document.createElement('span');
+        cursor.className = 'typing-cursor';
+        cursor.textContent = '|';
+        cursor.style.cssText = 'color: #6366f1; animation: blink-cursor 0.75s step-end infinite; margin-left: 2px;';
+
+        const style = document.createElement('style');
+        style.textContent = '@keyframes blink-cursor { 50% { opacity: 0; } }';
+        document.head.appendChild(style);
+
+        titleEl.textContent = '';
+        titleEl.appendChild(cursor);
+
+        let textIdx = 0, charIdx = 0, deleting = false;
+
+        function type() {
+            const current = texts[textIdx];
+            if (!deleting) {
+                titleEl.textContent = current.slice(0, charIdx + 1);
+                titleEl.appendChild(cursor);
+                charIdx++;
+                if (charIdx === current.length) {
+                    deleting = true;
+                    setTimeout(type, 2000);
+                    return;
+                }
+            } else {
+                titleEl.textContent = current.slice(0, charIdx - 1);
+                titleEl.appendChild(cursor);
+                charIdx--;
+                if (charIdx === 0) {
+                    deleting = false;
+                    textIdx = (textIdx + 1) % texts.length;
+                    setTimeout(type, 400);
+                    return;
+                }
+            }
+            setTimeout(type, deleting ? 40 : 80);
+        }
+        setTimeout(type, 800);
+    }
+
+    /* ------------------------------------------
+       REVEAL ON SCROLL (INTERSECTION OBSERVER)
+    ------------------------------------------ */
+    const reveals = document.querySelectorAll('.reveal');
+    if ('IntersectionObserver' in window) {
+        const io = new IntersectionObserver((entries) => {
+            entries.forEach((entry, idx) => {
+                if (entry.isIntersecting) {
+                    const el = entry.target;
+                    const delay = (el.dataset.delay || 0);
+                    setTimeout(() => el.classList.add('visible'), delay * 100);
+                    io.unobserve(el);
+                }
+            });
+        }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+        reveals.forEach((el, i) => {
+            el.dataset.delay = i % 6;
+            io.observe(el);
+        });
+    } else {
+        reveals.forEach(el => el.classList.add('visible'));
+    }
+
+    /* ------------------------------------------
+       COUNTER ANIMATION
+    ------------------------------------------ */
+    document.querySelectorAll('.stat-number[data-count]').forEach(el => {
+        const target = parseInt(el.dataset.count, 10);
+        const suffix = el.dataset.suffix || '';
+        let start = 0;
+        const duration = 1800;
+        const step = target / (duration / 16);
+
+        const io2 = new IntersectionObserver((entries) => {
+            if (entries[0].isIntersecting) {
+                const timer = setInterval(() => {
+                    start = Math.min(start + step, target);
+                    el.textContent = Math.round(start) + suffix;
+                    if (start >= target) clearInterval(timer);
+                }, 16);
+                io2.disconnect();
+            }
+        });
+        io2.observe(el);
+    });
+
+    /* ------------------------------------------
+       SWIPER — SKILLS (MOBILE)
+    ------------------------------------------ */
+    if (document.querySelector('.swiper-container-skills')) {
+        new Swiper('.swiper-container-skills', {
+            slidesPerView: 1.3,
+            spaceBetween: 16,
+            centeredSlides: false,
+            pagination: { el: '.swiper-container-skills .swiper-pagination', clickable: true },
+            breakpoints: {
+                480: { slidesPerView: 2.2 },
+                640: { slidesPerView: 3.2 },
+            }
+        });
+    }
+
+    /* ------------------------------------------
+       SWIPER — PROJECTS (MOBILE)
+    ------------------------------------------ */
+    if (document.querySelector('.swiper-container-projects')) {
+        new Swiper('.swiper-container-projects', {
+            slidesPerView: 1.1,
+            spaceBetween: 16,
+            centeredSlides: false,
+            pagination: { el: '.swiper-container-projects .swiper-pagination', clickable: true },
+            breakpoints: {
+                540: { slidesPerView: 1.5 },
+                768: { slidesPerView: 2.2 },
+            }
+        });
+    }
+
+    /* ------------------------------------------
+       PROJECT MODAL
+    ------------------------------------------ */
+    let galleryMainSwiper, galleryThumbsSwiper;
+
+    window.openProjectModal = function(id) {
+        const modal   = document.getElementById('projectModal');
+        const loading = document.getElementById('modalLoading');
+        const body    = document.getElementById('modalBody');
+
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        loading.style.display = 'flex';
+        body.style.display = 'none';
+
+        fetch('/projects/' + id)
+            .then(r => r.json())
+            .then(res => {
+                if (!res.success) throw new Error('Not found');
+                populateModal(res.data);
+                loading.style.display = 'none';
+                body.style.display = 'block';
+            })
+            .catch(() => {
+                loading.innerHTML = '<p style="color:#ef4444">Could not load project details.</p>';
+            });
+    };
+
+    function populateModal(p) {
+        document.getElementById('projectTitle').textContent    = p.name;
+        document.getElementById('projectCategory').textContent = p.category;
+        document.getElementById('projectDescription').textContent = p.long_description || p.short_description;
+        document.getElementById('projectLiveLink').href        = p.url || '#';
+
+        // Galleries
+        const mainSlides  = document.getElementById('galleryMainSlides');
+        const thumbSlides = document.getElementById('galleryThumbSlides');
+        mainSlides.innerHTML = '';
+        thumbSlides.innerHTML = '';
+
+        const images = p.galleries && p.galleries.length > 0
+            ? p.galleries
+            : [{ image: p.image, caption: p.name }];
+
+        images.forEach(g => {
+            mainSlides.innerHTML += `<div class="swiper-slide"><img src="${g.image}" alt="${g.caption || ''}"></div>`;
+            thumbSlides.innerHTML += `<div class="swiper-slide"><img src="${g.image}" alt="${g.caption || ''}"></div>`;
+        });
+
+        if (galleryThumbsSwiper) galleryThumbsSwiper.destroy(true, true);
+        if (galleryMainSwiper)  galleryMainSwiper.destroy(true, true);
+
+        galleryThumbsSwiper = new Swiper('.gallery-thumbs-swiper', {
+            slidesPerView: 4,
+            spaceBetween: 8,
+            freeMode: true,
+            watchSlidesProgress: true,
+        });
+
+        galleryMainSwiper = new Swiper('.gallery-main-swiper', {
+            spaceBetween: 10,
+            navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
+            thumbs: { swiper: galleryThumbsSwiper },
+        });
+
+        // Technologies
+        const techs = document.getElementById('projectTechnologies');
+        techs.innerHTML = (p.technologies || []).map(t => `<span class="tech-tag">${t}</span>`).join('') || '<span style="color: var(--text-muted)">—</span>';
+
+        // Skills
+        const skills = document.getElementById('projectSkills');
+        skills.innerHTML = (p.skills_used || []).map(s => `<span class="skill-tag">${s}</span>`).join('') || '<span style="color: var(--text-muted)">—</span>';
+
+        // Features
+        const features = document.getElementById('projectFeatures');
+        features.innerHTML = (p.features || []).map(f => `<li>${f}</li>`).join('') || '<li>No features listed.</li>';
+    }
+
+    window.closeProjectModal = function() {
+        const modal = document.getElementById('projectModal');
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+    };
+
+    // Close on ESC
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') window.closeProjectModal();
+    });
+
+    /* ------------------------------------------
+       CONTACT FORM — AJAX
+    ------------------------------------------ */
+    const contactForm = document.getElementById('contactForm');
+    const formMsg     = document.getElementById('formMessage');
+
+    if (contactForm) {
+        contactForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const btn = this.querySelector('.btn-submit');
+            const originalHtml = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+            btn.disabled = true;
+
+            try {
+                const res = await fetch(this.action, {
+                    method: 'POST',
+                    body: new FormData(this),
+                    headers: { 'X-Requested-With': 'XMLHttpRequest' }
+                });
+                const data = await res.json().catch(() => ({}));
+                if (res.ok) {
+                    formMsg.innerHTML = '<div class="alert-success"><i class="fas fa-check-circle"></i> Message sent! I will get back to you soon.</div>';
+                    this.reset();
+                } else {
+                    formMsg.innerHTML = '<div class="alert-danger"><i class="fas fa-exclamation-circle"></i> ' + (data.message || 'Something went wrong. Please try again.') + '</div>';
+                }
+            } catch (err) {
+                formMsg.innerHTML = '<div class="alert-danger"><i class="fas fa-exclamation-circle"></i> Network error. Please try again.</div>';
+            }
+
+            btn.innerHTML = originalHtml;
+            btn.disabled = false;
+            setTimeout(() => { formMsg.innerHTML = ''; }, 6000);
+        });
+    }
+
+    /* ------------------------------------------
+       YEAR IN FOOTER
+    ------------------------------------------ */
+    const yearEl = document.getElementById('year');
+    if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+    /* ------------------------------------------
+       SMOOTH SCROLL (for anchor links)
+    ------------------------------------------ */
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+        a.addEventListener('click', e => {
+            const target = document.querySelector(a.getAttribute('href'));
+            if (target) {
+                e.preventDefault();
+                window.scrollTo({ top: target.offsetTop - 80, behavior: 'smooth' });
+            }
+        });
+    });
+
+});

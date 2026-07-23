@@ -5,7 +5,7 @@
             <div class="d-lg-flex justify-content-between align-items-center text-lg-left text-center mb-lg-0 mb-3">
                 <!-- Profile Section -->
                 <div class="mkds text-center text-lg-left">
-                    <img src="{{ asset('images/mkds.jpg') }}" alt="Profile Image" class="profile-image rounded-circle shadow">
+                    <img src="{{ asset('images/mkds.png') }}" alt="Profile Image" class="profile-image rounded-circle shadow">
                     <div class="name display-4 font-weight-bold">Mokaddes Hosain</div>
                     <div class="profession text-muted">Software Developer</div>
                 </div>
@@ -47,7 +47,7 @@
             <!-- Profile Section -->
             <div class="profile-section">
                 <div class="profile-image-wrapper">
-                    <img src="{{ asset('images/mkds.jpg') }}" alt="Mokaddes Hosain" class="profile-image">
+                    <img src="{{ asset('images/mkds.png') }}" alt="Mokaddes Hosain" class="profile-image">
                     <div class="profile-ring"></div>
                 </div>
                 <h1 class="profile-name">Mokaddes Hosain</h1>
