@@ -15,11 +15,14 @@ class CategoriesTableSeeder extends Seeder
     public function run(): void
     {
         $categories = [
-            ['name' => 'Web Application', 'slug' => Str::slug('Web Application'), 'order_id' => 1, 'status' => 1],
-            ['name' => 'E-commerce', 'slug' => Str::slug('E-commerce'), 'order_id' => 2, 'status' => 1],
-            ['name' => 'Platform', 'slug' => Str::slug('Platform'), 'order_id' => 3, 'status' => 1],
-            ['name' => 'Management System', 'slug' => Str::slug('Management System'), 'order_id' => 4, 'status' => 1],
-            ['name' => 'Business Solution', 'slug' => Str::slug('Business Solution'), 'order_id' => 5, 'status' => 1],
+            ['name' => 'Business & Corporate Websites', 'slug' => Str::slug('Business & Corporate Websites'), 'order_id' => 1, 'status' => 1],
+            ['name' => 'E-Commerce & Marketplace', 'slug' => Str::slug('E-Commerce & Marketplace'), 'order_id' => 2, 'status' => 1],
+            ['name' => 'SaaS & Web Platforms', 'slug' => Str::slug('SaaS & Web Platforms'), 'order_id' => 3, 'status' => 1],
+            ['name' => 'Booking & Management Systems', 'slug' => Str::slug('Booking & Management Systems'), 'order_id' => 4, 'status' => 1],
+            ['name' => 'Business Process Solutions', 'slug' => Str::slug('Business Process Solutions'), 'order_id' => 5, 'status' => 1],
+            ['name' => 'AI-Assisted Development', 'slug' => Str::slug('AI-Assisted Development'), 'order_id' => 6, 'status' => 1],
+            ['name' => 'WordPress Plugin Development', 'slug' => Str::slug('WordPress Plugin Development'), 'order_id' => 7, 'status' => 1],
+            ['name' => 'AI Automation & Workflow', 'slug' => Str::slug('AI Automation & Workflow'), 'order_id' => 8, 'status' => 1],
         ];
 
         DB::table('categories')->insert($categories);

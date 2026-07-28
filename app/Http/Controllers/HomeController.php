@@ -2,6 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Blog;
+use App\Models\Category;
+use App\Models\Education;
+use App\Models\PersonalQuality;
+use App\Models\Project;
+use App\Models\Skill;
+use App\Models\Tool;
 use App\Models\VisitorLog;
 use App\Notifications\ContactMailNotification;
 use Illuminate\Http\Request;
@@ -12,7 +19,24 @@ class HomeController extends Controller
 {
     public function index()
     {
-        return view('home');
+        $totalProjects = Project::count();
+        $activeProjects = Project::where('status', 1)->count();
+        $totalCategories = Category::count();
+        $totalBlogs = Blog::count();
+        $publishedBlogs = Blog::where('status', 1)->count();
+        $totalSkills = Skill::count();
+        $totalTools = Tool::count();
+        $totalQualities = PersonalQuality::count();
+        $totalEducations = Education::count();
+        $totalVisitors = VisitorLog::count();
+        $latestBlogs = Blog::orderByDesc('id')->take(5)->get();
+
+        return view('home', compact(
+            'totalProjects', 'activeProjects',
+            'totalCategories', 'totalBlogs', 'publishedBlogs',
+            'totalSkills', 'totalTools', 'totalQualities',
+            'totalEducations', 'totalVisitors', 'latestBlogs'
+        ));
     }
 
     public function ai()

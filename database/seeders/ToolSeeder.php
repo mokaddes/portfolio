@@ -62,6 +62,36 @@ class ToolSeeder extends Seeder
                 'description' => 'Google’s backend services for real-time apps',
                 'order' => 8,
             ],
+            [
+                'name' => 'n8n',
+                'icon' => 'assets/icons/n8n.svg',
+                'description' => 'Workflow automation tool for scheduling, webhooks, and AI-driven integrations',
+                'order' => 9,
+            ],
+            [
+                'name' => 'Postman',
+                'icon' => 'assets/icons/postman.svg',
+                'description' => 'API client for testing and documenting REST endpoints',
+                'order' => 10,
+            ],
+            [
+                'name' => 'WordPress',
+                'icon' => 'assets/icons/wordpress.svg',
+                'description' => 'CMS platform used for custom plugin and theme development',
+                'order' => 11,
+            ],
+            [
+                'name' => 'Elementor',
+                'icon' => 'assets/icons/elementor.svg',
+                'description' => 'Page builder used to integrate custom shortcodes into WordPress sites',
+                'order' => 12,
+            ],
+            [
+                'name' => 'Ollama',
+                'icon' => 'assets/icons/ollama.svg',
+                'description' => 'Self-hosted local LLM runtime for cost-free AI agent automation',
+                'order' => 13,
+            ],
         ]);
     }
 }

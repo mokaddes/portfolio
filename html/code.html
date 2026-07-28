@@ -1,0 +1,596 @@
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <style>@layer base {
+        html, body {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            overscroll-behavior: none;
+        }
+
+        main > :first-child {
+            margin-top: 0 !important;
+        }
+
+        main > :last-child {
+            margin-bottom: 0 !important;
+        }
+    }
+
+    ::-webkit-scrollbar {
+        display: none;
+    }</style>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script id="tailwind-config">tailwind.config = {
+        darkMode: "class", theme: {
+            extend: {
+                "colors": {
+                    "tertiary": "#ffb3af",
+                    "on-error-container": "#ffdad6",
+                    "on-error": "#690005",
+                    "on-secondary-container": "#e6ecff",
+                    "surface-container-highest": "#2d3449",
+                    "tertiary-container": "#fc7c78",
+                    "surface-bright": "#31394d",
+                    "surface-container-lowest": "#060e20",
+                    "inverse-on-surface": "#283044",
+                    "surface-container-high": "#222a3d",
+                    "on-primary-container": "#00422b",
+                    "primary-container": "#10b981",
+                    "secondary-fixed": "#d8e2ff",
+                    "on-tertiary-fixed": "#410005",
+                    "error": "#ffb4ab",
+                    "outline-variant": "#3c4a42",
+                    "on-tertiary-container": "#711419",
+                    "tertiary-fixed": "#ffdad7",
+                    "surface-variant": "#2d3449",
+                    "on-tertiary": "#650911",
+                    "inverse-surface": "#dae2fd",
+                    "secondary-fixed-dim": "#adc6ff",
+                    "error-container": "#93000a",
+                    "on-secondary-fixed": "#001a42",
+                    "on-secondary-fixed-variant": "#004395",
+                    "on-primary-fixed": "#002113",
+                    "secondary-container": "#0566d9",
+                    "on-primary": "#003824",
+                    "on-surface": "#dae2fd",
+                    "on-tertiary-fixed-variant": "#842225",
+                    "primary": "#4edea3",
+                    "inverse-primary": "#006c49",
+                    "tertiary-fixed-dim": "#ffb3af",
+                    "surface": "#0b1326",
+                    "primary-fixed-dim": "#4edea3",
+                    "background": "#0b1326",
+                    "surface-dim": "#0b1326",
+                    "surface-container": "#171f33",
+                    "on-surface-variant": "#bbcabf",
+                    "surface-tint": "#4edea3",
+                    "primary-fixed": "#6ffbbe",
+                    "secondary": "#adc6ff",
+                    "on-secondary": "#002e6a",
+                    "surface-container-low": "#131b2e",
+                    "on-primary-fixed-variant": "#005236",
+                    "outline": "#86948a",
+                    "on-background": "#dae2fd"
+                },
+                "borderRadius": {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                "spacing": {
+                    "section-padding": "8rem",
+                    "container-max": "1280px",
+                    "stack-md": "1.5rem",
+                    "stack-sm": "0.5rem",
+                    "stack-lg": "4rem",
+                    "gutter": "2rem"
+                },
+                "fontFamily": {
+                    "label-md": ["JetBrains Mono"],
+                    "headline-lg-mobile": ["Inter"],
+                    "display": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "body-md": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "stats": ["Inter"]
+                },
+                "fontSize": {
+                    "label-md": ["0.875rem", {
+                        "lineHeight": "1.5",
+                        "letterSpacing": "0.05em",
+                        "fontWeight": "500"
+                    }],
+                    "headline-lg-mobile": ["2.25rem", {"lineHeight": "1.2", "fontWeight": "700"}],
+                    "display": ["4.5rem", {"lineHeight": "1.1", "letterSpacing": "-0.04em", "fontWeight": "800"}],
+                    "headline-md": ["2rem", {"lineHeight": "1.3", "fontWeight": "600"}],
+                    "body-md": ["1rem", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "headline-lg": ["3rem", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-lg": ["1.25rem", {"lineHeight": "1.75", "fontWeight": "400"}],
+                    "stats": ["2.5rem", {"lineHeight": "1", "fontWeight": "700"}]
+                }
+            }
+        }
+    }</script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"
+          rel="stylesheet"/>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@500&amp;display=swap"
+        rel="stylesheet"/>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet"/>
+</head>
+<body class="bg-background font-body-md text-on-background">
+<header class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]">
+    <div class="h-20 max-w-container-max mx-auto px-gutter flex items-center justify-between">
+        <div class="flex items-center gap-2">
+            <div class="w-8 h-8 rounded bg-primary-container flex items-center justify-center"><span
+                class="material-symbols-outlined text-on-primary-container text-[20px]">code</span></div>
+            <span class="font-headline-md text-body-lg font-bold tracking-tight text-on-surface">DEV.PORTFOLIO</span>
+        </div>
+        <nav class="hidden md:flex items-center gap-stack-lg" data-active-classes="text-primary font-bold"><a
+            aria-current="page" class="transition-colors text-primary font-bold" data-path="projects"
+            href="#">Projects</a><a
+            class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors"
+            data-path="services" href="#">Services</a><a
+            class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors"
+            data-path="about" href="#">About</a><a
+            class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors"
+            data-path="blog" href="#">Blog</a><a
+            class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors"
+            data-path="resume" href="#">Resume</a></nav>
+        <div class="flex items-center gap-4">
+            <div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span
+                class="material-symbols-outlined text-on-primary text-[18px]">person</span></div>
+        </div>
+    </div>
+</header>
+<main class="w-full pt-20 bg-background">
+    <div class="flex flex-col w-full relative">
+        <!-- Hero Section -->
+        <section
+            class="w-full relative px-gutter pt-section-padding pb-stack-lg max-w-container-max mx-auto flex flex-col lg:flex-row items-center gap-12 lg:gap-24">
+            <!-- Abstract Ambient Background -->
+            <div class="absolute inset-0 pointer-events-none overflow-hidden -z-10">
+                <div
+                    class="absolute top-1/4 left-1/4 w-[40vw] h-[40vw] bg-primary/5 rounded-full blur-[100px] opacity-50 mix-blend-screen"></div>
+                <div
+                    class="absolute bottom-1/4 right-1/4 w-[30vw] h-[30vw] bg-tertiary/5 rounded-full blur-[80px] opacity-30 mix-blend-screen"></div>
+            </div>
+            <div class="w-full lg:w-5/12 flex flex-col items-start z-10 relative">
+                <div
+                    class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-surface-container border border-white/5 mb-stack-md backdrop-blur-md">
+                    <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+                    <span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-widest">Case Study</span>
+                </div>
+                <h1 class="font-display text-headline-lg-mobile md:text-display text-on-background mb-stack-md relative">
+                    Zentune
+                    <span class="block text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary/60">Platform</span>
+                </h1>
+                <p class="font-body-lg text-body-lg text-on-surface-variant mb-stack-lg max-w-xl">
+                    A high-performance ECU remapping &amp; vehicle tuning portal featuring an AI support agent and a
+                    secure credit-based file delivery ecosystem.
+                </p>
+                <div class="flex flex-wrap items-center gap-stack-sm">
+                    <button
+                        class="px-6 py-3 rounded bg-primary text-on-primary font-label-md text-label-md hover:scale-[1.02] transition-transform duration-200 flex items-center gap-2 group shadow-[0_0_20px_rgba(16,185,129,0.2)]">
+                        Visit Live Site
+                        <span
+                            class="material-symbols-outlined text-[18px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                    </button>
+                    <button
+                        class="px-6 py-3 rounded border border-white/10 text-on-surface font-label-md text-label-md hover:bg-white/5 hover:border-white/20 transition-all duration-200 flex items-center gap-2">
+                        <span class="material-symbols-outlined text-[18px]">grid_view</span>
+                        All Projects
+                    </button>
+                </div>
+            </div>
+            <div class="w-full lg:w-7/12 relative z-10">
+                <div
+                    class="relative w-full aspect-[16/10] rounded-xl overflow-hidden bg-surface-container border border-white/5 shadow-2xl shadow-black/50 group">
+                    <div
+                        class="absolute inset-0 bg-gradient-to-tr from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10 pointer-events-none"></div>
+                    <img
+                        class="w-full h-full object-cover rounded-xl transition-transform duration-700 group-hover:scale-105"
+                        data-alt="A sleek, dark-themed dashboard mockup for an automotive tuning application, displaying performance graphs, engine metrics, and credit balances. The interface uses emerald green accents on a deep slate background. High resolution, professional portfolio presentation."
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuDgOjFmpqqIqzDQb8kw1of6hJdlyfJ6e9O85tdmALdJ778LfI_UWCYzjSU_XSC8Phk3hJWodKugo2ti7W6wojjzpKkDqQmUALN6SBSU5AKfSxYwlxEQaq1TDBOMr1PO4sri-6xV2NB5-bNFpKjE3XpH6vCt5-D3YcH2jUTUn9sizn77k6Fbs3o8mzt9kBn0sEdzmV6lGxD9huVM_RY6VhU3Luh-G6m9Nxh6nLoFVmr_TGCi03ZZvvs34N9GIxhRVm39HYeW4s5oKBvX"/>
+                </div>
+                <!-- Decorative Elements -->
+                <div
+                    class="absolute -bottom-6 -left-6 w-32 h-32 border border-primary/20 rounded-full blur-[1px]"></div>
+                <div class="absolute -top-6 -right-6 w-24 h-24 border border-tertiary/20 rounded-full blur-[1px]"></div>
+            </div>
+        </section>
+        <!-- Overview Section -->
+        <section class="w-full bg-surface-container-low py-section-padding relative">
+            <div class="max-w-container-max mx-auto px-gutter grid grid-cols-1 md:grid-cols-12 gap-gutter">
+                <div class="md:col-span-4 flex flex-col justify-start">
+                    <h2 class="font-headline-md text-headline-md text-on-surface mb-stack-sm">System Overview</h2>
+                    <div class="w-12 h-1 bg-primary mb-stack-md rounded-full"></div>
+                </div>
+                <div class="md:col-span-8">
+                    <p class="font-body-lg text-body-lg text-on-surface-variant leading-relaxed">
+                        Purpose-built vehicle tuning portal integrating an <strong class="text-on-surface font-medium">AI
+                        support agent</strong> and credit-based file delivery. This sophisticated system transitions
+                        traditional ECU remapping workflows into a streamlined, automated environment. It guarantees
+                        secure file transfer, transparent transaction history, and significantly reduces manual overhead
+                        for tuning providers through intelligent automation and a robust wallet system.
+                    </p>
+                </div>
+            </div>
+        </section>
+        <!-- Impact Cards (Problem/Solution/Contribution) -->
+        <section class="w-full max-w-container-max mx-auto px-gutter py-section-padding">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+                <!-- Card 1 -->
+                <div
+                    class="group relative bg-surface-container rounded-xl p-8 border-t border-white/10 hover:border-primary/30 transition-all duration-300 shadow-lg hover:shadow-[0_8px_30px_rgba(16,185,129,0.1)] flex flex-col h-full">
+                    <div
+                        class="absolute inset-0 bg-gradient-to-b from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl pointer-events-none"></div>
+                    <div
+                        class="w-12 h-12 rounded-lg bg-surface flex items-center justify-center mb-6 border border-white/5 group-hover:border-primary/20 transition-colors">
+                        <span
+                            class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors">broken_image</span>
+                    </div>
+                    <h3 class="font-headline-md text-body-lg font-bold text-on-surface mb-4">The Challenge</h3>
+                    <p class="font-body-md text-body-md text-on-surface-variant flex-grow">
+                        Manual file handling and disjointed communication channels created bottlenecks. Tuning
+                        professionals struggled with tracking file revisions, managing payments securely, and providing
+                        24/7 support across different time zones.
+                    </p>
+                </div>
+                <!-- Card 2 -->
+                <div
+                    class="group relative bg-surface-container rounded-xl p-8 border-t border-white/10 hover:border-primary/30 transition-all duration-300 shadow-lg hover:shadow-[0_8px_30px_rgba(16,185,129,0.1)] flex flex-col h-full">
+                    <div
+                        class="absolute inset-0 bg-gradient-to-b from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl pointer-events-none"></div>
+                    <div
+                        class="w-12 h-12 rounded-lg bg-surface flex items-center justify-center mb-6 border border-white/5 group-hover:border-primary/20 transition-colors">
+                        <span
+                            class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors">lightbulb</span>
+                    </div>
+                    <h3 class="font-headline-md text-body-lg font-bold text-on-surface mb-4">The Solution</h3>
+                    <p class="font-body-md text-body-md text-on-surface-variant flex-grow">
+                        A centralized, credit-based ecosystem. Customers purchase credits to unlock tuning files, while
+                        an integrated AI agent handles initial diagnostic queries and support ticketing, reducing human
+                        intervention by 60%.
+                    </p>
+                </div>
+                <!-- Card 3 -->
+                <div
+                    class="group relative bg-surface-container rounded-xl p-8 border-t border-white/10 hover:border-primary/30 transition-all duration-300 shadow-lg hover:shadow-[0_8px_30px_rgba(16,185,129,0.1)] flex flex-col h-full">
+                    <div
+                        class="absolute inset-0 bg-gradient-to-b from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl pointer-events-none"></div>
+                    <div
+                        class="w-12 h-12 rounded-lg bg-surface flex items-center justify-center mb-6 border border-white/5 group-hover:border-primary/20 transition-colors">
+                        <span
+                            class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors">engineering</span>
+                    </div>
+                    <h3 class="font-headline-md text-body-lg font-bold text-on-surface mb-4">My Role</h3>
+                    <p class="font-body-md text-body-md text-on-surface-variant flex-grow">
+                        Led the architectural design and full-stack implementation. Engineered the secure file
+                        processing pipeline, developed the internal wallet system, and integrated the NLP models for the
+                        AI support assistant.
+                    </p>
+                </div>
+            </div>
+        </section>
+        <!-- Interactive Image Gallery (Slider) -->
+        <section class="w-full bg-surface py-section-padding relative overflow-hidden">
+            <!-- Background Texture -->
+            <div class="absolute inset-0 opacity-10 pointer-events-none"
+                 style="background-image: radial-gradient(circle at 2px 2px, rgba(255,255,255,0.15) 1px, transparent 0); background-size: 32px 32px;"></div>
+            <div class="max-w-container-max mx-auto px-gutter">
+                <div class="flex items-end justify-between mb-stack-lg">
+                    <div>
+                        <h2 class="font-headline-md text-headline-md text-on-surface mb-2">Interface Gallery</h2>
+                        <p class="font-body-md text-on-surface-variant">Visualizing the tuning ecosystem.</p>
+                    </div>
+                    <!-- Controls -->
+                    <div class="hidden md:flex gap-4">
+                        <button aria-label="Previous image"
+                                class="w-12 h-12 rounded-full border border-white/10 bg-surface-container flex items-center justify-center text-on-surface hover:bg-white/5 hover:border-white/20 transition-colors focus:outline-none focus:ring-2 focus:ring-primary"
+                                id="slider-prev">
+                            <span class="material-symbols-outlined">arrow_back</span>
+                        </button>
+                        <button aria-label="Next image"
+                                class="w-12 h-12 rounded-full border border-white/10 bg-surface-container flex items-center justify-center text-on-surface hover:bg-white/5 hover:border-white/20 transition-colors focus:outline-none focus:ring-2 focus:ring-primary"
+                                id="slider-next">
+                            <span class="material-symbols-outlined">arrow_forward</span>
+                        </button>
+                    </div>
+                </div>
+                <!-- Slider Container -->
+                <div aria-label="Project images" aria-roledescription="carousel"
+                     class="relative w-full rounded-2xl overflow-hidden bg-surface-container aspect-video md:aspect-[21/9] shadow-2xl border border-white/5 group"
+                     id="slider-container" role="region" tabindex="0">
+                    <!-- Slides Track -->
+                    <div class="flex w-full h-full transition-transform duration-500 ease-in-out" id="slider-track">
+                        <!-- Slide 1 -->
+                        <div aria-label="1 of 3" aria-roledescription="slide"
+                             class="min-w-full h-full relative flex-shrink-0" role="group">
+                            <img
+                                alt="Detailed view of the ECU mapping interface with 3D graphs and real-time engine metrics."
+                                class="w-full h-full object-cover"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAB-YpYmDRlkFyqGX2cyHSUnQjjncTP9lnGU_nk1JJbekdz5AhZvuFWkQtMEMY3Gh9Qfiyq3UaY0dswFOQsxN-mwa-QvkSy3zjSDTzK0O32CJWshgDznKDszo7NOgBrYzxlZ9hIb-KRnY_Zve2jgPfXeDMQjnBbvoXzY_x9gATdo4tmUbRIng5lMDZX7GuUnUr49qb2EgYzF8SKRBu3ncp_BLvj84kZikd9U5dye-FPTQgHeBUGD-vwvrmJjgARJeX0HFDFmx49guEi"/>
+                            <div
+                                class="absolute bottom-0 left-0 w-full p-8 bg-gradient-to-t from-background via-background/80 to-transparent">
+                                <span class="font-label-md text-primary uppercase tracking-wider mb-2 block text-sm">Dashboard</span>
+                                <h4 class="font-headline-md text-body-lg font-bold text-on-surface">Advanced Telemetry
+                                    View</h4>
+                            </div>
+                        </div>
+                        <!-- Slide 2 -->
+                        <div aria-label="2 of 3" aria-roledescription="slide"
+                             class="min-w-full h-full relative flex-shrink-0" role="group">
+                            <img
+                                alt="A rugged diagnostic laptop displaying live vehicle data streams and raw code in a workshop environment."
+                                class="w-full h-full object-cover"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAqCMUj3rAjtti2hN_35WeMjWq7xdlcLcdHosIj7Aa4d1hFhk0WrW1JpQSkQMahTALP5Lp8FlTIXMi_wJSNNR1AXGdy6OKey7WWhu9tr0_0mJzN-2v8PFNarxsXk2coOgZ1C3Ja8VjU6vG4YVc4R-VMIaePlVRTk6prLuFDI3R_DrUr1WuwDLSmYxeWto_hx1-o_7K6LA0Mc8qJ6jLgIGEtQFZ0vcrMJUKrD0M7kb0FC_YpZ3CChcJ4y9LMdeQpC6hhYjEX8rJtV8OU"/>
+                            <div
+                                class="absolute bottom-0 left-0 w-full p-8 bg-gradient-to-t from-background via-background/80 to-transparent">
+                                <span class="font-label-md text-primary uppercase tracking-wider mb-2 block text-sm">Workshop</span>
+                                <h4 class="font-headline-md text-body-lg font-bold text-on-surface">Live Diagnostic
+                                    Integration</h4>
+                            </div>
+                        </div>
+                        <!-- Slide 3 -->
+                        <div aria-label="3 of 3" aria-roledescription="slide"
+                             class="min-w-full h-full relative flex-shrink-0" role="group">
+                            <img
+                                alt="Mobile application interface showing user credit balance, file upload status, and current tuning projects."
+                                class="w-full h-full object-cover"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDvSgd7zPn7SfG4ACmQYD6UzDMRdBgWSKOno9FQ2e6get8IV3pNdzfArmtRvEJkwA-70_129gpRRMYIdUsxsQoY0MR0NKbz26uRhxN2naudXQQhVutTRmsbCNXTZ8wF_VVCVIFyHmUOwJ7CQd5sojM5HszmqU-PCXlGvNAvR9Tsr84Awr60_EH_870dcJ_lkT91IDkZNbNHvyg8DWI6fAwAtpXNviqGy1LwOCJzY0erL_MbncGP3GgT9GxXwB58uzqdrKA7fsVtFBkR"/>
+                            <div
+                                class="absolute bottom-0 left-0 w-full p-8 bg-gradient-to-t from-background via-background/80 to-transparent">
+                                <span class="font-label-md text-primary uppercase tracking-wider mb-2 block text-sm">Mobile</span>
+                                <h4 class="font-headline-md text-body-lg font-bold text-on-surface">On-the-go File
+                                    Management</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Mobile Controls (Overlay) -->
+                    <div
+                        class="absolute inset-y-0 left-0 w-16 flex items-center justify-center md:hidden bg-gradient-to-r from-background/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+                        <button aria-label="Previous image"
+                                class="w-10 h-10 rounded-full bg-background/50 backdrop-blur text-white flex items-center justify-center"
+                                id="slider-prev-mobile">
+                            <span class="material-symbols-outlined">chevron_left</span>
+                        </button>
+                    </div>
+                    <div
+                        class="absolute inset-y-0 right-0 w-16 flex items-center justify-center md:hidden bg-gradient-to-l from-background/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+                        <button aria-label="Next image"
+                                class="w-10 h-10 rounded-full bg-background/50 backdrop-blur text-white flex items-center justify-center"
+                                id="slider-next-mobile">
+                            <span class="material-symbols-outlined">chevron_right</span>
+                        </button>
+                    </div>
+                </div>
+                <!-- Pagination Dots -->
+                <div aria-label="Slides" class="flex justify-center mt-6 gap-3" id="slider-dots" role="tablist">
+                    <button aria-label="Slide 1" aria-selected="true"
+                            class="w-3 h-3 rounded-full bg-primary transition-all focus:outline-none focus:ring-2 focus:ring-primary/50"
+                            role="tab"></button>
+                    <button aria-label="Slide 2" aria-selected="false"
+                            class="w-3 h-3 rounded-full bg-surface-container-high hover:bg-surface-variant transition-all focus:outline-none focus:ring-2 focus:ring-primary/50"
+                            role="tab"></button>
+                    <button aria-label="Slide 3" aria-selected="false"
+                            class="w-3 h-3 rounded-full bg-surface-container-high hover:bg-surface-variant transition-all focus:outline-none focus:ring-2 focus:ring-primary/50"
+                            role="tab"></button>
+                </div>
+            </div>
+        </section>
+        <!-- Technical Details & Features -->
+        <section class="w-full max-w-container-max mx-auto px-gutter py-section-padding">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+                <!-- Features List -->
+                <div>
+                    <h2 class="font-headline-md text-headline-md text-on-surface mb-stack-md flex items-center gap-4">
+                        <span class="material-symbols-outlined text-primary text-[32px]">memory</span>
+                        Key Features
+                    </h2>
+                    <div class="space-y-6">
+                        <div
+                            class="flex gap-4 p-6 rounded-xl bg-surface-container border-t border-white/5 relative overflow-hidden group">
+                            <div
+                                class="absolute left-0 top-0 bottom-0 w-1 bg-primary/20 group-hover:bg-primary transition-colors"></div>
+                            <span
+                                class="material-symbols-outlined text-on-surface-variant mt-1">account_balance_wallet</span>
+                            <div>
+                                <h4 class="font-label-md text-body-md font-bold text-on-surface mb-1">Secure Credit
+                                    Ecosystem</h4>
+                                <p class="font-body-md text-sm text-on-surface-variant">Stripe-integrated wallet system
+                                    allowing seamless top-ups and granular per-file transaction deductions with
+                                    immutable ledger tracking.</p>
+                            </div>
+                        </div>
+                        <div
+                            class="flex gap-4 p-6 rounded-xl bg-surface-container border-t border-white/5 relative overflow-hidden group">
+                            <div
+                                class="absolute left-0 top-0 bottom-0 w-1 bg-primary/20 group-hover:bg-primary transition-colors"></div>
+                            <span class="material-symbols-outlined text-on-surface-variant mt-1">smart_toy</span>
+                            <div>
+                                <h4 class="font-label-md text-body-md font-bold text-on-surface mb-1">AI Support Agent
+                                    (NLP)</h4>
+                                <p class="font-body-md text-sm text-on-surface-variant">Custom trained context-aware
+                                    assistant resolving tier-1 diagnostic queries and routing complex issues to
+                                    specialized human tuners.</p>
+                            </div>
+                        </div>
+                        <div
+                            class="flex gap-4 p-6 rounded-xl bg-surface-container border-t border-white/5 relative overflow-hidden group">
+                            <div
+                                class="absolute left-0 top-0 bottom-0 w-1 bg-primary/20 group-hover:bg-primary transition-colors"></div>
+                            <span class="material-symbols-outlined text-on-surface-variant mt-1">speed</span>
+                            <div>
+                                <h4 class="font-label-md text-body-md font-bold text-on-surface mb-1">Automated File
+                                    Processing</h4>
+                                <p class="font-body-md text-sm text-on-surface-variant">Asynchronous background jobs
+                                    handling large binary file validation, checksum verification, and secure cloud
+                                    storage delivery.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Architecture & Tech Stack -->
+                <div>
+                    <h2 class="font-headline-md text-headline-md text-on-surface mb-stack-md flex items-center gap-4">
+                        <span class="material-symbols-outlined text-primary text-[32px]">architecture</span>
+                        Architecture
+                    </h2>
+                    <div class="prose prose-invert max-w-none font-body-md text-on-surface-variant mb-stack-lg">
+                        <p class="mb-4">
+                            The platform is built on a robust <strong class="text-on-surface">Laravel</strong>
+                            foundation, chosen for its elegant syntax and powerful job queuing system necessary for
+                            heavy binary file processing. The frontend utilizes a reactive architecture to ensure
+                            real-time UI updates during file uploads and telemetry rendering.
+                        </p>
+                        <p>
+                            Data persistence is managed via PostgreSQL, ensuring ACID compliance for all credit ledger
+                            transactions, while Redis handles session state and high-speed queuing for the AI processing
+                            pipeline.
+                        </p>
+                    </div>
+                    <h3 class="font-label-md text-label-md text-on-surface uppercase tracking-widest mb-4">Core
+                        Technologies</h3>
+                    <div class="flex flex-wrap gap-3">
+                        <span
+                            class="px-4 py-2 rounded-full bg-surface-container border border-white/10 font-label-md text-xs text-on-surface-variant hover:text-on-surface hover:border-primary/50 transition-colors cursor-default">Laravel</span>
+                        <span
+                            class="px-4 py-2 rounded-full bg-surface-container border border-white/10 font-label-md text-xs text-on-surface-variant hover:text-on-surface hover:border-primary/50 transition-colors cursor-default">Vue.js</span>
+                        <span
+                            class="px-4 py-2 rounded-full bg-surface-container border border-white/10 font-label-md text-xs text-on-surface-variant hover:text-on-surface hover:border-primary/50 transition-colors cursor-default">PostgreSQL</span>
+                        <span
+                            class="px-4 py-2 rounded-full bg-surface-container border border-white/10 font-label-md text-xs text-on-surface-variant hover:text-on-surface hover:border-primary/50 transition-colors cursor-default">Redis</span>
+                        <span
+                            class="px-4 py-2 rounded-full bg-surface-container border border-white/10 font-label-md text-xs text-on-surface-variant hover:text-on-surface hover:border-primary/50 transition-colors cursor-default">Stripe API</span>
+                        <span
+                            class="px-4 py-2 rounded-full bg-surface-container border border-white/10 font-label-md text-xs text-on-surface-variant hover:text-on-surface hover:border-primary/50 transition-colors cursor-default">AWS S3</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Next Project Teaser -->
+        <section
+            class="w-full bg-surface-container-low py-12 mt-section-padding border-t border-white/5 relative overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-r from-primary/5 to-transparent pointer-events-none"></div>
+            <div
+                class="max-w-container-max mx-auto px-gutter flex flex-col sm:flex-row items-center justify-between gap-6 relative z-10">
+                <div>
+                    <span class="font-label-md text-xs text-on-surface-variant uppercase tracking-widest block mb-1">Next Project</span>
+                    <h3 class="font-headline-md text-body-lg font-bold text-on-surface">FinTech Dashboard UI</h3>
+                </div>
+                <button
+                    class="w-12 h-12 rounded-full bg-primary text-on-primary flex items-center justify-center hover:scale-110 transition-transform shadow-[0_0_15px_rgba(16,185,129,0.3)]">
+                    <span class="material-symbols-outlined">arrow_forward</span>
+                </button>
+            </div>
+        </section>
+    </div>
+    <script>
+        // Simple Vanilla JS Slider Logic
+        document.addEventListener('DOMContentLoaded', () => {
+            const track = document.getElementById('slider-track');
+            const prevBtns = [document.getElementById('slider-prev'), document.getElementById('slider-prev-mobile')];
+            const nextBtns = [document.getElementById('slider-next'), document.getElementById('slider-next-mobile')];
+            const dotsContainer = document.getElementById('slider-dots');
+            const dots = Array.from(dotsContainer.children);
+            const container = document.getElementById('slider-container');
+
+            let currentIndex = 0;
+            const slideCount = dots.length;
+
+            function updateSlider(index) {
+                // Bounds check
+                if (index < 0) index = slideCount - 1;
+                if (index >= slideCount) index = 0;
+
+                currentIndex = index;
+
+                // Move track
+                track.style.transform = `translateX(-${currentIndex * 100}%)`;
+
+                // Update dots
+                dots.forEach((dot, i) => {
+                    if (i === currentIndex) {
+                        dot.classList.remove('bg-surface-container-high');
+                        dot.classList.add('bg-primary');
+                        dot.setAttribute('aria-selected', 'true');
+                    } else {
+                        dot.classList.add('bg-surface-container-high');
+                        dot.classList.remove('bg-primary');
+                        dot.setAttribute('aria-selected', 'false');
+                    }
+                });
+            }
+
+            // Event Listeners for buttons
+            prevBtns.forEach(btn => {
+                if (btn) btn.addEventListener('click', () => updateSlider(currentIndex - 1));
+            });
+
+            nextBtns.forEach(btn => {
+                if (btn) btn.addEventListener('click', () => updateSlider(currentIndex + 1));
+            });
+
+            // Event Listeners for dots
+            dots.forEach((dot, i) => {
+                dot.addEventListener('click', () => updateSlider(i));
+            });
+
+            // Keyboard navigation
+            container.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowLeft') {
+                    updateSlider(currentIndex - 1);
+                } else if (e.key === 'ArrowRight') {
+                    updateSlider(currentIndex + 1);
+                }
+            });
+        });
+    </script>
+</main>
+<footer class="w-full bg-surface-container-lowest py-section-padding">
+    <div class="max-w-container-max mx-auto px-gutter">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter mb-stack-lg">
+            <div class="col-span-1 md:col-span-2"><h3
+                class="font-headline-md text-headline-md text-on-surface mb-stack-sm">Let's build something
+                exceptional.</h3>
+                <p class="font-body-md text-body-md text-on-surface-variant">Crafting high-performance web experiences
+                    with technical rigor and aesthetic precision.</p></div>
+            <div><h4 class="font-label-md text-label-md text-primary mb-stack-md uppercase">Contact</h4>
+                <ul class="space-y-stack-sm">
+                    <li class="flex items-center gap-2 font-body-md text-body-md text-on-surface-variant hover:text-on-surface cursor-pointer transition-colors">
+                        <span class="material-symbols-outlined text-[18px]">mail</span>hello@devportfolio.com
+                    </li>
+                    <li class="flex items-center gap-2 font-body-md text-body-md text-on-surface-variant hover:text-on-surface cursor-pointer transition-colors">
+                        <span class="material-symbols-outlined text-[18px]">alternate_email</span>@devhandle
+                    </li>
+                </ul>
+            </div>
+            <div><h4 class="font-label-md text-label-md text-primary mb-stack-md uppercase">Network</h4>
+                <ul class="space-y-stack-sm">
+                    <li class="font-body-md text-body-md text-on-surface-variant hover:text-on-surface cursor-pointer transition-colors">
+                        LinkedIn
+                    </li>
+                    <li class="font-body-md text-body-md text-on-surface-variant hover:text-on-surface cursor-pointer transition-colors">
+                        GitHub
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div
+            class="border-t border-outline-variant pt-stack-md flex flex-col md:flex-row justify-between items-center gap-stack-md">
+            <span
+                class="font-label-md text-label-md text-on-surface-variant">© 2024 DEV.PORTFOLIO. All rights reserved.</span>
+            <div class="flex gap-stack-md"><span
+                class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface cursor-pointer">Privacy Policy</span><span
+                class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface cursor-pointer">Terms of Service</span>
+            </div>
+        </div>
+    </div>
+</footer>
+</body>
+</html>

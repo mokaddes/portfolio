@@ -95,14 +95,39 @@ class SkillsTableSeeder extends Seeder
                 'description' => 'I build AI-supported workflows that reduce manual work and accelerate delivery',
             ],
             [
-                'name' => 'RAG Systems',
-                'icon' => 'assets/icons/orm.svg',
-                'description' => 'I work with retrieval-augmented generation patterns for smarter search and answers',
+                'name' => 'n8n Automation',
+                'icon' => 'assets/icons/n8n.svg',
+                'description' => 'I build n8n workflows to automate post scheduling, comment replies, and cross-platform integrations',
             ],
             [
-                'name' => 'Vector Database',
-                'icon' => 'assets/icons/database.svg',
-                'description' => 'I use vector storage patterns for semantic search and AI knowledge retrieval',
+                'name' => 'Webhook Integration',
+                'icon' => 'assets/icons/webhook.svg',
+                'description' => 'I design and secure webhook handlers for real-time event-driven automation',
+            ],
+            [
+                'name' => 'Multi-Provider LLM Integration',
+                'icon' => 'assets/icons/chatgpt.svg',
+                'description' => 'I build unified AI client abstractions across OpenAI, Anthropic, Gemini, Groq, DeepSeek, and Ollama',
+            ],
+            [
+                'name' => 'Meta Graph API',
+                'icon' => 'assets/icons/facebook.svg',
+                'description' => 'I integrate Facebook Page automation, Messenger bots, and WhatsApp Business messaging via the Meta Graph API',
+            ],
+            [
+                'name' => 'WordPress Plugin Development',
+                'icon' => 'assets/icons/wordpress.svg',
+                'description' => 'I build custom WordPress plugins with admin dashboards, shortcodes, and voting/nomination systems',
+            ],
+            [
+                'name' => 'Local LLM Deployment (Ollama)',
+                'icon' => 'assets/icons/ollama.svg',
+                'description' => 'I run self-hosted open-source LLMs for cost-free, private AI agent automation',
+            ],
+            [
+                'name' => 'Google Workspace API Integration',
+                'icon' => 'assets/icons/google.svg',
+                'description' => 'I integrate Google Sheets and Google Docs via OAuth2 for automated data and document workflows',
             ],
         ]);
     }

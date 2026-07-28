@@ -9,10 +9,11 @@ class Category extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'slug', 'order_id', 'parent_id', 'status'];
+    protected $fillable = ['name', 'slug', 'order_id', 'parent_id', 'status', 'tags'];
 
     protected $casts = [
         'status' => 'boolean',
+        'tags' => 'array',
     ];
 
     public function projects()

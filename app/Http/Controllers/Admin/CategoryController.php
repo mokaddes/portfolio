@@ -44,8 +44,12 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $this->repository->create($request->except('_token'));
-       return response()->json(['success' => 'Data stored successfully'], 200);
+        $data = $request->except('_token');
+        if (isset($data['tags']) && is_string($data['tags'])) {
+            $data['tags'] = array_map('trim', explode(',', $data['tags']));
+        }
+        $this->repository->create($data);
+        return response()->json(['success' => 'Data stored successfully'], 200);
     }
 
     /**

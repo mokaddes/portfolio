@@ -102,7 +102,7 @@
         <div class="hidden items-center gap-7 lg:flex">
             <a href="{{ route('frontend.index') }}#services" class="nav-link text-sm text-slate-300 transition hover:text-white">Services</a>
             <a href="{{ route('frontend.index') }}#about" class="nav-link text-sm text-slate-300 transition hover:text-white">About</a>
-            <a href="{{ route('frontend.index') }}#projects" class="nav-link text-sm text-slate-300 transition hover:text-white">Projects</a>
+            <a href="{{ route('projects.index') }}" class="nav-link text-sm transition hover:text-white {{ request()->routeIs('projects.*') ? 'is-active' : 'text-slate-300' }}">Projects</a>
             <a href="{{ route('resume') }}" class="nav-link text-sm transition hover:text-white {{ request()->routeIs('resume') ? 'is-active' : 'text-slate-300' }}">Resume</a>
             <a href="{{ route('blog.index') }}" class="nav-link text-sm transition hover:text-white {{ request()->routeIs('blog.*') ? 'is-active' : 'text-slate-300' }}">Blog</a>
             <a href="{{ route('frontend.index') }}#contact" class="nav-link text-sm text-slate-300 transition hover:text-white">Contact</a>
@@ -126,7 +126,7 @@
         <div class="flex flex-col gap-1">
             <a href="{{ route('frontend.index') }}#services" class="rounded-lg px-3 py-2.5 text-sm text-slate-200 hover:bg-white/5">Services</a>
             <a href="{{ route('frontend.index') }}#about" class="rounded-lg px-3 py-2.5 text-sm text-slate-200 hover:bg-white/5">About</a>
-            <a href="{{ route('frontend.index') }}#projects" class="rounded-lg px-3 py-2.5 text-sm text-slate-200 hover:bg-white/5">Projects</a>
+            <a href="{{ route('projects.index') }}" class="rounded-lg px-3 py-2.5 text-sm hover:bg-white/5 {{ request()->routeIs('projects.*') ? 'text-white bg-white/5' : 'text-slate-200' }}">Projects</a>
             <a href="{{ route('resume') }}" class="rounded-lg px-3 py-2.5 text-sm hover:bg-white/5 {{ request()->routeIs('resume') ? 'text-white bg-white/5' : 'text-slate-200' }}">Resume</a>
             <a href="{{ route('blog.index') }}" class="rounded-lg px-3 py-2.5 text-sm hover:bg-white/5 {{ request()->routeIs('blog.*') ? 'text-white bg-white/5' : 'text-slate-200' }}">Blog</a>
             <a href="{{ route('frontend.index') }}#contact" class="rounded-lg px-3 py-2.5 text-sm text-slate-200 hover:bg-white/5">Contact</a>
@@ -151,7 +151,7 @@
         <div class="flex flex-wrap gap-4 text-sm text-slate-400">
             <a href="{{ route('frontend.index') }}#services" class="transition hover:text-white">Services</a>
             <a href="{{ route('frontend.index') }}#about" class="transition hover:text-white">About</a>
-            <a href="{{ route('frontend.index') }}#projects" class="transition hover:text-white">Projects</a>
+            <a href="{{ route('projects.index') }}" class="transition hover:text-white">Projects</a>
             <a href="{{ route('blog.index') }}" class="transition hover:text-white">Blog</a>
             <a href="{{ route('frontend.index') }}#contact" class="transition hover:text-white">Contact</a>
         </div>

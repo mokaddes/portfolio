@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AiProviderController;
 use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\EducationController;
+use App\Http\Controllers\Admin\GalleryController;
 use App\Http\Controllers\Admin\PersonalQualityController;
 use App\Http\Controllers\Admin\ProjectController;
 use App\Http\Controllers\Admin\SkillController;
@@ -26,6 +27,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [FrontendController::class, 'index'])->name('frontend.index');
+Route::get('/projects', [FrontendController::class, 'projectsIndex'])->name('projects.index');
 Route::get('/projects/{id}', [FrontendController::class, 'show'])->name('projects.show');
 Route::get('/study-cases/{project:slug}', [FrontendController::class, 'projectStudyCase'])->name('projects.study-case');
 Route::get('/blog', [FrontendController::class, 'blogIndex'])->name('blog.index');
@@ -38,7 +40,6 @@ Route::get('/image', [ImageProcessingController::class, 'index']);
 Route::post('/image/store', [ImageProcessingController::class, 'store'])->name('image.store');
 
 Route::get('ai', [HomeController::class, 'ai'])->name('ai.index');
-Route::get('ai/writing-assist', [HomeController::class, 'writingAssist'])->name('ai.writing-assist');
 
 Route::post('contact', [HomeController::class, 'contact'])->name('contact');
 
@@ -53,6 +54,9 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin', 'as' => 'admin.'], fu
         Route::post('/store', [ProjectController::class, 'store'])->name('store');
         Route::post('/{project}/update/', [ProjectController::class, 'update'])->name('update');
         Route::get('/{project}/delete/', [ProjectController::class, 'destroy'])->name('delete');
+        Route::get('/{project}/gallery', [GalleryController::class, 'index'])->name('gallery');
+        Route::post('/{project}/gallery/store', [GalleryController::class, 'store'])->name('gallery.store');
+        Route::get('/gallery/{gallery}/delete', [GalleryController::class, 'destroy'])->name('gallery.delete');
     });
     Route::group(['prefix' => 'categories', 'as' => 'categories.'], function () {
         Route::get('/', [CategoryController::class, 'index'])->name('index');
@@ -94,6 +98,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin', 'as' => 'admin.'], fu
         Route::post('/{blog}/update', [BlogController::class, 'update'])->name('update');
         Route::get('/{blog}/delete', [BlogController::class, 'destroy'])->name('delete');
         Route::post('/{blog}/generate-topics', [BlogController::class, 'generateTopics'])->name('generate-topics');
+        Route::post('/create-with-ai', [BlogController::class, 'createWithAi'])->name('create-with-ai');
     });
     Route::group(['prefix' => 'ai-providers', 'as' => 'ai-provider.'], function () {
         Route::get('/', [AiProviderController::class, 'index'])->name('index');

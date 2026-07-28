@@ -2,6 +2,9 @@
     $tags = collect($blog->tags ?? []);
     $words = str_word_count(strip_tags($blog->content ?? ''));
     $readMins = max(1, (int) ceil($words / 200));
+    $headings = [];
+    preg_match_all('/<h[2-3][^>]*>(.*?)<\/h[2-3]>/i', $blog->content ?? '', $matches);
+    $headings = $matches[1] ?? [];
 @endphp
 
 @extends('layouts.portfolio')
@@ -38,8 +41,19 @@
                     </div>
                 </div>
 
-                <div class="prose prose-invert prose-slate mt-8 max-w-none prose-p:leading-8 prose-p:text-slate-300 prose-headings:font-display prose-headings:text-white">
-                    {!! nl2br(e($blog->content)) !!}
+                @if(count($headings) > 1)
+                    <div class="mt-8 rounded-2xl border border-white/10 bg-white/5 p-6">
+                        <h2 class="font-display text-lg font-bold text-white">Table of Contents</h2>
+                        <ul class="mt-3 list-inside list-disc space-y-1">
+                            @foreach($headings as $h)
+                                <li class="text-sm text-slate-400">{{ strip_tags($h) }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+
+                <div class="prose prose-invert prose-slate mt-8 max-w-none prose-p:leading-8 prose-p:text-slate-300 prose-headings:font-display prose-headings:text-white prose-a:text-amber-300 prose-a:no-underline hover:prose-a:underline prose-code:text-amber-200 prose-pre:bg-slate-800 prose-img:rounded-xl">
+                    {!! $blog->content !!}
                 </div>
 
                 @if($tags->count())
@@ -50,6 +64,20 @@
                         @endforeach
                     </div>
                 @endif
+
+                <div class="mt-8 flex items-center gap-4 border-t border-white/10 pt-6">
+                    <span class="text-xs uppercase text-slate-500">Share</span>
+                    <a href="https://twitter.com/intent/tweet?text={{ urlencode($blog->title) }}&url={{ urlencode(request()->url()) }}" target="_blank" class="text-slate-400 transition hover:text-amber-300" title="Share on Twitter">
+                        <i class="fa-brands fa-x-twitter text-lg"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ urlencode(request()->url()) }}" target="_blank" class="text-slate-400 transition hover:text-amber-300" title="Share on LinkedIn">
+                        <i class="fa-brands fa-linkedin-in text-lg"></i>
+                    </a>
+                    <button onclick="navigator.clipboard.writeText(window.location.href).then(() => { this.querySelector('.tooltip').classList.remove('hidden'); setTimeout(() => { this.querySelector('.tooltip').classList.add('hidden'); }, 2000); })" class="text-slate-400 transition hover:text-amber-300 relative" title="Copy link">
+                        <i class="fa-solid fa-link text-lg"></i>
+                        <span class="tooltip hidden absolute -top-8 left-1/2 -translate-x-1/2 bg-slate-700 text-xs text-white px-2 py-1 rounded">Copied!</span>
+                    </button>
+                </div>
 
                 @if(!empty($blog->related_topics))
                     <div class="mt-6 rounded-2xl border border-amber-400/20 bg-amber-400/5 p-6">
@@ -75,5 +103,13 @@
                 </div>
             </section>
         @endif
+
+        <section class="mt-14 glass reveal rounded-2xl p-6 sm:p-10">
+            <h2 class="font-display text-2xl font-bold text-white">Leave a comment</h2>
+            <p class="mt-2 text-sm text-slate-400">Have questions or thoughts? Reach out via the contact form or start a discussion.</p>
+            <a href="{{ route('frontend.index') }}#contact" class="mt-4 inline-flex items-center gap-2 rounded-full bg-amber-400/10 px-6 py-2 text-sm font-semibold text-amber-300 transition hover:bg-amber-400/20">
+                <i class="fa-solid fa-message"></i> Contact me
+            </a>
+        </section>
     </section>
 @endsection

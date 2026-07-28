@@ -7,6 +7,13 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/pages/data-list-view.css') }}">
 @endpush
 @section('content')
+    <input type="hidden" id="store_route" value="{{ route('admin.skill.store') }}">
+    @if(session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('success') }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        </div>
+    @endif
     <div class="app-content content">
         <div class="content-overlay"></div>
         <div class="header-navbar-shadow"></div>
@@ -68,8 +75,16 @@
                                         </div>
                                     </td>
                                     <td class="product-action">
-                                        <span class="action-edit"><a href="#"><i class="feather icon-edit"></i></a></span>
-                                        <span class="action-delete"><a href="{{ route('admin.skill.delete', $skill->id) }}"><i class="feather icon-trash"></i></a></span>
+                                        @php
+                                            $editData = [
+                                                'update_route' => route('admin.skill.update', $skill->id),
+                                                'name' => $skill->name,
+                                                'description' => $skill->description,
+                                                'status' => $skill->status ? 1 : 0,
+                                            ];
+                                        @endphp
+                                        <a href="#" class="action-edit" data-edit='{{ json_encode($editData) }}'><i class="feather icon-edit"></i></a>
+                                        <a href="{{ route('admin.skill.delete', $skill->id) }}" class="action-delete" onclick="return confirm('Delete?')"><i class="feather icon-trash"></i></a>
                                     </td>
                                 </tr>
                             @endforeach

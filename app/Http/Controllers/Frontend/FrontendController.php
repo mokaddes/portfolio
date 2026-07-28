@@ -87,13 +87,31 @@ class FrontendController extends Controller
             ->orderBy('order')
             ->take(3)
             ->get();
+        $projectImage = $galleryItems->count() > 0 ? $galleryItems->first()->image : $project->image;
 
         return view('portfolio.project-study-case', [
             'project' => $project,
             'relatedProjects' => $relatedProjects,
             'galleryItems' => $galleryItems,
             'screenshots' => $screenshots,
+            'projectImage' => $projectImage,
         ]);
+    }
+
+    public function projectsIndex()
+    {
+        $projects = Project::with(['category'])
+            ->where('status', 1)
+            ->orderByDesc('is_featured')
+            ->orderBy('order')
+            ->get();
+
+        $categories = $projects->pluck('category.name')->filter()->unique()->values();
+
+        return view('portfolio.projects-index', array_merge($this->headerData(), [
+            'projects' => $projects,
+            'categories' => $categories,
+        ]));
     }
 
     public function resume()
@@ -285,7 +303,7 @@ class FrontendController extends Controller
         ];
 
         return array_merge($this->headerData(), [
-            'careerSummary' => 'I build Laravel applications, SaaS platforms, AI-assisted workflows, and database-driven portfolio systems that help teams ship faster and look more professional.',
+            'careerSummary' => 'Laravel Developer with 5+ years of experience building scalable SaaS platforms, AI-powered applications, CRM systems, REST APIs, automation workflows, and enterprise web solutions. Passionate about writing clean, maintainable code that solves real business problems.',
             'designation' => 'Laravel Developer | SaaS Engineer | AI Automation',
             'skills' => $skills,
             'projects' => $projects,

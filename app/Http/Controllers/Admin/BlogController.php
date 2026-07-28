@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Blog;
+use App\Models\Category;
 use App\Services\AiService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -13,7 +14,8 @@ class BlogController extends Controller
     public function index()
     {
         $blogs = Blog::orderBy('id', 'desc')->get();
-        return view('admin.blogs.index', compact('blogs'));
+        $categories = Category::where('status', 1)->orderBy('order_id')->get();
+        return view('admin.blogs.index', compact('blogs', 'categories'));
     }
 
     public function store(Request $request)
@@ -142,5 +144,55 @@ class BlogController extends Controller
         }
 
         return response()->json(['success' => false, 'message' => 'Failed to generate topics.'], 422);
+    }
+
+    public function createWithAi(Request $request)
+    {
+        $request->validate([
+            'category_id' => 'nullable|exists:categories,id',
+            'topic'       => 'required|string|max:255',
+        ]);
+
+        $category = $request->category_id ? Category::find($request->category_id) : null;
+        $categoryName = $category->name ?? $request->input('category_name', 'General');
+
+        $aiService = new AiService();
+
+        $prompt = "Write a complete blog post in JSON format with the following fields: "
+            . "title (string), excerpt (string, 2-3 sentences), content (string, full HTML article with multiple paragraphs and sections). "
+            . "Category: {$categoryName}. Topic: {$request->topic}. "
+            . "Also suggest 3 related topic tags as a JSON array in a 'tags' field. "
+            . "Return ONLY valid JSON, no markdown, no explanation.";
+
+        $response = $aiService->call($prompt);
+
+        if (!$response) {
+            return response()->json(['success' => false, 'message' => 'AI generation failed.'], 422);
+        }
+
+        $response = preg_replace('/^```(?:json)?\s*|\s*```$/', '', trim($response));
+        $generated = json_decode($response, true);
+
+        if (!$generated || !isset($generated['title'], $generated['content'])) {
+            return response()->json(['success' => false, 'message' => 'Invalid AI response format.'], 422);
+        }
+
+        $blog = Blog::create([
+            'title'       => $generated['title'],
+            'slug'        => Str::slug($generated['title']) . '-' . uniqid(),
+            'excerpt'     => $generated['excerpt'] ?? '',
+            'content'     => $generated['content'],
+            'category'    => $categoryName,
+            'status'      => 0,
+            'is_featured' => false,
+            'published_at' => null,
+            'related_topics' => $generated['tags'] ?? [],
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Blog post created with AI. Review and publish it.',
+            'blog' => $blog,
+        ]);
     }
 }

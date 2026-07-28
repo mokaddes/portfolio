@@ -58,6 +58,7 @@
                                 <th>TITLE</th>
                                 <th>CATEGORY</th>
                                 <th>STATUS</th>
+                                <th>FEATURED</th>
                                 <th>PUBLISHED</th>
                                 <th>ACTION</th>
                             </tr>
@@ -77,6 +78,13 @@
                                                 <div class="chip-text">{{ $blog->status ? 'Active' : 'Draft' }}</div>
                                             </div>
                                         </div>
+                                    </td>
+                                    <td>
+                                        @if($blog->is_featured)
+                                            <i class="feather icon-star text-warning"></i>
+                                        @else
+                                            <i class="feather icon-star text-muted"></i>
+                                        @endif
                                     </td>
                                     <td class="product-category">{{ $blog->published_at ? $blog->published_at->format('M d, Y') : '-' }}</td>
                                     <td class="product-action">
@@ -107,7 +115,12 @@
                                             </div>
                                             <div class="col-sm-12 data-field-col">
                                                 <label for="data-category">Category</label>
-                                                <input type="text" class="form-control" name="category" id="data-category" placeholder="e.g. Laravel, Automation">
+                                                <select class="form-control" name="category" id="data-category">
+                                                    <option value="">Select category</option>
+                                                    @foreach($categories as $cat)
+                                                        <option value="{{ $cat->name }}">{{ $cat->name }}</option>
+                                                    @endforeach
+                                                </select>
                                             </div>
                                             <div class="col-sm-12 data-field-col">
                                                 <label for="data-excerpt">Excerpt</label>
@@ -154,6 +167,61 @@
                         </div>
                     </div>
                 </section>
+
+                <div class="row mt-2">
+                    <div class="col-12 text-right">
+                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#createAiModal">
+                            <i class="feather icon-zap"></i> Create with AI
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="createAiModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Create Blog Post with AI</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form id="createAiForm">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>Category</label>
+                            <select name="category_id" class="form-control">
+                                <option value="">Select category</option>
+                                @foreach($categories as $cat)
+                                    <option value="{{ $cat->id }}" data-tags="{{ json_encode($cat->tags ?? []) }}">{{ $cat->name }}</option>
+                                @endforeach
+                            </select>
+                            <small class="text-muted">Suggested tags will appear based on category</small>
+                        </div>
+                        <div class="form-group">
+                            <label>Topic / Keywords</label>
+                            <input type="text" name="topic" class="form-control" required placeholder="e.g. Laravel best practices for 2026">
+                        </div>
+                        <div id="suggestedTags" class="form-group" style="display:none">
+                            <label>Suggested tags from category</label>
+                            <div id="tagList" class="d-flex flex-wrap gap-1"></div>
+                        </div>
+                        <div class="form-group">
+                            <div class="progress" style="display:none" id="aiProgress">
+                                <div class="progress-bar progress-bar-striped progress-bar-animated" style="width:100%">Generating...</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success" id="generateBtn">
+                            <i class="feather icon-zap"></i> Generate
+                        </button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -181,7 +249,12 @@
                         </div>
                         <div class="form-group">
                             <label>Category</label>
-                            <input type="text" name="category" class="form-control" value="{{ $blog->category }}">
+                            <select name="category" class="form-control">
+                                <option value="">Select category</option>
+                                @foreach($categories as $cat)
+                                    <option value="{{ $cat->name }}" {{ $blog->category == $cat->name ? 'selected' : '' }}>{{ $cat->name }}</option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="form-group">
                             <label>Excerpt</label>
@@ -244,6 +317,51 @@
             $('.summernote-edit').summernote({
                 height: 200,
                 toolbar: [['style',['bold','italic','underline']],['para',['ul','ol']],['insert',['link']],['view',['codeview']]]
+            });
+
+            $('select[name="category_id"]').on('change', function() {
+                var selected = $(this).find('option:selected');
+                var tags = selected.data('tags');
+                var $container = $('#suggestedTags');
+                var $tagList = $('#tagList');
+                $tagList.empty();
+                if (tags && tags.length) {
+                    $.each(tags, function(i, tag) {
+                        $tagList.append('<span class="badge badge-primary mr-1 mb-1 p-1">' + tag + '</span>');
+                    });
+                    $container.show();
+                } else {
+                    $container.hide();
+                }
+            });
+
+            $('#createAiForm').on('submit', function(e) {
+                e.preventDefault();
+                var $btn = $('#generateBtn');
+                var $progress = $('#aiProgress');
+                $btn.prop('disabled', true);
+                $progress.show();
+
+                $.ajax({
+                    url: '{{ route('admin.blog.create-with-ai') }}',
+                    method: 'POST',
+                    data: $(this).serialize(),
+                    success: function(res) {
+                        $progress.hide();
+                        $btn.prop('disabled', false);
+                        $('#createAiModal').modal('hide');
+                        location.reload();
+                    },
+                    error: function(xhr) {
+                        $progress.hide();
+                        $btn.prop('disabled', false);
+                        var msg = 'Generation failed.';
+                        if (xhr.responseJSON && xhr.responseJSON.message) {
+                            msg = xhr.responseJSON.message;
+                        }
+                        alert(msg);
+                    }
+                });
             });
         });
     </script>
