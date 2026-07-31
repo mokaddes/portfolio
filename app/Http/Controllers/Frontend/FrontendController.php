@@ -379,7 +379,7 @@ class FrontendController extends Controller
             [
                 'role' => 'Jr. Software Developer',
                 'company' => 'Arobil Ltd',
-                'period' => 'February 2021 - June 2021',
+                'period' => 'January 2022 - May 2022',
                 'location' => 'Banani, Dhaka, Bangladesh',
                 'current' => false,
                 'description' => 'Leading development of complex web applications with scalable architectures. Mentoring junior developers and conducting code reviews. Specializing in Laravel-based solutions for various business domains including e-commerce, SaaS platforms, and management systems.',
