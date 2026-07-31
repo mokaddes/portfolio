@@ -1,26 +1,4 @@
-@php
-    $settings = $settings ?? null;
 
-    $profileName = $settings?->portfolio_name ?? 'Mokaddes Hosain';
-
-    $defaultTitle = $settings?->meta_title
-        ?? 'Mokaddes Hosain | Laravel Developer | SaaS Engineer | AI Automation';
-
-    $defaultDescription = $settings?->meta_description
-        ?? 'Laravel Developer specializing in SaaS applications, AI automation, REST APIs, Laravel, Vue.js, PHP, MySQL, WordPress, and scalable enterprise web applications.';
-
-    $defaultKeywords = $settings?->keywords
-        ?? 'Laravel Developer, SaaS Engineer, AI Automation, PHP Developer, Vue.js, REST API, Bangladesh';
-
-    $seoTitle = trim($__env->yieldContent('title')) ?: $defaultTitle;
-    $seoDescription = trim($__env->yieldContent('meta_description')) ?: $defaultDescription;
-
-    $seoImage = $settings?->seo_image
-        ? asset($settings->seo_image)
-        : asset('assets/images/hero.png');
-
-    $canonical = url()->current();
-@endphp
 
 
 <meta charset="utf-8">

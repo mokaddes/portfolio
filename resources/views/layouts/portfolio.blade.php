@@ -1,3 +1,26 @@
+@php
+    $settings = $settings ?? null;
+
+    $profileName = $settings?->portfolio_name ?? 'Mokaddes Hosain';
+
+    $defaultTitle = $settings?->meta_title
+        ?? 'Mokaddes Hosain | Laravel Developer | SaaS Engineer | AI Automation';
+
+    $defaultDescription = $settings?->meta_description
+        ?? 'Laravel Developer specializing in SaaS applications, AI automation, REST APIs, Laravel, Vue.js, PHP, MySQL, WordPress, and scalable enterprise web applications.';
+
+    $defaultKeywords = $settings?->keywords
+        ?? 'Laravel Developer, SaaS Engineer, AI Automation, PHP Developer, Vue.js, REST API, Bangladesh';
+
+    $seoTitle = trim($__env->yieldContent('title')) ?: $defaultTitle;
+    $seoDescription = trim($__env->yieldContent('meta_description')) ?: $defaultDescription;
+
+    $seoImage = $settings?->seo_image
+        ? asset($settings->seo_image)
+        : asset('assets/images/hero.png');
+
+    $canonical = url()->current();
+@endphp
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -38,7 +61,7 @@
         </div>
 
         <div class="hidden items-center gap-3 lg:flex">
-            <a href="{{ $resumeLink }}" class="btn-ghost rounded-full px-5 py-2.5 text-sm font-semibold text-white transition">
+            <a href="{{ route('resume.download') }}" class="btn-ghost rounded-full px-5 py-2.5 text-sm font-semibold text-white transition">
                 Download CV
             </a>
             <a href="{{ route('frontend.index') }}#contact" class="btn-primary rounded-full px-5 py-2.5 text-sm font-bold transition">
@@ -61,7 +84,7 @@
             <a href="{{ route('frontend.index') }}#contact" class="rounded-lg px-3 py-2.5 text-sm text-slate-200 hover:bg-white/5">Contact</a>
         </div>
         <div class="mt-4 flex gap-3">
-            <a href="{{ $resumeLink }}" class="btn-ghost flex-1 rounded-full px-4 py-2.5 text-center text-sm font-semibold text-white">Curriculum Vitae</a>
+            <a href="{{ route('resume.download') }}" class="btn-ghost flex-1 rounded-full px-4 py-2.5 text-center text-sm font-semibold text-white">Curriculum Vitae</a>
             <a href="{{ route('frontend.index') }}#contact" class="btn-primary flex-1 rounded-full px-4 py-2.5 text-center text-sm font-bold">Hire Me</a>
         </div>
     </div>

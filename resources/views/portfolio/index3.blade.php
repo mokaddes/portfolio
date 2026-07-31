@@ -55,7 +55,7 @@
                     <a href="#projects" class="btn-primary rounded-full px-6 py-3 text-sm font-bold transition">
                         Explore My Work
                     </a>
-                    <a href="{{ $resumeLink }}" target="_blank" rel="noopener" class="btn-ghost rounded-full px-6 py-3 text-sm font-semibold text-white transition">
+                    <a href="{{ route('resume.download') }}" target="_blank" rel="noopener" class="btn-ghost rounded-full px-6 py-3 text-sm font-semibold text-white transition">
                         Download CV
                     </a>
                     <a href="#contact" class="inline-flex items-center gap-2 text-sm font-semibold text-slate-300 transition hover:text-amber-300">

@@ -90,13 +90,13 @@ class FrontendController extends Controller
             ->get();
         $projectImage = $galleryItems->count() > 0 ? $galleryItems->first()->image : $project->image;
 
-        return view('portfolio.project-study-case', [
+        return view('portfolio.project-study-case', array_merge($this->headerData(), [
             'project' => $project,
             'relatedProjects' => $relatedProjects,
             'galleryItems' => $galleryItems,
             'screenshots' => $screenshots,
             'projectImage' => $projectImage,
-        ]);
+        ]));
     }
 
     public function projectsIndex()

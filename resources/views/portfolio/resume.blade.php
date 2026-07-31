@@ -24,7 +24,7 @@
                 </div>
             </div>
             <div class="flex w-full shrink-0 gap-3 lg:w-auto">
-                <a href="{{ $resumeLink }}" class="btn-primary flex-1 rounded-full px-6 py-3 text-center text-sm font-bold transition lg:flex-none">
+                <a href="{{ route('resume.download') }}" class="btn-primary flex-1 rounded-full px-6 py-3 text-center text-sm font-bold transition lg:flex-none">
                     <i class="fa-solid fa-download mr-1.5"></i> Download PDF
                 </a>
             </div>
