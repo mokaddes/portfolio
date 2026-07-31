@@ -276,7 +276,7 @@ class FrontendController extends Controller
         })->values();
 
         $aboutStats = [
-            ['label' => 'Projects shipped', 'value' => $projects->count() . '+'],
+            ['label' => 'Projects shipped', 'value' => $projects->count() + 51 . '+'],
             ['label' => 'Core skills', 'value' => $skills->count() . '+'],
             ['label' => 'Tools used', 'value' => $tools->count() . '+'],
             // ['label' => 'Education records', 'value' => $education->count() . '+'],
@@ -289,15 +289,15 @@ class FrontendController extends Controller
             [
                 'role' => 'Software Developer',
                 'company' => 'Dhaka Softwares',
-                'period' => 'January 2025 - Present',
+                'period' => 'August 2022 - July 2026',
                 'location' => 'Banani, Dhaka, Bangladesh (Remote)',
                 'current' => true,
                 'description' => 'Developing and maintaining enterprise-level web applications using Laravel framework. Collaborating with cross-functional teams to deliver robust, scalable software solutions. Implementing best practices in code quality, security, and performance optimization while working remotely.',
             ],
             [
-                'role' => 'Software Developer',
+                'role' => 'Jr. Software Developer',
                 'company' => 'Arobil Ltd',
-                'period' => 'February 2022 - Present',
+                'period' => 'February 2021 - June 2021',
                 'location' => 'Banani, Dhaka, Bangladesh',
                 'current' => false,
                 'description' => 'Leading development of complex web applications with scalable architectures. Mentoring junior developers and conducting code reviews. Specializing in Laravel-based solutions for various business domains including e-commerce, SaaS platforms, and management systems.',
