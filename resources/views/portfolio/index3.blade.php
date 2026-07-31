@@ -19,7 +19,7 @@
     ])
         ->merge($featuredProjects->take(3)->map(fn ($p) => '✓ shipped  '.$p->name))
         ->push('$ echo $AVAILABILITY')
-        ->push('open for freelance, contract & remote work')
+        ->push('Available for Full-time • Remote • Freelance')
         ->values()
         ->all();
 @endphp
@@ -40,11 +40,14 @@
                     Available for Full-time, Remote & Freelance Opportunities
                 </div>
 
-                <h2 class="font-display max-w-xl text-3xl font-bold leading-[1.15] text-white sm:text-4xl lg:text-5xl">
-                    Senior Laravel Developer Building Scalable SaaS & AI-Powered Web Applications
+                <h1 class="font-display max-w-xl text-3xl font-bold leading-[1.15] text-white sm:text-4xl lg:text-5xl">
+                    Laravel Developer
+                </h1>
+                <h2 class="mt-3 text-xl text-slate-300">
+                    Building Scalable SaaS, AI Automation & Enterprise Web Applications
                 </h2>
 
-                <p class="mt-4 max-w-lg text-sm leading-6 text-slate-300 sm:text-base" style="display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden;">
+                <p class="mt-4 max-w-lg text-sm leading-6 text-slate-300 sm:text-base" >
                     {{ $careerSummary }}
                 </p>
 
@@ -96,9 +99,13 @@
     <section id="services" class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
         <div class="mb-8 reveal">
             <p class="eyebrow text-[10px] uppercase text-amber-300">What I Can Help You Build</p>
-            <h2 class="mt-2 font-display text-2xl font-bold text-white sm:text-3xl">
-                From custom Laravel development to AI integration and business automation, I deliver secure, scalable, and high-performance web solutions tailored to your business goals.
+            <h2 class="mt-2 max-w-4xl font-display text-2xl font-bold text-white sm:text-3xl">
+                End-to-End Laravel Development & AI Solutions for Modern Businesses
             </h2>
+
+            <p class="mt-4 max-w-3xl text-slate-400 leading-7">
+                I help startups, agencies, and enterprises build scalable SaaS platforms, business automation systems, AI-powered applications, REST APIs, and high-performance web solutions using Laravel and modern technologies.
+            </p>
         </div>
         <div id="services-slider" class="no-scrollbar -mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-2 md:mx-0 md:grid md:snap-none md:gap-5 md:overflow-visible md:px-0 md:grid-cols-2 xl:grid-cols-4">
             @foreach($services as $service)
@@ -117,64 +124,180 @@
         <div id="services-dots" class="mt-3 flex justify-center gap-1.5 md:hidden"></div>
     </section>
 
-    <section id="about" class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-        <div class="grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
-            <div class="glass reveal rounded-xl p-5 sm:p-6">
-                <p class="eyebrow text-[10px] uppercase text-amber-300">About</p>
-                <h2 class="mt-2 font-display text-2xl font-bold text-white sm:text-3xl">Crafting Scalable Solutions for Your Business</h2>
-                <p class="mt-4 text-sm leading-7 text-slate-300 sm:text-base">
-                    I specialize in developing secure, scalable, and maintainable web applications using Laravel. My expertise includes SaaS platforms, CRM systems, AI integration, REST APIs, payment gateways, Google Maps, automation workflows, and database optimization. I enjoy turning complex business requirements into reliable software that delivers measurable value.
+    <section id="about" class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+
+        <div class="grid gap-6 lg:grid-cols-[0.95fr_1.05fr]">
+
+            <!-- About -->
+            <div class="glass reveal rounded-xl p-6 lg:p-8">
+
+                <p class="eyebrow text-[10px] uppercase text-amber-300">
+                    About Me
                 </p>
-                <div class="mt-6 grid gap-3 sm:grid-cols-2">
-                    @foreach($personalQualities->take(4) as $quality)
-                        <div class="rounded-lg border border-white/10 bg-white/5 p-3">
-                            <div class="text-sm font-semibold text-white">{{ $quality->title ?? $quality->name ?? 'Quality' }}</div>
-                            <div class="mt-1 text-xs leading-5 text-slate-400">{{ $quality->description }}</div>
+
+                <h2 class="mt-2 font-display text-2xl font-bold text-white sm:text-3xl">
+                    Building Scalable Laravel & AI Solutions That Drive Business Growth
+                </h2>
+
+                <p class="mt-5 text-sm leading-7 text-slate-300 sm:text-base">
+                    I'm <strong class="text-white">Mokaddes Hosain</strong>, a Senior Laravel Developer with over 5 years of professional experience building secure, scalable, and high-performance web applications. I specialize in Laravel, SaaS platforms, REST APIs, AI-powered automation, and enterprise software solutions that help businesses streamline operations and accelerate growth.
+                </p>
+
+                <p class="mt-4 text-sm leading-7 text-slate-300 sm:text-base">
+                    Throughout my career, I have delivered CRM systems, ERP modules, e-commerce platforms, multi-tenant SaaS applications, automation workflows, payment gateway integrations, AI-powered tools, and custom business software. My focus is always on writing clean, maintainable code while ensuring exceptional performance, security, and long-term scalability.
+                </p>
+
+                <p class="mt-4 text-sm leading-7 text-slate-300 sm:text-base">
+                    Beyond development, I enjoy collaborating with cross-functional teams, mentoring developers, reviewing code, planning software architecture, and transforming complex business requirements into reliable digital products that create measurable business value.
+                </p>
+
+                <!-- Highlights -->
+
+                <div class="mt-8 grid gap-4 sm:grid-cols-2">
+                    @foreach($highlights as $highlight)
+                        <div class="rounded-lg border border-white/10 bg-white/5 p-4">
+                            <div class="text-lg font-bold text-white">{{ $highlight['title'] }}</div>
+                            <p class="mt-1 text-sm text-slate-400">
+                                {{ $highlight['description'] }}
+                            </p>
                         </div>
                     @endforeach
                 </div>
+
             </div>
 
-            <div class="space-y-5">
-                <div class="glass reveal rounded-xl p-5 sm:p-6">
-                    <div class="flex items-center justify-between gap-4">
-                        <h3 class="font-display text-lg font-bold text-white">Technology Stack</h3>
-                        <span class="rounded-full border border-white/10 bg-white/5 px-2.5 py-0.5 font-mono text-[10px] text-slate-300">{{ $skills->count() }} skills / {{ $tools->count() }} tools</span>
+            <!-- Right Side -->
+
+            <div class="space-y-6">
+
+                <!-- Technology -->
+
+                <div class="glass reveal rounded-xl p-6">
+
+                    <div class="flex flex-wrap items-center justify-between gap-3">
+
+                        <div>
+
+                            <h3 class="font-display text-xl font-bold text-white">
+                                Core Technologies
+                            </h3>
+
+                            <p class="mt-1 text-sm text-slate-400">
+                                Modern technologies I use to build scalable applications.
+                            </p>
+
+                        </div>
+
+                        <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1 font-mono text-xs text-slate-300">
+                        {{ $skills->count() }} Skills • {{ $tools->count() }} Tools
+                    </span>
+
                     </div>
-                    <div class="mt-4 flex flex-wrap gap-2">
+
+                    <div class="mt-6 flex flex-wrap gap-2">
+
                         @foreach($skills as $skill)
-                            <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-slate-200">{{ $skill->name }}</span>
+                            <span class="rounded-full border border-white/10 bg-white/5 px-3 py-2 text-xs text-slate-200">
+                            {{ $skill->name }}
+                        </span>
                         @endforeach
+
                         @foreach($tools as $tool)
-                            <span class="rounded-full border border-amber-400/20 bg-amber-400/10 px-3 py-1 text-xs text-amber-100">{{ $tool->name }}</span>
+                            <span class="rounded-full border border-amber-400/20 bg-amber-400/10 px-3 py-2 text-xs text-amber-100">
+                            {{ $tool->name }}
+                        </span>
                         @endforeach
+
                     </div>
+
                 </div>
 
-                <div class="glass reveal rounded-xl p-5 sm:p-6">
-                    <h3 class="font-display text-lg font-bold text-white">Education</h3>
-                    <div class="mt-4 space-y-3">
+                <!-- Education -->
+
+                <div class="glass reveal rounded-xl p-6">
+
+                    <h3 class="font-display text-xl font-bold text-white">
+                        Education
+                    </h3>
+
+                    <p class="mt-2 text-sm text-slate-400">
+                        Strong engineering background with analytical thinking and problem-solving expertise.
+                    </p>
+
+                    <div class="mt-6 space-y-4">
+
                         @foreach($educations as $education)
-                            <div class="rounded-lg border border-white/10 bg-white/5 p-3">
-                                <div class="flex flex-wrap items-center justify-between gap-2">
-                                    <div class="text-sm font-semibold text-white">{{ $education->degree }}</div>
-                                    <div class="font-mono text-[10px] uppercase tracking-[0.2em] text-slate-400">{{ $education->year }}</div>
+
+                            <div class="rounded-lg border border-white/10 bg-white/5 p-4">
+
+                                <div class="flex items-start justify-between">
+
+                                    <div>
+
+                                        <div class="text-base font-semibold text-white">
+                                            {{ $education->degree }}
+                                        </div>
+
+                                        <div class="mt-1 text-sm text-slate-300">
+                                            {{ $education->institution }}
+                                        </div>
+
+                                        <div class="mt-2 font-mono text-sm text-emerald-300">
+                                            CGPA {{ $education->cgpa }} / {{ $education->out_of_cgpa }}
+                                        </div>
+
+                                    </div>
+
+                                    <span class="font-mono text-xs uppercase tracking-[0.2em] text-slate-400">
+                                    {{ $education->year }}
+                                </span>
+
                                 </div>
-                                <div class="mt-0.5 text-xs text-slate-300">{{ $education->institution }}</div>
-                                <div class="mt-1 font-mono text-xs text-emerald-300">CGPA {{ $education->cgpa }} / {{ $education->out_of_cgpa }}</div>
+
                             </div>
+
                         @endforeach
+
                     </div>
+
                 </div>
+
+                <!-- Why Hire Me -->
+
+                <div class="glass reveal rounded-xl p-6">
+
+                    <h3 class="font-display text-xl font-bold text-white">
+                        Why Work With Me?
+                    </h3>
+
+                    <p class="mt-3 text-sm leading-7 text-slate-300">
+
+                        I believe successful software is more than just writing code. My goal is to understand your business challenges, design scalable solutions, and deliver secure, maintainable applications that support long-term growth. From planning and development to deployment and ongoing maintenance, I focus on quality, communication, and delivering real business value.
+
+                    </p>
+
+                </div>
+
             </div>
+
         </div>
+
     </section>
 
     <section id="projects" class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-        <div class="mb-8 flex flex-col gap-3 reveal sm:flex-row sm:items-end sm:justify-between">
-            <div class="max-w-2xl">
-                <p class="eyebrow text-[10px] uppercase text-amber-300">Featured Projects</p>
-                <h2 class="mt-2 font-display text-2xl font-bold text-white sm:text-3xl">A selection of highlighted projects from the portfolio.</h2>
+        <div class="mb-8 flex flex-col gap-3 reveal sm:flex-row sm:items-center sm:justify-between">
+            <div class="max-w-3xl">
+                <p class="eyebrow text-[10px] uppercase text-amber-300">
+                    Featured Projects
+                </p>
+
+                <h2 class="mt-2 font-display text-2xl font-bold text-white sm:text-3xl">
+                    Real-World Laravel, SaaS & AI Solutions
+                </h2>
+
+                <p class="mt-4 text-sm leading-7 text-slate-400 sm:text-base">
+                    Explore a selection of projects showcasing my expertise in Laravel development, SaaS platforms, AI automation, REST APIs, CRM systems, enterprise applications, and scalable web solutions built for startups and businesses.
+                </p>
             </div>
             <a href="{{ route('projects.index') }}" class="btn-primary rounded-full px-4 py-2 text-xs font-bold transition">
                 View All Projects
@@ -250,7 +373,7 @@
                         <div class="relative overflow-hidden rounded-xl border border-white/10 bg-white p-3 shadow-2xl shadow-black/40 transition duration-500 group-hover:-translate-y-1.5 sm:p-5">
                             @if($settings->certificate_image)
                                 <button type="button" data-cert-open class="block w-full cursor-zoom-in">
-                                    <img src="{{ asset($settings->certificate_image) }}" alt="{{ $settings->certificate_title ?? 'Professional certificate' }}" class="mx-auto max-h-[440px] w-auto object-contain transition duration-500 group-hover:scale-[1.02]">
+                                    <img src="{{ asset($settings->certificate_image) }}" alt="Laravel Developer Experience Certificate issued by {{ $settings->certificate_issuer }} to Mokaddes Hosain" class="mx-auto max-h-[440px] w-auto object-contain transition duration-500 group-hover:scale-[1.02]">
                                 </button>
                             @endif
                             <div class="pointer-events-none absolute right-4 top-4 inline-flex items-center gap-1.5 rounded-full bg-emerald-500 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-white shadow-lg shadow-emerald-500/30">
@@ -316,9 +439,13 @@
         <div class="grid gap-6 lg:grid-cols-[1fr_0.9fr]">
             <div class="glass reveal rounded-xl p-5 sm:p-6">
                 <p class="eyebrow text-[10px] uppercase text-amber-300">Contact</p>
-                <h2 class="mt-2 font-display text-2xl font-bold text-white sm:text-3xl">Let&apos;s build something useful together.</h2>
-                <p class="mt-4 max-w-2xl text-sm leading-6 text-slate-300 sm:text-base">
-                    Need Laravel development, project structure, or a database-driven portfolio and blog? Send a message and I&apos;ll reply.
+                <h2 class="mt-2 font-display text-2xl font-bold text-white sm:text-3xl">
+                    Let's Turn Your Ideas into Scalable Software
+                </h2>
+                <p class="mt-4 max-w-2xl text-sm leading-7 text-slate-300 sm:text-base">
+
+                    Whether you're building a SaaS platform, AI-powered application, CRM system, custom Laravel solution, or need API integrations, I'm available for freelance, remote, and full-time opportunities. Let's discuss how I can help bring your project to life.
+
                 </p>
 
                 <div class="mt-6 grid gap-3 sm:grid-cols-2">
@@ -372,30 +499,32 @@
 @endsection
 
 @push('styles')
-    .status-dot { box-shadow: 0 0 0 4px rgba(52,211,153,0.16); }
-    .term {
-        font-family: 'JetBrains Mono', monospace;
-        background: #0b0f16;
-        border: 1px solid var(--line);
-    }
-    .term-topbar span { display:inline-block; width:10px; height:10px; border-radius:999px; }
-    .term-line { opacity: 0; white-space: pre-wrap; word-break: break-word; }
-    .term-cursor {
-        display:inline-block; width:7px; height:1em; background:var(--amber);
-        margin-left:2px; vertical-align:text-bottom; animation: blink 1s step-end infinite;
-    }
-    @keyframes blink { 0%,100% { opacity:1 } 50% { opacity:0 } }
-    .orb { position:absolute; border-radius:9999px; filter: blur(70px); pointer-events:none; }
-    .orb-anim { animation: drift 14s ease-in-out infinite alternate; }
-    @keyframes drift { from { transform: translate(0,0);} to { transform: translate(18px,-14px);} }
-    .loader-spinner {
-        display:inline-block; width:14px; height:14px;
-        border:2px solid rgba(26,18,4,0.35); border-top-color:#1a1204;
-        border-radius:9999px; animation: spin .6s linear infinite;
-    }
-    @keyframes spin { to { transform: rotate(360deg); } }
-    #contact-form-message.error { border-color: rgba(251,113,133,0.25); background: rgba(251,113,133,0.10); color: #fecdd3; }
-    #contact-form-message.success { border-color: rgba(52,211,153,0.25); background: rgba(52,211,153,0.10); color: #a7f3d0; }
+    <style>
+        .status-dot { box-shadow: 0 0 0 4px rgba(52,211,153,0.16); }
+        .term {
+            font-family: 'JetBrains Mono', monospace;
+            background: #0b0f16;
+            border: 1px solid var(--line);
+        }
+        .term-topbar span { display:inline-block; width:10px; height:10px; border-radius:999px; }
+        .term-line { opacity: 0; white-space: pre-wrap; word-break: break-word; }
+        .term-cursor {
+            display:inline-block; width:7px; height:1em; background:var(--amber);
+            margin-left:2px; vertical-align:text-bottom; animation: blink 1s step-end infinite;
+        }
+        @keyframes blink { 0%,100% { opacity:1 } 50% { opacity:0 } }
+        .orb { position:absolute; border-radius:9999px; filter: blur(70px); pointer-events:none; }
+        .orb-anim { animation: drift 14s ease-in-out infinite alternate; }
+        @keyframes drift { from { transform: translate(0,0);} to { transform: translate(18px,-14px);} }
+        .loader-spinner {
+            display:inline-block; width:14px; height:14px;
+            border:2px solid rgba(26,18,4,0.35); border-top-color:#1a1204;
+            border-radius:9999px; animation: spin .6s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        #contact-form-message.error { border-color: rgba(251,113,133,0.25); background: rgba(251,113,133,0.10); color: #fecdd3; }
+        #contact-form-message.success { border-color: rgba(52,211,153,0.25); background: rgba(52,211,153,0.10); color: #a7f3d0; }
+    </style>
 @endpush
 
 @push('scripts')

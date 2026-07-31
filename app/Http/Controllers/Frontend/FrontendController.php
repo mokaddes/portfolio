@@ -260,23 +260,105 @@ class FrontendController extends Controller
             ->orderBy('order')
             ->get();
         $tools = Tool::where('status', 1)->orderBy('order')->get();
-        $personalQualities = PersonalQuality::where('status', 1)->orderBy('id')->get();
+        $totalProject = $projects->count() + 51;
+        $highlights = [
+
+            [
+                'title'=>'5+ Years Experience',
+                'description'=>'Building enterprise Laravel applications and SaaS platforms.'
+            ],
+
+            [
+                'title'=>"70+ Projects Delivered",
+                'description'=>'Successfully completed web applications for startups and businesses.'
+            ],
+
+            [
+                'title'=>'Laravel & SaaS Specialist',
+                'description'=>'Expert in scalable architecture, multi-tenant systems, and APIs.'
+            ],
+
+            [
+                'title'=>'AI & Automation',
+                'description'=>'OpenAI, n8n, workflow automation, chatbots, and intelligent solutions.'
+            ],
+
+            [
+                'title'=>'API Integration',
+                'description'=>'Payment gateways, Google APIs, OAuth, Firebase, WhatsApp, and more.'
+            ],
+
+            [
+                'title'=>'Team Leadership',
+                'description'=>'Code reviews, mentoring developers, and technical planning.'
+            ]
+
+        ];;
         $education = Education::where('status', 1)->orderByDesc('year')->get();
         $blogs = Blog::where('status', 1)->orderByDesc('published_at')->get();
 
-        $services = $categories->map(function ($category) use ($projects) {
-            $projectCount = $projects->where('category_id', $category->id)->count();
+        $services = [
 
-            return [
-                'title' => $category->name,
-                'subtitle' => $projectCount . ' live project' . ($projectCount === 1 ? '' : 's'),
-                'description' => $this->serviceDescription($category->name),
-                'icon' => $this->serviceIcon($category->name),
-            ];
-        })->values();
+            [
+                'icon' => 'fa-solid fa-layer-group',
+                'subtitle' => 'Laravel',
+                'title' => 'Custom Laravel Development',
+                'description' => 'Build secure, scalable Laravel web applications, enterprise portals, CRM systems, ERP solutions, and custom business software.'
+            ],
+
+            [
+                'icon' => 'fa-solid fa-cloud',
+                'subtitle' => 'SaaS',
+                'title' => 'SaaS Application Development',
+                'description' => 'Multi-tenant SaaS platforms with subscription billing, user management, dashboards, roles & permissions, and cloud deployment.'
+            ],
+
+            [
+                'icon' => 'fa-solid fa-robot',
+                'subtitle' => 'AI',
+                'title' => 'AI Integration & Automation',
+                'description' => 'Integrate OpenAI, ChatGPT, Gemini, Claude, AI chatbots, workflow automation, n8n, and intelligent business processes.'
+            ],
+
+            [
+                'icon' => 'fa-solid fa-code',
+                'subtitle' => 'API',
+                'title' => 'REST API Development',
+                'description' => 'Develop secure RESTful APIs, third-party integrations, payment gateways, OAuth authentication, and webhook services.'
+            ],
+
+            [
+                'icon' => 'fa-solid fa-cart-shopping',
+                'subtitle' => 'E-Commerce',
+                'title' => 'E-Commerce Solutions',
+                'description' => 'Custom online stores, payment integration, inventory management, order processing, subscriptions, and marketplace development.'
+            ],
+
+            [
+                'icon' => 'fa-solid fa-plug',
+                'subtitle' => 'Integration',
+                'title' => 'Third-Party Integrations',
+                'description' => 'Google Maps, Stripe, PayPal, Twilio, SendGrid, Firebase, WhatsApp, Google Login, and custom API integrations.'
+            ],
+
+            [
+                'icon' => 'fa-brands fa-wordpress',
+                'subtitle' => 'WordPress',
+                'title' => 'WordPress Development',
+                'description' => 'Custom themes, plugins, WooCommerce solutions, performance optimization, and API-connected WordPress applications.'
+            ],
+
+            [
+                'icon' => 'fa-solid fa-chart-line',
+                'subtitle' => 'Performance',
+                'title' => 'Optimization & Maintenance',
+                'description' => 'Website optimization, security hardening, bug fixing, database tuning, server deployment, monitoring, and long-term maintenance.'
+            ]
+
+        ];
 
         $aboutStats = [
-            ['label' => 'Projects shipped', 'value' => $projects->count() + 51 . '+'],
+            ['label' => 'Projects shipped', 'value' => 70 . '+'],
             ['label' => 'Core skills', 'value' => $skills->count() . '+'],
             ['label' => 'Tools used', 'value' => $tools->count() . '+'],
             // ['label' => 'Education records', 'value' => $education->count() . '+'],
@@ -328,7 +410,7 @@ class FrontendController extends Controller
             'categories' => $categories,
             'services' => $services,
             'tools' => $tools,
-            'personalQualities' => $personalQualities,
+            'highlights' => $highlights,
             'educations' => $education,
             'blogs' => $blogs,
             'aboutStats' => $aboutStats,

@@ -86,7 +86,7 @@
     target="{{ str_starts_with($whatsappHref, 'http') ? '_blank' : '_self' }}"
     rel="noopener"
     aria-label="Chat on WhatsApp"
-    class="fixed bottom-5 right-5 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-emerald-500 text-white shadow-2xl shadow-emerald-500/30 transition hover:scale-105 hover:bg-emerald-400"
+    class="fixed bottom-24 right-5 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-emerald-500 text-white shadow-2xl shadow-emerald-500/30 transition hover:scale-105 hover:bg-emerald-400"
 >
     <span class="motion-reduce:animate-none absolute inset-0 -z-10 animate-ping rounded-full bg-emerald-400/40"></span>
     <i class="fa-brands fa-whatsapp text-2xl"></i>
