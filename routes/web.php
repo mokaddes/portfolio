@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\EducationController;
 use App\Http\Controllers\Admin\GalleryController;
 use App\Http\Controllers\Admin\PersonalQualityController;
 use App\Http\Controllers\Admin\ProjectController;
+use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\SkillController;
 use App\Http\Controllers\Admin\ToolController;
 use App\Http\Controllers\Frontend\FrontendController;
@@ -106,6 +107,11 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin', 'as' => 'admin.'], fu
         Route::post('/{aiProvider}/update', [AiProviderController::class, 'update'])->name('update');
         Route::get('/{aiProvider}/delete', [AiProviderController::class, 'destroy'])->name('delete');
         Route::get('/{aiProvider}/toggle-active', [AiProviderController::class, 'toggleActive'])->name('toggle-active');
+    });
+
+    Route::group(['prefix' => 'settings', 'as' => 'settings.'], function () {
+        Route::get('/', [SettingsController::class, 'index'])->name('index');
+        Route::put('/update', [SettingsController::class, 'update'])->name('update');
     });
 
     Route::get('visitors', [HomeController::class, 'visitors'])->name('visitors');

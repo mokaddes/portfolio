@@ -1,5 +1,6 @@
 @php
-    $profileName = $profileName ?? 'Mokaddes Hosain';
+    $settings = $settings ?? null;
+    $profileName = $settings?->portfolio_name ?: ($profileName ?? 'Mokaddes Hosain');
     $profileTitle = $profileTitle ?? 'Laravel Developer | SaaS | Automation';
     $resumeLink = $resumeLink ?? route('resume.download');
     $whatsappHref = $whatsappHref ?? '#contact';
@@ -9,9 +10,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="@yield('meta_description', $profileName.' — Laravel developer, SaaS builder, and automation engineer. Portfolio, resume, and blog.')">
-    <title>@yield('title', $profileName.' | Portfolio')</title>
-    <link rel="shortcut icon" href="{{ asset('images/mkds.jpg') }}" type="image/x-icon">
+    <meta name="description" content="@yield('meta_description', $settings?->meta_description ?: $profileName.' — Laravel developer, SaaS builder, and automation engineer. Portfolio, resume, and blog.')">
+    <meta name="keywords" content="{{ $settings?->keywords ?? '' }}">
+    <title>@yield('title', $settings?->meta_title ?: $profileName.' | Portfolio')</title>
+    <link rel="shortcut icon" href="{{ asset($settings?->favicon ?: 'images/mkds.jpg') }}" type="image/x-icon">
+    @if($settings?->seo_image)
+        <meta property="og:image" content="{{ asset($settings->seo_image) }}">
+        <meta name="twitter:image" content="{{ asset($settings->seo_image) }}">
+    @endif
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -102,9 +108,9 @@
         <div class="hidden items-center gap-7 lg:flex">
             <a href="{{ route('frontend.index') }}#services" class="nav-link text-sm text-slate-300 transition hover:text-white">Services</a>
             <a href="{{ route('frontend.index') }}#about" class="nav-link text-sm text-slate-300 transition hover:text-white">About</a>
-            <a href="{{ route('projects.index') }}" class="nav-link text-sm transition hover:text-white {{ request()->routeIs('projects.*') ? 'is-active' : 'text-slate-300' }}">Projects</a>
+            <a href="{{ route('frontend.index') }}#projects" class="nav-link text-sm transition hover:text-white {{ request()->routeIs('projects.*') ? 'is-active' : 'text-slate-300' }}">Projects</a>
             <a href="{{ route('resume') }}" class="nav-link text-sm transition hover:text-white {{ request()->routeIs('resume') ? 'is-active' : 'text-slate-300' }}">Resume</a>
-            <a href="{{ route('blog.index') }}" class="nav-link text-sm transition hover:text-white {{ request()->routeIs('blog.*') ? 'is-active' : 'text-slate-300' }}">Blog</a>
+{{--            <a href="{{ route('blog.index') }}" class="nav-link text-sm transition hover:text-white {{ request()->routeIs('blog.*') ? 'is-active' : 'text-slate-300' }}">Blog</a>--}}
             <a href="{{ route('frontend.index') }}#contact" class="nav-link text-sm text-slate-300 transition hover:text-white">Contact</a>
         </div>
 
@@ -126,9 +132,9 @@
         <div class="flex flex-col gap-1">
             <a href="{{ route('frontend.index') }}#services" class="rounded-lg px-3 py-2.5 text-sm text-slate-200 hover:bg-white/5">Services</a>
             <a href="{{ route('frontend.index') }}#about" class="rounded-lg px-3 py-2.5 text-sm text-slate-200 hover:bg-white/5">About</a>
-            <a href="{{ route('projects.index') }}" class="rounded-lg px-3 py-2.5 text-sm hover:bg-white/5 {{ request()->routeIs('projects.*') ? 'text-white bg-white/5' : 'text-slate-200' }}">Projects</a>
+            <a href="{{ route('frontend.index') }}#projects" class="rounded-lg px-3 py-2.5 text-sm hover:bg-white/5 {{ request()->routeIs('projects.*') ? 'text-white bg-white/5' : 'text-slate-200' }}">Projects</a>
             <a href="{{ route('resume') }}" class="rounded-lg px-3 py-2.5 text-sm hover:bg-white/5 {{ request()->routeIs('resume') ? 'text-white bg-white/5' : 'text-slate-200' }}">Resume</a>
-            <a href="{{ route('blog.index') }}" class="rounded-lg px-3 py-2.5 text-sm hover:bg-white/5 {{ request()->routeIs('blog.*') ? 'text-white bg-white/5' : 'text-slate-200' }}">Blog</a>
+{{--            <a href="{{ route('blog.index') }}" class="rounded-lg px-3 py-2.5 text-sm hover:bg-white/5 {{ request()->routeIs('blog.*') ? 'text-white bg-white/5' : 'text-slate-200' }}">Blog</a>--}}
             <a href="{{ route('frontend.index') }}#contact" class="rounded-lg px-3 py-2.5 text-sm text-slate-200 hover:bg-white/5">Contact</a>
         </div>
         <div class="mt-4 flex gap-3">

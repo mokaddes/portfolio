@@ -7,11 +7,13 @@ use App\Models\Category;
 use App\Models\Education;
 use App\Models\PersonalQuality;
 use App\Models\Project;
+use App\Models\Setting;
 use App\Models\Skill;
 use App\Models\Tool;
 use App\Models\VisitorLog;
 use App\Notifications\ContactMailNotification;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Validator;
 
@@ -46,22 +48,50 @@ class HomeController extends Controller
 
     public function contact(Request $request)
     {
-       /* $blockIps = VisitorLog::where('is_blocked', '1')->pluck('ip_address')->toArray();
-        if (in_array($request->ip(), $blockIps)) {
-            abort(403, 'You are blocked from sending message.');
-        }*/
         $valid = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
             'email' => 'required|email',
             'message' => 'required'
         ]);
 
-        if ($valid->fails()) {
-            $session = [
-                'message' => $valid->errors()->first(),
+        $fail = function ($message) {
+            if (request()->wantsJson()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => $message
+                ], 422);
+            }
+
+            return redirect()->back()->with([
+                'message' => $message,
                 'alert-type' => 'error'
-            ];
-            return redirect()->back()->with($session);
+            ]);
+        };
+
+        if ($valid->fails()) {
+            return $fail($valid->errors()->first());
         }
+
+        $settings = Setting::getSettings();
+        if ($settings && $settings->is_captcha_enable && $settings->captcha_secret) {
+            $token = $request->input('g-recaptcha-response');
+
+            if (!$token) {
+                return $fail('Captcha verification failed.');
+            }
+
+            $response = Http::asForm()->post('https://www.google.com/recaptcha/api/siteverify', [
+                'secret' => $settings->captcha_secret,
+                'response' => $token,
+                'remoteip' => $request->ip(),
+            ]);
+
+            $captcha = $response->json();
+            if (!($captcha['success'] ?? false) || ($captcha['score'] ?? 0) < 0.5) {
+                return $fail('Captcha verification failed.');
+            }
+        }
+
         $data = [
             'subject' => $request->subject,
             'name' => $request->name,
@@ -71,14 +101,17 @@ class HomeController extends Controller
         ];
         $mail = 'info@mokaddes.com';
         Notification::route('mail', $mail)->notify(new ContactMailNotification($data));
-        $session = [
+
+        if ($request->wantsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Thank you for your message. We will get back to you soon.'
+            ]);
+        }
+
+        return redirect()->back()->with([
             'message' => 'Thank you for your message. We will get back to you soon.',
             'alert-type' => 'success'
-        ];
-
-        return response()->json([
-            'success' => true,
-            'message' => 'Thank you for your message. We will get back to you soon.'
         ]);
     }
 

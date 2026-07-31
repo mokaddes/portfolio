@@ -8,6 +8,7 @@ use App\Models\Category;
 use App\Models\Education;
 use App\Models\PersonalQuality;
 use App\Models\Project;
+use App\Models\Setting;
 use App\Models\Skill;
 use App\Models\Tool;
 use App\Models\VisitorLog;
@@ -128,6 +129,16 @@ class FrontendController extends Controller
     {
         $data = $this->portfolioData();
 
+        $data['careerSummary'] = 'Full-Stack Laravel Developer with 5+ years of experience building
+            scalable web applications, SaaS platforms, e-commerce solutions,
+            booking systems, and enterprise software. Proficient in PHP, Laravel,
+            Vue.js, MySQL, REST APIs, JavaScript, and modern web technologies.
+            Experienced in AI integration, including LLMs, n8n automation,
+            webhooks, and multi-provider AI solutions for business workflows.
+            Passionate about developing secure, high-performance, and userfocused applications while delivering clean, maintainable, and scalable
+            code.';
+
+//        return view('portfolio.resume-pdf', $data);
         $pdf = Pdf::loadView('portfolio.resume-pdf', $data)
             ->setPaper('a4', 'portrait')
             ->setOption('isRemoteEnabled', true)
@@ -208,10 +219,17 @@ class FrontendController extends Controller
             return Str::contains(strtolower($card['label']), 'whatsapp');
         });
 
+        $imagePath = public_path('assets/images/mokaddes.png');
+        $settings = Setting::getSettings();
+
+
         return [
+            'settings' => $settings,
             'profileName' => 'Mokaddes Hosain',
             'profileTitle' => 'Laravel Developer | SaaS | Automation',
-            'profileImage' => asset('images/mkds.jpg'),
+            'profileImage' => file_exists($imagePath)
+                ? 'data:image/png;base64,' . base64_encode(file_get_contents($imagePath))
+                : null,
             'resumeLink' => route('resume.download'),
             'contactCards' => $contactCards,
             'whatsappHref' => $whatsappCard['href'] ?? '#contact',

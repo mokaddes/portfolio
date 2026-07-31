@@ -24,8 +24,8 @@
         ->all();
 @endphp
 
-@section('title', $profileName.' | Portfolio')
-@section('meta_description', 'Content-driven Laravel portfolio with live projects, services, about details, and blog articles.')
+@section('title', $settings?->meta_title ?: ($profileName.' | Portfolio'))
+@section('meta_description', $settings?->meta_description ?: 'Content-driven Laravel portfolio with live projects, services, about details, and blog articles.')
 @section('header_tag', 'Portfolio')
 
 @section('content')
@@ -74,7 +74,7 @@
                 <div class="term overflow-hidden rounded-2xl shadow-2xl">
                     <div class="flex flex-col items-center gap-3 bg-white/[0.02] px-6 pb-6 pt-8">
                         <div class="h-24 w-24 shrink-0 overflow-hidden rounded-full ring-4 ring-amber-400/20 ring-offset-4 ring-offset-[#0b0f16] sm:h-28 sm:w-28">
-                            <img src="{{ asset('assets/images/hero.png') }}" alt="{{ $profileName }}" class="h-full w-full object-cover object-top">
+                            <img src="{{ asset($settings?->portfolio_image ?: 'assets/images/hero.png') }}" alt="{{ $profileName }}" class="h-full w-full object-cover object-top">
                         </div>
                         <div class="text-center">
                             <div class="font-display text-base font-bold text-white">{{ $profileName }}</div>
@@ -94,13 +94,13 @@
     </section>
 
     <section id="services" class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-        <div class="mb-8 max-w-2xl reveal">
+        <div class="mb-8 reveal">
             <p class="eyebrow text-[10px] uppercase text-amber-300">What I Can Help You Build</p>
             <h2 class="mt-2 font-display text-2xl font-bold text-white sm:text-3xl">
                 From custom Laravel development to AI integration and business automation, I deliver secure, scalable, and high-performance web solutions tailored to your business goals.
             </h2>
         </div>
-        <div id="services-slider" class="no-scrollbar -mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-2 md:mx-0 md:grid md:snap-none md:gap-5 md:overflow-visible md:px-0 md:grid-cols-2 xl:grid-cols-3">
+        <div id="services-slider" class="no-scrollbar -mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-2 md:mx-0 md:grid md:snap-none md:gap-5 md:overflow-visible md:px-0 md:grid-cols-2 xl:grid-cols-4">
             @foreach($services as $service)
                 <article class="glass reveal w-[82%] shrink-0 snap-center rounded-xl p-5 transition duration-300 hover:-translate-y-1.5 hover:border-amber-400/25 md:w-auto md:shrink" style="transition-delay:{{ $loop->index * 60 }}ms">
                     <div class="flex items-start justify-between gap-3">
@@ -217,36 +217,100 @@
         <div id="projects-dots" class="mt-3 flex justify-center gap-1.5 md:hidden"></div>
     </section>
 
-    <section class="hidden md:block mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-        <div class="glass reveal rounded-xl p-5 sm:p-6">
-            <div class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-                <div class="max-w-2xl">
-                    <p class="eyebrow text-[10px] uppercase text-amber-300">Blog preview</p>
-                    <h2 class="mt-2 font-display text-2xl font-bold text-white sm:text-3xl">The blog lives on its own page now.</h2>
-                    <p class="mt-3 text-sm leading-6 text-slate-300 sm:text-base">A quick preview here — full articles are on a separate page, stored in the database.</p>
-                </div>
-                <a href="{{ route('blog.index') }}" class="btn-ghost w-fit rounded-full px-4 py-2 text-xs font-semibold text-white transition">
-                    View all posts
-                </a>
-            </div>
+    @if($settings?->certificate_image || $settings?->certificate_title)
+        <section id="certificate" class="relative mx-auto max-w-7xl overflow-hidden px-4 py-12 sm:px-6 lg:px-8">
+            <div class="orb orb-anim h-72 w-72 bg-emerald-400/10" style="bottom:-5rem; right:-6rem; animation-delay:1s;"></div>
+            <div class="orb orb-anim h-56 w-56 bg-amber-400/10" style="top:-4rem; left:-5rem; animation-delay:3s;"></div>
 
-            <div class="mt-6 grid gap-4 md:grid-cols-3">
-                @forelse($featuredBlogs as $blog)
-                    <article class="rounded-lg border border-white/10 bg-slate-950/45 p-5 transition duration-300 hover:-translate-y-1 hover:border-amber-400/20">
-                        <div class="eyebrow text-[10px] uppercase text-amber-300">{{ $blog->category ?? 'Article' }}</div>
-                        <h3 class="mt-3 font-display text-lg font-bold text-white">{{ $blog->title }}</h3>
-                        <p class="mt-2 text-sm leading-6 text-slate-400">{{ $blog->excerpt }}</p>
-                        <a href="{{ route('blog.show', $blog) }}" class="mt-4 inline-flex items-center gap-1.5 text-xs font-semibold text-amber-200">
-                            Read article
-                            <i class="fa-solid fa-arrow-right text-[10px]"></i>
-                        </a>
-                    </article>
-                @empty
-                    <div class="rounded-lg border border-white/10 bg-slate-950/45 p-5 text-sm text-slate-300">No blog posts found.</div>
-                @endforelse
+            <div class="relative z-10 glass reveal rounded-2xl p-5 sm:p-8 lg:p-10">
+                <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+                    <div class="max-w-2xl">
+                        <div class="inline-flex items-center gap-2.5">
+                            <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-amber-400/10 text-amber-300">
+                                <i class="fa-solid fa-award text-sm"></i>
+                            </span>
+                            <p class="eyebrow text-[10px] uppercase text-amber-300">Professional Certificate</p>
+                        </div>
+                        <h2 class="mt-3 font-display text-2xl font-bold text-white sm:text-3xl">
+                            A credential earned through real, verifiable work.
+                        </h2>
+                        <p class="mt-2 text-sm leading-6 text-slate-400">
+                            A certification that reflects the skills, practice, and standards applied to the projects in this portfolio.
+                        </p>
+                    </div>
+                    <div class="inline-flex w-fit items-center gap-2 rounded-full border border-emerald-400/20 bg-emerald-400/10 px-3.5 py-1.5 text-xs font-semibold text-emerald-200">
+                        <span class="status-dot h-2 w-2 rounded-full bg-emerald-300"></span>
+                        Verified credential
+                    </div>
+                </div>
+
+                <div class="mt-8 grid items-center gap-8 lg:grid-cols-[1.15fr_0.85fr] lg:gap-10">
+                    <div class="group relative">
+                        <div class="absolute -inset-4 rounded-3xl bg-gradient-to-tr from-amber-400/15 via-transparent to-emerald-400/15 blur-2xl opacity-0 transition duration-500 group-hover:opacity-100"></div>
+                        <div class="relative overflow-hidden rounded-xl border border-white/10 bg-white p-3 shadow-2xl shadow-black/40 transition duration-500 group-hover:-translate-y-1.5 sm:p-5">
+                            @if($settings->certificate_image)
+                                <button type="button" data-cert-open class="block w-full cursor-zoom-in">
+                                    <img src="{{ asset($settings->certificate_image) }}" alt="{{ $settings->certificate_title ?? 'Professional certificate' }}" class="mx-auto max-h-[440px] w-auto object-contain transition duration-500 group-hover:scale-[1.02]">
+                                </button>
+                            @endif
+                            <div class="pointer-events-none absolute right-4 top-4 inline-flex items-center gap-1.5 rounded-full bg-emerald-500 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-white shadow-lg shadow-emerald-500/30">
+                                <i class="fa-solid fa-shield-halved text-[10px]"></i>
+                                Verified
+                            </div>
+                            @if($settings->certificate_image)
+                                <div class="absolute inset-x-0 bottom-0 flex items-center justify-center gap-1.5 bg-gradient-to-t from-black/70 to-transparent pb-4 pt-10 text-[11px] font-semibold text-white opacity-0 transition duration-300 group-hover:opacity-100">
+                                    <i class="fa-solid fa-magnifying-glass-plus text-[10px]"></i>
+                                    Click to view full size
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div class="rounded-xl border border-white/10 bg-slate-950/45 p-4">
+                            <div class="eyebrow text-[9px] uppercase text-slate-500">Certificate</div>
+                            <div class="mt-1.5 font-display text-lg font-bold leading-snug text-white">{{ $settings->certificate_title ?? 'Professional Certificate' }}</div>
+                        </div>
+                        <div class="rounded-xl border border-white/10 bg-slate-950/45 p-4">
+                            <div class="eyebrow text-[9px] uppercase text-slate-500">Issued by</div>
+                            <div class="mt-1.5 flex items-center gap-2 text-sm font-semibold text-white">
+                                <span class="flex h-7 w-7 items-center justify-center rounded-md bg-white/5 text-amber-300">
+                                    <i class="fa-solid fa-building-columns text-[11px]"></i>
+                                </span>
+                                {{ $settings->certificate_issuer ?? '—' }}
+                            </div>
+                        </div>
+                        <div class="rounded-xl border border-white/10 bg-slate-950/45 p-4">
+                            <div class="flex items-center gap-3">
+                                <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-emerald-400/10 text-emerald-300">
+                                    <i class="fa-solid fa-circle-check text-[11px]"></i>
+                                </span>
+                                <div>
+                                    <div class="eyebrow text-[9px] uppercase text-slate-500">Status</div>
+                                    <div class="mt-0.5 text-sm font-semibold text-white">Issued & active</div>
+                                </div>
+                            </div>
+                        </div>
+                        @if($settings->certificate_image)
+                            <button type="button" data-cert-open class="btn-primary inline-flex w-full items-center justify-center gap-2 rounded-full px-5 py-2.5 text-xs font-bold transition sm:w-auto">
+                                <i class="fa-solid fa-expand text-[11px]"></i>
+                                View full size
+                            </button>
+                        @endif
+                    </div>
+                </div>
             </div>
+        </section>
+
+        <div id="cert-lightbox" class="fixed inset-0 z-[70] hidden items-center justify-center bg-black/85 p-4 backdrop-blur-sm">
+            <button type="button" data-cert-close aria-label="Close certificate preview" class="absolute right-5 top-5 flex h-10 w-10 items-center justify-center rounded-full border border-white/15 bg-white/5 text-white transition hover:bg-white/15">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            @if($settings->certificate_image)
+                <img src="{{ asset($settings->certificate_image) }}" alt="{{ $settings->certificate_title ?? 'Professional certificate' }}" class="max-h-[88vh] max-w-full rounded-lg object-contain shadow-2xl">
+            @endif
         </div>
-    </section>
+    @endif
 
     <section id="contact" class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
         <div class="grid gap-6 lg:grid-cols-[1fr_0.9fr]">
@@ -276,11 +340,11 @@
 
             <div class="glass reveal rounded-xl p-5 sm:p-6" style="transition-delay:120ms">
                 <h3 class="font-display text-lg font-bold text-white">Send a message</h3>
-                <form action="{{ route('contact') }}" method="post" class="mt-4 space-y-3">
+                <form id="contact-form" action="{{ route('contact') }}" method="post" class="mt-4 space-y-3">
                     @csrf
                     <div>
                         <label for="name" class="mb-1.5 block text-xs font-semibold text-slate-300">Name</label>
-                        <input id="name" name="name" type="text" class="w-full rounded-lg border border-white/10 bg-slate-950/60 px-3.5 py-2.5 text-sm text-white outline-none transition focus:border-amber-400/50 focus:ring-2 focus:ring-amber-400/20">
+                        <input id="name" name="name" type="text" required class="w-full rounded-lg border border-white/10 bg-slate-950/60 px-3.5 py-2.5 text-sm text-white outline-none transition focus:border-amber-400/50 focus:ring-2 focus:ring-amber-400/20">
                     </div>
                     <div>
                         <label for="email" class="mb-1.5 block text-xs font-semibold text-slate-300">Email</label>
@@ -290,9 +354,17 @@
                         <label for="message" class="mb-1.5 block text-xs font-semibold text-slate-300">Message</label>
                         <textarea id="message" name="message" rows="4" required class="w-full rounded-lg border border-white/10 bg-slate-950/60 px-3.5 py-2.5 text-sm text-white outline-none transition focus:border-amber-400/50 focus:ring-2 focus:ring-amber-400/20"></textarea>
                     </div>
-                    <button type="submit" class="btn-primary w-full rounded-lg px-4 py-2.5 text-xs font-bold transition">
-                        Send message
+                    @if(($settings->is_captcha_enable ?? false) && $settings->captcha_key)
+                        <input type="hidden" name="g-recaptcha-response" id="g-recaptcha-response">
+                        <div class="text-xs text-slate-500">Protected by reCAPTCHA v3.</div>
+                    @endif
+                    <button type="submit" id="contact-submit-btn" class="btn-primary flex w-full items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-xs font-bold transition disabled:cursor-not-allowed disabled:opacity-70">
+                        <span class="btn-label">Send message</span>
+                        <span class="btn-loader hidden">
+                            <span class="loader-spinner"></span>
+                        </span>
                     </button>
+                    <div id="contact-form-message" class="hidden rounded-lg border px-3.5 py-2.5 text-xs font-semibold"></div>
                 </form>
             </div>
         </div>
@@ -316,9 +388,127 @@
     .orb { position:absolute; border-radius:9999px; filter: blur(70px); pointer-events:none; }
     .orb-anim { animation: drift 14s ease-in-out infinite alternate; }
     @keyframes drift { from { transform: translate(0,0);} to { transform: translate(18px,-14px);} }
+    .loader-spinner {
+        display:inline-block; width:14px; height:14px;
+        border:2px solid rgba(26,18,4,0.35); border-top-color:#1a1204;
+        border-radius:9999px; animation: spin .6s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    #contact-form-message.error { border-color: rgba(251,113,133,0.25); background: rgba(251,113,133,0.10); color: #fecdd3; }
+    #contact-form-message.success { border-color: rgba(52,211,153,0.25); background: rgba(52,211,153,0.10); color: #a7f3d0; }
 @endpush
 
 @push('scripts')
+<script>
+    (function () {
+        const lightbox = document.getElementById('cert-lightbox');
+        if (!lightbox) return;
+        const openers = document.querySelectorAll('[data-cert-open]');
+        const closer = document.querySelector('[data-cert-close]');
+
+        function open() {
+            lightbox.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+        function close() {
+            lightbox.classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+        openers.forEach(function (el) {
+            el.addEventListener('click', function (e) {
+                e.preventDefault();
+                open();
+            });
+        });
+        if (closer) closer.addEventListener('click', close);
+        lightbox.addEventListener('click', function (e) {
+            if (e.target === lightbox) close();
+        });
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') close();
+        });
+    })();
+</script>
+@if(($settings->is_captcha_enable ?? false) && $settings->captcha_key)
+    <script src="https://www.google.com/recaptcha/api.js?render={{ $settings->captcha_key }}"></script>
+@endif
+<script>
+    (function () {
+        const siteKey = @json(($settings->is_captcha_enable ?? false) ? $settings->captcha_key : null);
+        const form = document.getElementById('contact-form');
+        if (!form) return;
+
+        const btn = document.getElementById('contact-submit-btn');
+        const btnLabel = btn.querySelector('.btn-label');
+        const btnLoader = btn.querySelector('.btn-loader');
+        const msgBox = document.getElementById('contact-form-message');
+
+        function showMessage(type, text) {
+            msgBox.textContent = text;
+            msgBox.classList.remove('hidden', 'error', 'success');
+            msgBox.classList.add(type);
+            clearTimeout(showMessage._timer);
+            showMessage._timer = setTimeout(function () {
+                msgBox.classList.add('hidden');
+            }, 8000);
+        }
+
+        function setLoading(loading) {
+            btn.disabled = loading;
+            btnLabel.classList.toggle('hidden', loading);
+            btnLoader.classList.toggle('hidden', !loading);
+        }
+
+        function submitAjax() {
+            setLoading(true);
+            msgBox.classList.add('hidden');
+
+            fetch(form.action, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest'
+                },
+                body: new FormData(form)
+            })
+                .then(function (res) {
+                    return res.json().catch(function () { return null; }).then(function (data) {
+                        return { ok: res.ok, data: data };
+                    });
+                })
+                .then(function (result) {
+                    if (result.ok && result.data && result.data.success) {
+                        showMessage('success', result.data.message || 'Thank you for your message.');
+                        form.reset();
+                    } else {
+                        showMessage('error', (result.data && result.data.message) || 'Something went wrong. Please try again.');
+                    }
+                })
+                .catch(function () {
+                    showMessage('error', 'Something went wrong. Please try again.');
+                })
+                .finally(function () {
+                    setLoading(false);
+                });
+        }
+
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            if (btn.disabled) return;
+
+            if (siteKey && window.grecaptcha) {
+                grecaptcha.ready(function () {
+                    grecaptcha.execute(siteKey, { action: 'contact' }).then(function (token) {
+                        document.getElementById('g-recaptcha-response').value = token;
+                        submitAjax();
+                    });
+                });
+            } else {
+                submitAjax();
+            }
+        });
+    })();
+</script>
 <script>
     (function () {
         const body = document.getElementById('terminal-body');

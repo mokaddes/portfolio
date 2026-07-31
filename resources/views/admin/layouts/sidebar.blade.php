@@ -75,6 +75,12 @@
                     <span class="menu-title" data-i18n="AiProvider">AI Providers</span>
                 </a>
             </li>
+            <li class=" nav-item @yield('settings')">
+                <a href="{{ route('admin.settings.index') }}">
+                    <i class="feather icon-settings"></i>
+                    <span class="menu-title" data-i18n="Settings">Settings</span>
+                </a>
+            </li>
             <li class=" nav-item @yield('visitors')">
                 <a href="{{ route('admin.visitors') }}">
                     <i class="feather icon-user"></i>

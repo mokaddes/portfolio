@@ -21,7 +21,7 @@ class ProjectGalleriesTableSeeder extends Seeder
             for ($i = 1; $i <= 5; $i++) {
                 $galleries[] = [
                     'project_id' => $project->id,
-                    'image' => "assets/images/gallery/project/{$project->slug}_{$i}.jpg",
+                    'image' => "assets/images/gallery/{$project->slug}/{$i}.jpg",
                     'caption' => "Preview of {$project->name} – Image {$i}",
                     'created_at' => now(),
                     'updated_at' => now(),
