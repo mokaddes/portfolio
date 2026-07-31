@@ -32,14 +32,14 @@
             <a href="{{ route('frontend.index') }}#services" class="nav-link text-sm text-slate-300 transition hover:text-white">Services</a>
             <a href="{{ route('frontend.index') }}#about" class="nav-link text-sm text-slate-300 transition hover:text-white">About</a>
             <a href="{{ route('frontend.index') }}#projects" class="nav-link text-sm transition hover:text-white {{ request()->routeIs('projects.*') ? 'is-active' : 'text-slate-300' }}">Projects</a>
-            <a href="{{ route('resume') }}" class="nav-link text-sm transition hover:text-white {{ request()->routeIs('resume') ? 'is-active' : 'text-slate-300' }}">Resume</a>
+            <a href="{{ route('CV') }}" class="nav-link text-sm transition hover:text-white {{ request()->routeIs('resume') ? 'is-active' : 'text-slate-300' }}">Resume</a>
 {{--            <a href="{{ route('blog.index') }}" class="nav-link text-sm transition hover:text-white {{ request()->routeIs('blog.*') ? 'is-active' : 'text-slate-300' }}">Blog</a>--}}
             <a href="{{ route('frontend.index') }}#contact" class="nav-link text-sm text-slate-300 transition hover:text-white">Contact</a>
         </div>
 
         <div class="hidden items-center gap-3 lg:flex">
             <a href="{{ $resumeLink }}" class="btn-ghost rounded-full px-5 py-2.5 text-sm font-semibold text-white transition">
-                Download Resume
+                Download CV
             </a>
             <a href="{{ route('frontend.index') }}#contact" class="btn-primary rounded-full px-5 py-2.5 text-sm font-bold transition">
                 Hire Me
@@ -56,7 +56,7 @@
             <a href="{{ route('frontend.index') }}#services" class="rounded-lg px-3 py-2.5 text-sm text-slate-200 hover:bg-white/5">Services</a>
             <a href="{{ route('frontend.index') }}#about" class="rounded-lg px-3 py-2.5 text-sm text-slate-200 hover:bg-white/5">About</a>
             <a href="{{ route('frontend.index') }}#projects" class="rounded-lg px-3 py-2.5 text-sm hover:bg-white/5 {{ request()->routeIs('projects.*') ? 'text-white bg-white/5' : 'text-slate-200' }}">Projects</a>
-            <a href="{{ route('resume') }}" class="rounded-lg px-3 py-2.5 text-sm hover:bg-white/5 {{ request()->routeIs('resume') ? 'text-white bg-white/5' : 'text-slate-200' }}">Resume</a>
+            <a href="{{ route('CV') }}" class="rounded-lg px-3 py-2.5 text-sm hover:bg-white/5 {{ request()->routeIs('resume') ? 'text-white bg-white/5' : 'text-slate-200' }}">Resume</a>
 {{--            <a href="{{ route('blog.index') }}" class="rounded-lg px-3 py-2.5 text-sm hover:bg-white/5 {{ request()->routeIs('blog.*') ? 'text-white bg-white/5' : 'text-slate-200' }}">Blog</a>--}}
             <a href="{{ route('frontend.index') }}#contact" class="rounded-lg px-3 py-2.5 text-sm text-slate-200 hover:bg-white/5">Contact</a>
         </div>

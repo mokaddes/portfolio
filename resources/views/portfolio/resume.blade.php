@@ -10,7 +10,7 @@
         <section class="glass reveal flex flex-col items-center gap-6 rounded-2xl p-7 text-center sm:p-9 lg:flex-row lg:items-center lg:text-left">
             <img src="{{ $profileImage }}" alt="{{ $profileName }}" class="h-28 w-28 shrink-0 rounded-full object-cover ring-4 ring-amber-400/20 ring-offset-4 ring-offset-[#0f141c] sm:h-32 sm:w-32">
             <div class="min-w-0 flex-1">
-                <p class="eyebrow text-xs uppercase text-amber-300">Resume</p>
+                <p class="eyebrow text-xs uppercase text-amber-300">Curriculum Vitae</p>
                 <h1 class="mt-2 font-display text-3xl font-bold text-white sm:text-4xl">{{ $profileName }}</h1>
                 <p class="mt-1 text-sm uppercase tracking-[0.18em] text-slate-400">{{ $designation }}</p>
                 <p class="mt-4 max-w-2xl text-sm leading-7 text-slate-300 sm:text-base">{{ $careerSummary }}</p>
@@ -176,15 +176,15 @@
                     </div>
                 </div>
 
-                @if($personalQualities->count())
+                @if($highlights)
                     <div class="glass reveal rounded-2xl p-7 sm:p-8">
                         <p class="eyebrow text-xs uppercase text-amber-300">Why hire me</p>
                         <h2 class="mt-2 font-display text-2xl font-bold text-white sm:text-3xl">Working style</h2>
                         <div class="mt-5 grid gap-3 md:grid-cols-2">
-                            @foreach($personalQualities->take(6) as $quality)
+                            @foreach($highlights as $quality)
                                 <div class="rounded-xl border border-white/10 bg-slate-950/50 p-4">
-                                    <div class="font-semibold text-white">{{ $quality->title ?? $quality->name }}</div>
-                                    <div class="mt-2 text-sm leading-7 text-slate-400">{{ $quality->description }}</div>
+                                    <div class="font-semibold text-white">{{ $quality['title'] ?? $quality['name'] }}</div>
+                                    <div class="mt-2 text-sm leading-7 text-slate-400">{{ $quality['description'] }}</div>
                                 </div>
                             @endforeach
                         </div>
