@@ -18,8 +18,30 @@
         <meta property="og:image" content="{{ asset($settings->seo_image) }}">
         <meta name="twitter:image" content="{{ asset($settings->seo_image) }}">
     @endif
+    <meta property="og:title" content="@yield('title', $settings?->meta_title ?: $profileName . ' | Portfolio')">
+    <meta property="og:description" content="@yield('meta_description', $settings?->meta_description)">
+    <meta property="og:image" content="{{ asset($settings?->seo_image) }}">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="{{ $profileName }}">
+    <meta property="og:locale" content="en_US">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="@yield('title', $settings?->meta_title ?: $profileName . ' | Portfolio')">
+    <meta name="twitter:description" content="@yield('meta_description', $settings?->meta_description)">
+    <meta name="twitter:image" content="{{ asset($settings?->seo_image) }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <meta property="fb:app_id" content="2390583041430665">
+
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-KN8XQ96L');</script>
+    <!-- End Google Tag Manager -->
+
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -91,6 +113,10 @@
     </style>
 </head>
 <body class="overflow-x-hidden">
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KN8XQ96L"
+                  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
 <div class="fixed inset-0 pointer-events-none grid-glow"></div>
 
 <header class="sticky top-0 z-50 border-b border-white/5 bg-slate-950/70 backdrop-blur-xl">
