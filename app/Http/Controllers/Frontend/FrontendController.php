@@ -219,8 +219,8 @@ class FrontendController extends Controller
             return Str::contains(strtolower($card['label']), 'whatsapp');
         });
 
-        $imagePath = public_path('assets/images/mokaddes.png');
         $settings = Setting::getSettings();
+        $imagePath = public_path($settings->portfolio_image);
 
 
         return [
