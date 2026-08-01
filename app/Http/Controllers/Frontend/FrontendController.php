@@ -117,7 +117,7 @@ class FrontendController extends Controller
 
     public function resume()
     {
-        $data = $this->portfolioData();
+        $data = $this->portfolioData() + $this->headerData();
 
         return view('portfolio.resume', $data);
     }
@@ -127,7 +127,7 @@ class FrontendController extends Controller
      */
     public function resumeDownload()
     {
-        $data = $this->portfolioData();
+        $data = $this->portfolioData() + $this->headerData();
 
         $data['careerSummary'] = 'Full-Stack Laravel Developer with 5+ years of experience building
             scalable web applications, SaaS platforms, e-commerce solutions,
