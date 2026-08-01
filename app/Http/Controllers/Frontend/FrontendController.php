@@ -241,7 +241,7 @@ class FrontendController extends Controller
         return [
             ['label' => 'Email', 'value' => 'mr.mokaddes@gmail.com', 'href' => 'mailto:mr.mokaddes@gmail.com', 'icon' => 'fa-regular fa-envelope'],
             ['label' => 'WhatsApp', 'value' => '+8801750899448', 'href' => 'https://wa.me/8801750899448', 'icon' => 'fa-brands fa-whatsapp'],
-            ['label' => 'LinkedIn', 'value' => 'linkedin.com/in/mokaddes', 'href' => 'https://www.linkedin.com/in/mokaddes/', 'icon' => 'fa-brands fa-linkedin-in'],
+            ['label' => 'LinkedIn', 'value' => 'linkedin.com/in/mokaddeshosain', 'href' => 'https://www.linkedin.com/in/mokaddeshosain', 'icon' => 'fa-brands fa-linkedin-in'],
             ['label' => 'GitHub', 'value' => 'github.com/mokaddes', 'href' => 'https://github.com/mokaddes', 'icon' => 'fa-brands fa-github'],
         ];
     }
