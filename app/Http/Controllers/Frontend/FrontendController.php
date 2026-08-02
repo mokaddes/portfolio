@@ -373,7 +373,7 @@ class FrontendController extends Controller
                 'company' => 'Dhaka Softwares',
                 'period' => 'August 2022 - July 2026',
                 'location' => 'Banani, Dhaka, Bangladesh (Remote)',
-                'current' => true,
+                'current' => false,
                 'description' => 'Developing and maintaining enterprise-level web applications using Laravel framework. Collaborating with cross-functional teams to deliver robust, scalable software solutions. Implementing best practices in code quality, security, and performance optimization while working remotely.',
             ],
             [
