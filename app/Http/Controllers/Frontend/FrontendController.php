@@ -117,7 +117,7 @@ class FrontendController extends Controller
 
     public function resume()
     {
-        $data = $this->portfolioData() + $this->headerData();
+        $data = $this->portfolioData();
 
         return view('portfolio.resume', $data);
     }
@@ -127,7 +127,7 @@ class FrontendController extends Controller
      */
     public function resumeDownload()
     {
-        $data = $this->portfolioData() + $this->headerData();
+        $data = $this->portfolioData();
 
         $data['careerSummary'] = 'Full-Stack Laravel Developer with 5+ years of experience building
             scalable web applications, SaaS platforms, e-commerce solutions,
@@ -399,7 +399,8 @@ class FrontendController extends Controller
             ['label' => 'Nationality', 'value' => 'Bangladeshi', 'icon' => 'fa-regular fa-flag'],
             ['label' => 'Marital status', 'value' => 'Married', 'icon' => 'fa-solid fa-heart'],
             ['label' => 'Mobile', 'value' => '+880 1750 899448', 'icon' => 'fa-solid fa-mobile-screen'],
-            ['label' => 'Address', 'value' => 'Rangpur, Bangladesh', 'icon' => 'fa-solid fa-location-dot'],
+            ['label' => 'Permanent Address', 'value' => 'Rangpur, Bangladesh', 'icon' => 'fa-solid fa-location-dot'],
+            ['label' => 'Present Address', 'value' => 'Dhaka, Bangladesh', 'icon' => 'fa-solid fa-location-dot'],
         ];
 
         return array_merge($this->headerData(), [
