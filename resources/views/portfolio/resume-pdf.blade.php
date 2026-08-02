@@ -239,8 +239,11 @@
                 <div class="eyebrow">Skills</div>
                 <div class="block-title">Technical Skills</div>
                 <div class="chip-wrap">
-                    @foreach($skills->sortBy('name') as $skill)
+                    @foreach($skills as $skill)
                         <span class="chip">{{ $skill->name }}</span>
+                    @endforeach
+                    @foreach($tools as $tool)
+                        <span class="chip">{{ $tool->name }}</span>
                     @endforeach
                 </div>
             </div>
