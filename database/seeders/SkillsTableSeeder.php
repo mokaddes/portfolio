@@ -14,51 +14,135 @@ class SkillsTableSeeder extends Seeder
     public function run(): void
     {
         DB::table('skills')->insert([
-            ['name' => 'Laravel', 'icon' => 'assets/icons/laravel.svg', 'description' => 'I build scalable SaaS platforms, REST APIs, and enterprise web applications using Laravel.'],
+            // Core Backend & Architecture
+            [
+                'name' => 'Laravel',
+                'icon' => 'assets/icons/laravel.svg',
+                'description' => 'Expert-level (⭐⭐⭐⭐⭐) development of scalable SaaS platforms, enterprise web apps, and custom solutions.'
+            ],
+            [
+                'name' => 'PHP',
+                'icon' => 'assets/icons/php.svg',
+                'description' => 'Advanced modern PHP development following clean architecture, OOP principles, and best practices.'
+            ],
+            [
+                'name' => 'MySQL & Database Design',
+                'icon' => 'assets/icons/database.svg',
+                'description' => 'Architecting optimized relational schemas, efficient data modeling, and complex query performance tuning.'
+            ],
 
-            ['name' => 'PHP', 'icon' => 'assets/icons/php.svg', 'description' => 'Experienced in modern PHP development following clean architecture and best practices.'],
+            // APIs & Integrations
+            [
+                'name' => 'RESTful API & Integration',
+                'icon' => 'assets/icons/rest.svg',
+                'description' => 'Designing secure, rate-limited APIs and seamlessly connecting third-party services and platforms.'
+            ],
+            [
+                'name' => 'Swagger / OpenAPI',
+                'icon' => 'assets/icons/swagger.svg',
+                'description' => 'Contract-first API development, clear endpoint documentation, and interactive testing environments.'
+            ],
 
-            ['name' => 'AI Automation', 'icon' => 'assets/icons/crud.svg', 'description' => 'I build AI-powered workflows that automate business processes and improve productivity.'],
+            // Specialized Development
+            [
+                'name' => 'SaaS Development',
+                'icon' => 'assets/icons/cloud.svg',
+                'description' => 'Building multi-tenant Software-as-a-Service platforms with subscription billing and role management.'
+            ],
+            [
+                'name' => 'CRM Development',
+                'icon' => 'assets/icons/crm.svg',
+                'description' => 'Creating custom Customer Relationship Management systems tailored to specific business workflows.'
+            ],
+            [
+                'name' => 'Web Application',
+                'icon' => 'assets/icons/web.svg',
+                'description' => 'Developing comprehensive, full-stack web applications from initial concept to deployment.'
+            ],
+            [
+                'name' => 'AI Chatbot & OpenAI API',
+                'icon' => 'assets/icons/chatgpt.svg',
+                'description' => 'Integrating OpenAI models to build intelligent chatbots, virtual assistants, and automated workflows.'
+            ],
+            [
+                'name' => 'Multi-Provider LLM Integration',
+                'icon' => 'assets/icons/chatgpt.svg',
+                'description' => 'Unified AI integration supporting OpenAI, Gemini, Claude, Groq, DeepSeek, and custom LLM providers.'
+            ],
+            [
+                'name' => 'Payment Gateway Integration',
+                'icon' => 'assets/icons/payment.svg',
+                'description' => 'Secure implementation of local and international payment systems, subscription billing, and checkout flows.'
+            ],
+            [
+                'name' => 'n8n Workflow Automation',
+                'icon' => 'assets/icons/n8n.svg',
+                'description' => 'Designing custom workflow automations using n8n, AI agents, third-party APIs, and webhooks.'
+            ],
+            [
+                'name' => 'Webhook Systems',
+                'icon' => 'assets/icons/webhook.svg',
+                'description' => 'Building robust, event-driven webhook architecture for real-time cross-platform synchronizations.'
+            ],
+            [
+                'name' => 'Meta Graph & Social APIs',
+                'icon' => 'assets/icons/facebook.svg',
+                'description' => 'Integration with WhatsApp Business API, Facebook, Messenger, and Instagram Graph services.'
+            ],
+            [
+                'name' => 'Local LLM Deployment (Ollama)',
+                'icon' => 'assets/icons/ollama.svg',
+                'description' => 'Self-hosting local AI models for private, privacy-focused, and cost-effective enterprise processing.'
+            ],
 
-            ['name' => 'OpenAI API', 'icon' => 'assets/icons/chatgpt.svg', 'description' => 'I integrate OpenAI for chatbots, assistants, content generation, and AI automation.'],
+            // Frontend & JavaScript Ecosystem
+            [
+                'name' => 'Vue.js',
+                'icon' => 'assets/icons/vuejs.svg',
+                'description' => 'Building reactive, component-based Single Page Applications (SPAs) and dynamic UI elements.'
+            ],
+            [
+                'name' => 'JavaScript',
+                'icon' => 'assets/icons/javascript.svg',
+                'description' => 'Writing clean, modern ES6+ JavaScript for interactive and asynchronous application logic.'
+            ],
+            [
+                'name' => 'AJAX',
+                'icon' => 'assets/icons/ajax.svg',
+                'description' => 'Implementing seamless, asynchronous data loading without full page reloads for better UX.'
+            ],
+            [
+                'name' => 'jQuery',
+                'icon' => 'assets/icons/jquery.svg',
+                'description' => 'DOM manipulation, event handling, and legacy project maintenance using jQuery.'
+            ],
 
-            ['name' => 'n8n Automation', 'icon' => 'assets/icons/n8n.svg', 'description' => 'I develop workflow automations using n8n, AI agents, APIs, and webhooks.'],
-
-            ['name' => 'REST API', 'icon' => 'assets/icons/rest.svg', 'description' => 'I design secure RESTful APIs for SaaS platforms and third-party integrations.'],
-
-            ['name' => 'Webhook Integration', 'icon' => 'assets/icons/webhook.svg', 'description' => 'I build secure webhook systems for real-time integrations and automation.'],
-
-            ['name' => 'Vue.js', 'icon' => 'assets/icons/vuejs.svg', 'description' => 'I create modern interactive interfaces using Vue.js.'],
-
-            ['name' => 'Database', 'icon' => 'assets/icons/database.svg', 'description' => 'Experienced with MySQL and MariaDB database design and optimization.'],
-
-            ['name' => 'Multi-Provider LLM Integration', 'icon' => 'assets/icons/chatgpt.svg', 'description' => 'Unified AI integration across OpenAI, Gemini, Claude, Groq, DeepSeek, and Ollama.'],
-
-            ['name' => 'Google Workspace API Integration', 'icon' => 'assets/icons/google.svg', 'description' => 'Automation using Google Sheets, Docs, Drive, and OAuth2 APIs.'],
-
-            ['name' => 'Meta Graph API', 'icon' => 'assets/icons/facebook.svg', 'description' => 'Facebook, Messenger, Instagram, and WhatsApp Business API integrations.'],
-
-            ['name' => 'WordPress Plugin Development', 'icon' => 'assets/icons/wordpress.svg', 'description' => 'Custom WordPress plugins, admin panels, and business solutions.'],
-
-            ['name' => 'Local LLM Deployment (Ollama)', 'icon' => 'assets/icons/ollama.svg', 'description' => 'Deploy self-hosted AI models for private and cost-efficient automation.'],
-
-            ['name' => 'Swagger/OpenAPI', 'icon' => 'assets/icons/swagger.svg', 'description' => 'API documentation and contract-first development.'],
-
-            ['name' => 'Prompt Engineering', 'icon' => 'assets/icons/terminal.svg', 'description' => 'Design reliable prompts for AI applications and business workflows.'],
-
-            ['name' => 'JavaScript', 'icon' => 'assets/icons/javascript.svg', 'description' => 'Interactive frontend development using modern JavaScript.'],
-
-            ['name' => 'HTML5', 'icon' => 'assets/icons/html.svg', 'description' => 'Semantic and accessible web markup.'],
-
-            ['name' => 'CSS3', 'icon' => 'assets/icons/css.svg', 'description' => 'Responsive layouts with modern CSS.'],
-
-            ['name' => 'Bootstrap', 'icon' => 'assets/icons/bootstrap.svg', 'description' => 'Responsive UI development with Bootstrap.'],
-
-            ['name' => 'Apache Server', 'icon' => 'assets/icons/apache.svg', 'description' => 'Apache web server configuration and deployment.'],
-
-            ['name' => 'SonarQube', 'icon' => 'assets/icons/sonarqube-1.svg', 'description' => 'Static code analysis and code quality improvement.'],
-
-            ['name' => 'jQuery', 'icon' => 'assets/icons/jquery.svg', 'description' => 'Legacy project maintenance and AJAX interactions.'],
+            // Markup, Styling & Design
+            [
+                'name' => 'HTML5',
+                'icon' => 'assets/icons/html.svg',
+                'description' => 'Structuring web content using semantic, accessible, and SEO-friendly HTML5 markup.'
+            ],
+            [
+                'name' => 'CSS3',
+                'icon' => 'assets/icons/css.svg',
+                'description' => 'Styling custom user interfaces with modern CSS3 features, animations, and variables.'
+            ],
+            [
+                'name' => 'Tailwind CSS',
+                'icon' => 'assets/icons/tailwind.svg',
+                'description' => 'Rapid UI development using utility-first CSS for highly customizable and modern designs.'
+            ],
+            [
+                'name' => 'Bootstrap',
+                'icon' => 'assets/icons/bootstrap.svg',
+                'description' => 'Utilizing the Bootstrap framework for quick, reliable, and component-rich frontend layouts.'
+            ],
+            [
+                'name' => 'Responsive Design',
+                'icon' => 'assets/icons/responsive.svg',
+                'description' => 'Ensuring web applications look and function flawlessly across all devices and screen sizes.'
+            ],
         ]);
     }
 }
