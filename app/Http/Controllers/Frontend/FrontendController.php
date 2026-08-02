@@ -248,7 +248,7 @@ class FrontendController extends Controller
 
     private function portfolioData(): array
     {
-        $skills = Skill::where('status', 1)->orderBy('name')->get();
+        $skills = Skill::where('status', 1)->get();
         $categories = Category::withCount([
             'projects' => function ($query) {
                 $query->where('status', 1);
