@@ -243,6 +243,7 @@ class FrontendController extends Controller
             ['label' => 'WhatsApp', 'value' => '+8801750899448', 'href' => 'https://wa.me/8801750899448', 'icon' => 'fa-brands fa-whatsapp'],
             ['label' => 'LinkedIn', 'value' => 'linkedin.com/in/mokaddeshosain', 'href' => 'https://www.linkedin.com/in/mokaddeshosain', 'icon' => 'fa-brands fa-linkedin-in'],
             ['label' => 'GitHub', 'value' => 'github.com/mokaddes', 'href' => 'https://github.com/mokaddes', 'icon' => 'fa-brands fa-github'],
+            ['label' => 'Portfolio', 'value' => 'mokaddes.com', 'href' => 'https://mokaddes.com', 'icon' => 'fa-solid fa-globe'],
         ];
     }
 
