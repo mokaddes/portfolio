@@ -53,10 +53,8 @@
             display: inline;
         }
         .contact-link {
-            color: #333;
-            text-decoration: none;
-            display: inline;
-            white-space: nowrap;
+            margin:0;
+            padding:0
         }
 
         /* ---------- Two column layout ---------- */
