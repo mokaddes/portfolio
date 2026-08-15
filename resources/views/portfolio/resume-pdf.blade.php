@@ -48,14 +48,10 @@
         .header .name { font-size: 19px; font-weight: bold; letter-spacing: 0.3px; }
         .header .designation { margin-top: 2px; font-size: 10px; color: #cbd5e1; }
         .header .contacts { margin-top: 8px; font-size: 8.5px; color: #dbeafe; }
-        .header .contacts span { margin-right: 10px; white-space: nowrap; }
-        .contact-item {
+        .header .contacts a { margin-right: 10px; white-space: nowrap;
             display: inline;
         }
-        .contact-link {
-            margin:0;
-            padding:0
-        }
+
 
         /* ---------- Two column layout ---------- */
         .layout { width: 100%; border-collapse: collapse; margin-top: 10px; }
@@ -231,11 +227,9 @@
                 <div class="designation">{{ $designation }}</div>
                 <div class="contacts">
                     @foreach($contactCards as $card)
-                        <span class="contact-item">
                             <a href="{{ $card['href'] }}" class="contact-link">
                                 {{ $card['value'] }}
                             </a>
-                        </span>
                     @endforeach
                 </div>
             </td>
