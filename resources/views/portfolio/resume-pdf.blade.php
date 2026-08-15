@@ -224,7 +224,11 @@
                 <div class="designation">{{ $designation }}</div>
                 <div class="contacts">
                     @foreach($contactCards as $card)
-                        <span>{{ $card['value'] }}</span>
+                        <span>
+                        <a href="{{ $card['href'] }}" target="_blank">
+                            {{ $card['value'] }}
+                        </a>
+                    </span>
                     @endforeach
                 </div>
             </td>
